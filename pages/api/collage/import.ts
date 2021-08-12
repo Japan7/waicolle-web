@@ -9,9 +9,10 @@ export const config = {
   },
 };
 
-export let WAICOLLAGE_DATA: WCItem[] = [];
+export const WAICOLLAGE_DATA: { [key: number]: WCItem[] } = {};
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  WAICOLLAGE_DATA = JSON.parse(req.body);
-  res.status(200).json({ url: 'https://waicolle.yuru.moe/collage' });
+  const body = JSON.parse(req.body);
+  WAICOLLAGE_DATA[body.guild] = body.data;
+  res.status(200).json({ url: 'https://waicolle.yuru.moe/collage/' + body.guild });
 }

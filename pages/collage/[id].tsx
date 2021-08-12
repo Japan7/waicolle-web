@@ -1,19 +1,19 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { useState } from 'react';
-import CollageHeader from '../components/collage/CollageHeader';
-import WaifuCollage from '../components/collage/WaifuCollage';
-import WaifuInfos from '../components/collage/WaifuInfos';
-import { CollageFilters, WCItem } from '../lib/types';
+import CollageHeader from '../../components/collage/CollageHeader';
+import WaifuCollage from '../../components/collage/WaifuCollage';
+import WaifuInfos from '../../components/collage/WaifuInfos';
+import { CollageFilters, WCItem } from '../../lib/types';
+import { WAICOLLAGE_DATA } from '../api/collage/import';
 import styles from '../styles/Collage.module.css';
-import { WAICOLLAGE_DATA } from './api/collage/import';
 
 const client = new ApolloClient({
   uri: 'https://graphql.anilist.co',
   cache: new InMemoryCache()
 });
 
-export async function getServerSideProps() {
-  return { props: { data: WAICOLLAGE_DATA } };
+export async function getServerSideProps(context: any) {
+  return { props: { data: WAICOLLAGE_DATA[context.params.id] } };
 }
 
 export default function Collage({ data }: { data: WCItem[] }) {
