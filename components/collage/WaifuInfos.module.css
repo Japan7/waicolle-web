@@ -1,0 +1,87 @@
+.infos {
+  display: grid;
+  grid-template:
+    "name"
+    "image"
+    "chara"
+    "waifu"
+    "modifiers";
+  margin: 0.5em;
+}
+
+.infos * {
+  align-items: center;
+  margin: 0.2em;
+}
+
+.infos h1 {
+  font-size: large;
+}
+
+.infos h2 {
+  font-size: medium;
+}
+
+.name {
+  grid-area: name;
+  display: flex;
+  flex-direction: column;
+}
+
+.image {
+  grid-area: image;
+  width: 100%;
+}
+
+.image img {
+  width: 75%;
+  margin: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.waifu {
+  grid-area: waifu;
+  display: grid;
+  grid-template-columns: auto auto;
+  width: 100%;
+}
+
+.modifiers {
+  grid-area: modifiers;
+  display: flex;
+}
+
+.modifiers p {
+  font-size: xx-large;
+  margin: auto;
+}
+
+.chara {
+  grid-area: chara;
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+@media only screen and (max-width: 800px) {
+  .infos {
+    grid-template:
+      "name name"
+      "image chara"
+      "image waifu"
+      "image modifiers"
+      / 1fr 1fr;
+  }
+
+  .infos h1 {
+    font-size: medium;
+  }
+
+  .infos h2 {
+    font-size: small;
+  }
+
+  .infos p {
+    font-size: small;
+  }
+}

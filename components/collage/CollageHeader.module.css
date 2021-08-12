@@ -1,0 +1,57 @@
+.header {
+  display: grid;
+  grid-template:
+    "user media"
+    "filters infos";
+  padding: 0.5em;
+  color: wheat;
+}
+
+.header * {
+  display: flex;
+  margin: auto;
+}
+
+.userSelector {
+  grid-area: user;
+}
+
+.filtersSelector {
+  grid-area: filters;
+}
+
+.userSelector label,
+.filtersSelector label {
+  padding: 0 1em 0 0.25em;
+}
+
+.mediaSelector {
+  grid-area: media;
+}
+
+.mediaSelector label {
+  padding: 0 0.25em;
+}
+
+.infos {
+  grid-area: infos;
+}
+
+.infos * {
+  text-decoration: none;
+  color: wheat;
+}
+
+@media only screen and (max-width: 800px) {
+  .header {
+    grid-template:
+      "user"
+      "filters"
+      "media"
+      "infos";
+  }
+
+  .header * {
+    padding: 0.25em 0;
+  }
+}

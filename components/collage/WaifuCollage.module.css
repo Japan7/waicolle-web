@@ -1,0 +1,17 @@
+.collageDiv {
+  height: 100%;
+  overflow: scroll;
+}
+
+.collage {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.chara {
+  width: 4em;
+  height: 6em;
+  cursor: pointer;
+  object-fit: cover;
+}
