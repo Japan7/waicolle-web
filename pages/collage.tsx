@@ -1,18 +1,22 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import CollageHeader from '../components/collage/CollageHeader';
 import WaifuCollage from '../components/collage/WaifuCollage';
 import WaifuInfos from '../components/collage/WaifuInfos';
 import { CollageFilters, WCItem } from '../lib/types';
 import styles from '../styles/Collage.module.css';
+import { WAICOLLAGE_DATA } from './api/collage/import';
 
 const client = new ApolloClient({
   uri: 'https://graphql.anilist.co',
   cache: new InMemoryCache()
 });
 
-export default function Collage() {
-  const [data, setData] = useState<WCItem[]>([]);
+export async function getServerSideProps() {
+  return { props: { data: WAICOLLAGE_DATA } };
+}
+
+export default function Collage({ data }: { data: WCItem[] }) {
   const [filters, setFilters] = useState<CollageFilters>({
     player: null,
     playerIsIncluded: true,
@@ -24,12 +28,6 @@ export default function Collage() {
     lasts: false
   });
   const [selected, setSelected] = useState<WCItem | null>(null);
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const data = params.get('data');
-    if (data) fetch(data).then(resp => resp.json()).then(newData => setData(newData));
-  }, []);
 
   return (
     <ApolloProvider client={client}>
