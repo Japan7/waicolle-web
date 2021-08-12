@@ -4,8 +4,8 @@ import CollageHeader from '../../components/collage/CollageHeader';
 import WaifuCollage from '../../components/collage/WaifuCollage';
 import WaifuInfos from '../../components/collage/WaifuInfos';
 import { CollageFilters, WCItem } from '../../lib/types';
+import styles from '../../styles/Collage.module.css';
 import { WAICOLLAGE_DATA } from '../api/collage/import';
-import styles from '../styles/Collage.module.css';
 
 const client = new ApolloClient({
   uri: 'https://graphql.anilist.co',
