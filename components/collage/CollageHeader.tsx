@@ -11,35 +11,23 @@ export default function CollageHeader({ data, filters, setFilters }:
     setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>
   }) {
 
-  const setPlayer = useCallback((player: string | null) =>
-    setFilters({ ...filters, player: player }), [filters, setFilters]);
-
-  const setPlayerIsIncluded = useCallback((isIncluded: boolean) =>
-    setFilters({ ...filters, playerIsIncluded: isIncluded }), [filters, setFilters]);
-
   const setCharas = useCallback((charas: number[] | null) =>
     setFilters({ ...filters, charas: charas }), [filters, setFilters]);
 
   return (
     <div className={styles.header}>
-      <UserSelector
-        data={data}
-        setPlayer={setPlayer}
-        playerIsIncluded={filters.playerIsIncluded}
-        setPlayerIsIncluded={setPlayerIsIncluded}
-      />
+      <UserSelector data={data} filters={filters} setFilters={setFilters} />
       <FiltersSelector filters={filters} setFilters={setFilters} />
       <MediaSelector charas={filters.charas} setCharas={setCharas} />
     </div>
   );
 }
 
-function UserSelector({ data, setPlayer, playerIsIncluded, setPlayerIsIncluded }:
+function UserSelector({ data, filters, setFilters }:
   {
     data: WCItem[],
-    setPlayer: (player: string | null) => void,
-    playerIsIncluded: boolean,
-    setPlayerIsIncluded: (isIncluded: boolean) => void
+    filters: CollageFilters,
+    setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>
   }) {
 
   const users: string[] = useMemo(() => {
@@ -48,13 +36,19 @@ function UserSelector({ data, setPlayer, playerIsIncluded, setPlayerIsIncluded }
     return Array.from(userSet).sort((a, b) => a.localeCompare(b));
   }, [data]);
 
+  const setPlayer = useCallback((player: string | null) =>
+    setFilters({ ...filters, player: player }), [filters, setFilters]);
+
+  const setPlayerIsIncluded = useCallback((isIncluded: boolean) =>
+    setFilters({ ...filters, playerIsIncluded: isIncluded }), [filters, setFilters]);
+
   return (
     <div className={styles.userSelector}>
       <div>
         <input
           type="radio"
           id="include"
-          checked={playerIsIncluded}
+          checked={filters.playerIsIncluded}
           onChange={() => setPlayerIsIncluded(true)}
         />
         <label htmlFor="include">Include</label>
@@ -63,13 +57,13 @@ function UserSelector({ data, setPlayer, playerIsIncluded, setPlayerIsIncluded }
         <input
           type="radio"
           id="exclude"
-          checked={!playerIsIncluded}
+          checked={!filters.playerIsIncluded}
           onChange={() => setPlayerIsIncluded(false)}
         />
         <label htmlFor="exclude">Exclude</label>
       </div>
       <div>
-        <select onChange={e => setPlayer(e.target.value || null)}>
+        <select value={filters.player ?? ''} onChange={e => setPlayer(e.target.value || null)} >
           <option value="">All players</option>
           {users.map(user =>
             <option value={user} key={user}>{user}</option>)}
@@ -88,7 +82,7 @@ function FiltersSelector({ filters, setFilters }:
         <input
           type="checkbox"
           id="unlocked"
-          defaultChecked={filters.unlockedOnly}
+          checked={filters.unlockedOnly}
           onChange={() => setFilters({ ...filters, unlockedOnly: !filters.unlockedOnly })}
         />
         <label htmlFor="unlocked">🔓</label>
@@ -97,7 +91,7 @@ function FiltersSelector({ filters, setFilters }:
         <input
           type="checkbox"
           id="locked"
-          defaultChecked={filters.lockedOnly}
+          checked={filters.lockedOnly}
           onChange={() => setFilters({ ...filters, lockedOnly: !filters.lockedOnly })}
         />
         <label htmlFor="locked">🔒</label>
@@ -106,7 +100,7 @@ function FiltersSelector({ filters, setFilters }:
         <input
           type="checkbox"
           id="ascended"
-          defaultChecked={filters.ascendedOnly}
+          checked={filters.ascendedOnly}
           onChange={() => setFilters({ ...filters, ascendedOnly: !filters.ascendedOnly })}
         />
         <label htmlFor="ascended">🌟</label>
@@ -115,7 +109,7 @@ function FiltersSelector({ filters, setFilters }:
         <input
           type="checkbox"
           id="nanaed"
-          defaultChecked={filters.nanaedOnly}
+          checked={filters.nanaedOnly}
           onChange={() => setFilters({ ...filters, nanaedOnly: !filters.nanaedOnly })}
         />
         <label htmlFor="nanaed">Nanaed</label>
@@ -124,7 +118,7 @@ function FiltersSelector({ filters, setFilters }:
         <input
           type="checkbox"
           id="lasts"
-          defaultChecked={filters.lasts}
+          checked={filters.lasts}
           onChange={() => setFilters({ ...filters, lasts: !filters.lasts })}
         />
         <label htmlFor="lasts">Lasts</label>

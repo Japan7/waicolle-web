@@ -1,6 +1,7 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import fs from 'fs';
-import { useState } from 'react';
+import { useRouter } from 'next/dist/client/router';
+import { useEffect, useState } from 'react';
 import CollageHeader from '../../components/collage/CollageHeader';
 import WaifuCollage from '../../components/collage/WaifuCollage';
 import WaifuInfos from '../../components/collage/WaifuInfos';
@@ -20,7 +21,7 @@ export async function getServerSideProps(context: any) {
 }
 
 export default function Collage({ data }: { data: WCItem[] }) {
-  const [filters, setFilters] = useState<CollageFilters>({
+  const defaultFilters = {
     player: null,
     playerIsIncluded: true,
     charas: null,
@@ -29,8 +30,22 @@ export default function Collage({ data }: { data: WCItem[] }) {
     lockedOnly: false,
     nanaedOnly: false,
     lasts: false
-  });
+  };
+  const [filters, setFilters] = useState<CollageFilters>(defaultFilters);
   const [selected, setSelected] = useState<WCItem | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    let item;
+    if (item = localStorage.getItem('collageFilters_' + router.query.id)) {
+      setFilters(JSON.parse(item));
+    };
+  }, [router.query.id]);
+
+  useEffect(() => {
+    filters.charas = null;
+    localStorage.setItem('collageFilters_' + router.query.id, JSON.stringify(filters));
+  }, [filters, router.query.id]);
 
   return (
     <ApolloProvider client={client}>
