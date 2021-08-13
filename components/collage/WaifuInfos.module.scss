@@ -70,7 +70,11 @@
       "image chara"
       "image waifu"
       "image modifiers"
-      / 1fr 1fr;
+      / 1fr 3fr;
+
+    * {
+      margin: 0%;
+    }
 
     h1 {
       font-size: medium;
