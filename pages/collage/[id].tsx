@@ -1,4 +1,5 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import fs from 'fs';
 import { useState } from 'react';
 import CollageHeader from '../../components/collage/CollageHeader';
 import WaifuCollage from '../../components/collage/WaifuCollage';
@@ -13,7 +14,9 @@ const client = new ApolloClient({
 });
 
 export async function getServerSideProps(context: any) {
-  return { props: { data: WAICOLLAGE_DATA[context.params.id] } };
+  const data = context.params.id === 'test' ?
+    JSON.parse(fs.readFileSync('tests/collage.json', 'utf-8')) : WAICOLLAGE_DATA[context.params.id];
+  return { props: { data: data } };
 }
 
 export default function Collage({ data }: { data: WCItem[] }) {
