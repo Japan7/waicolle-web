@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import { useCallback, useMemo, useState } from 'react';
 import { MEDIA_DATA_QUERY } from '../../lib/queries';
 import { CollageFilters, MediaData, WCItem } from '../../lib/types';
-import styles from './CollageHeader.module.css';
+import styles from './CollageHeader.module.scss';
 
 export default function CollageHeader({ data, filters, setFilters }:
   {

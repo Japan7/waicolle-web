@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { CollageFilters, WCItem } from '../../lib/types';
-import styles from './WaifuCollage.module.css';
+import styles from './WaifuCollage.module.scss';
 
 function sortFavourites(a: WCItem, b: WCItem) {
   if (a.alchara.favourites > b.alchara.favourites) return -1;

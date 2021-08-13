@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import { CHARA_DATA_QUERY } from '../../lib/queries';
 import { CharaData, WCItem, WCWaifu } from '../../lib/types';
 import { getRank } from '../../lib/utils';
-import styles from './WaifuInfos.module.css';
+import styles from './WaifuInfos.module.scss';
 
 export default function WaifuInfos({ item }: { item: WCItem | null }) {
   const { data, loading } = useQuery<{ Character: CharaData }>(CHARA_DATA_QUERY, {

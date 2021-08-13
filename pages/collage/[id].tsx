@@ -4,7 +4,7 @@ import CollageHeader from '../../components/collage/CollageHeader';
 import WaifuCollage from '../../components/collage/WaifuCollage';
 import WaifuInfos from '../../components/collage/WaifuInfos';
 import { CollageFilters, WCItem } from '../../lib/types';
-import styles from '../../styles/Collage.module.css';
+import styles from '../../styles/Collage.module.scss';
 import { WAICOLLAGE_DATA } from '../api/collage/import';
 
 const client = new ApolloClient({
