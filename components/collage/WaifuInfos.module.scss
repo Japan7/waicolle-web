@@ -7,19 +7,19 @@
     "waifu"
     "modifiers";
   margin: 0.5em;
-}
 
-.infos * {
-  align-items: center;
-  margin: 0.2em;
-}
+  * {
+    align-items: center;
+    margin: 0.2em;
+  }
 
-.infos h1 {
-  font-size: large;
-}
+  h1 {
+    font-size: large;
+  }
 
-.infos h2 {
-  font-size: medium;
+  h2 {
+    font-size: medium;
+  }
 }
 
 .name {
@@ -31,13 +31,13 @@
 .image {
   grid-area: image;
   width: 100%;
-}
 
-.image img {
-  width: 75%;
-  margin: auto;
-  display: block;
-  object-fit: contain;
+  img {
+    width: 75%;
+    margin: auto;
+    display: block;
+    object-fit: contain;
+  }
 }
 
 .waifu {
@@ -50,11 +50,11 @@
 .modifiers {
   grid-area: modifiers;
   display: flex;
-}
 
-.modifiers p {
-  font-size: xx-large;
-  margin: auto;
+  p {
+    font-size: xx-large;
+    margin: auto;
+  }
 }
 
 .chara {
@@ -71,17 +71,14 @@
       "image waifu"
       "image modifiers"
       / 1fr 1fr;
-  }
 
-  .infos h1 {
-    font-size: medium;
-  }
+    h1 {
+      font-size: medium;
+    }
 
-  .infos h2 {
-    font-size: small;
-  }
-
-  .infos p {
-    font-size: small;
+    h2,
+    p {
+      font-size: small;
+    }
   }
 }
