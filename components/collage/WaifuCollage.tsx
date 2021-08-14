@@ -59,12 +59,8 @@ export default function WaifuCollage({ data, filters, setSelected }:
       }
     });
     setPics(newPics);
-    setShown(newPics.slice(0, 200));
-  }, [data, filters, isIncluded, setSelected]);
-
-  useEffect(() => {
-    document.getElementById("collage")?.dispatchEvent(new MouseEvent('scroll'));
-  }, [shown.length]);
+    setShown(newPics.slice(0, 500));
+  }, [data, filters.lasts, isIncluded, setSelected]);
 
   return (
     <div className={styles.collageDiv} id="collage">
@@ -74,7 +70,7 @@ export default function WaifuCollage({ data, filters, setSelected }:
         next={() => setShown(pics.slice(0, shown.length + 200))}
         hasMore={shown.length < pics.length}
         loader={null}
-        scrollThreshold={0.5}
+        scrollThreshold={0.25}
         scrollableTarget="collage"
       >
         {shown}

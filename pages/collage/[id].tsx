@@ -1,6 +1,7 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import fs from 'fs';
 import { useRouter } from 'next/dist/client/router';
+import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import CollageHeader from '../../components/collage/CollageHeader';
 import WaifuCollage from '../../components/collage/WaifuCollage';
@@ -48,33 +49,30 @@ export default function Collage({ data }: { data: WCItem[] }) {
   }, [filters, router.query.id]);
 
   return (
-    <ApolloProvider client={client}>
-      <div className={styles.app}>
+    <div className={styles.app}>
+      <Head>
+        <title>Collage | Waifu Collection</title>
+      </Head>
+
+      <ApolloProvider client={client}>
         <div className={styles.collage}>
-          <CollageHeader
-            data={data}
-            filters={filters}
-            setFilters={setFilters}
-          />
-          <WaifuCollage
-            data={data}
-            filters={filters}
-            setSelected={setSelected}
-          />
+          <CollageHeader data={data} filters={filters} setFilters={setFilters} />
+          <WaifuCollage data={data} filters={filters} setSelected={setSelected} />
         </div>
         <div className={styles.infos}>
           <WaifuInfos item={selected} />
         </div>
-        <style jsx global>{`
-          html,
-          body,
-          #__next {
-            height: 100%;
-            background-color: black;
-            color: white;
-          }
+      </ApolloProvider>
+
+      <style jsx global>{`
+        html,
+        body,
+        #__next {
+          height: 100%;
+          background-color: black;
+          color: white;
+        }
       `}</style>
-      </div>
-    </ApolloProvider>
+    </div>
   );
 };

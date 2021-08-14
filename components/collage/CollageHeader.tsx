@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { useCallback, useMemo, useState } from 'react';
 import { MEDIA_DATA_QUERY } from '../../lib/queries';
 import { CollageFilters, MediaData, WCItem } from '../../lib/types';
@@ -127,27 +127,31 @@ function FiltersSelector({ filters, setFilters }:
   );
 }
 
-function MediaSelector({ charas, setCharas }: { charas: number[] | null, setCharas: (charas: number[] | null) => void }) {
-  const [mediaId, setMediaId] = useState<number | null>(null);
-  const [charaPage, setCharaPage] = useState<number>(1);
+function MediaSelector({ charas, setCharas }:
+  { charas: number[] | null, setCharas: (charas: number[] | null) => void }) {
 
-  const { data, error } = useQuery<{ Media: MediaData }>(MEDIA_DATA_QUERY, {
-    variables: { id: mediaId, chara_page: charaPage },
-    skip: !mediaId,
+  const [mediaId, setMediaId] = useState<number | null>(null);
+
+  const [getCharas, { data, error }] = useLazyQuery<{ Media: MediaData }>(MEDIA_DATA_QUERY, {
+    variables: { id: mediaId },
     onCompleted: data => {
       setCharas([...charas!, ...data.Media.characters.nodes.map(n => n.id)]);
       if (data.Media.characters.pageInfo.hasNextPage) {
-        setCharaPage(data.Media.characters.pageInfo.currentPage + 1);
+        getCharas({ variables: { chara_page: data.Media.characters.pageInfo.currentPage + 1 } });
       }
     }
   });
 
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = Number.isNaN(e.target.valueAsNumber) ? null : e.target.valueAsNumber;
-    inputValue ? setCharas([]) : setCharas(null);
-    setCharaPage(1);
     setMediaId(inputValue);
-  }, [setCharas]);
+    if (inputValue) {
+      setCharas([]);
+      getCharas({ variables: { chara_page: 1 } });
+    } else {
+      setCharas(null);
+    }
+  }, [getCharas, setCharas]);
 
   return (
     <>
@@ -159,11 +163,10 @@ function MediaSelector({ charas, setCharas }: { charas: number[] | null, setChar
         />
       </div>
       <div className={styles.infos}>
-        {error && <label>No media found with this ID</label>}
-        {data?.Media &&
-          <a href={data?.Media.siteUrl}>
-            [{data?.Media.type}] {data?.Media.title.romaji}
-          </a>}
+        {mediaId &&
+          (data ?
+            <a href={data.Media.siteUrl}>[{data.Media.type}] {data.Media.title.romaji}</a> :
+            error && <label>No media found with this ID</label>)}
       </div>
     </>
   );
