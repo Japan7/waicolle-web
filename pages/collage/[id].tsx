@@ -44,8 +44,9 @@ export default function Collage({ data }: { data: WCItem[] }) {
   }, [router.query.id]);
 
   useEffect(() => {
-    filters.charas = null;
-    localStorage.setItem('collageFilters_' + router.query.id, JSON.stringify(filters));
+    const filtersCopy: CollageFilters = { ...filters };
+    filtersCopy.charas = null;
+    localStorage.setItem('collageFilters_' + router.query.id, JSON.stringify(filtersCopy));
   }, [filters, router.query.id]);
 
   return (
