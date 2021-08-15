@@ -3,21 +3,16 @@
   grid-template:
     "name"
     "image"
-    "chara"
-    "waifu"
+    "props"
     "modifiers";
   margin: 0.5em;
-
-  * {
-    align-items: center;
-    margin: 0.2em;
-  }
 
   h1 {
     font-size: large;
   }
 
-  h2 {
+  h2,
+  p {
     font-size: medium;
   }
 }
@@ -26,11 +21,17 @@
   grid-area: name;
   display: flex;
   flex-direction: column;
+  margin: auto;
+
+  * {
+    margin: auto;
+  }
 }
 
 .image {
   grid-area: image;
   width: 100%;
+  padding: 1em 0;
 
   img {
     width: 75%;
@@ -40,16 +41,18 @@
   }
 }
 
-.waifu {
-  grid-area: waifu;
+.props {
   display: grid;
-  grid-template-columns: auto auto;
-  width: 100%;
+  grid-template-columns: 1fr 1fr;
+
+  * {
+    margin: 0.2em;
+  }
 }
 
 .modifiers {
-  grid-area: modifiers;
   display: flex;
+  margin: 1em 0;
 
   p {
     font-size: xx-large;
@@ -57,24 +60,13 @@
   }
 }
 
-.chara {
-  grid-area: chara;
-  display: grid;
-  grid-template-columns: auto auto;
-}
-
 @media only screen and (max-width: 800px) {
   .infos {
     grid-template:
       "name name"
-      "image chara"
-      "image waifu"
+      "image props"
       "image modifiers"
       / 1fr 3fr;
-
-    * {
-      margin: 0%;
-    }
 
     h1 {
       font-size: medium;

@@ -20,8 +20,7 @@ function CharaInfos({ waifu, chara }: { waifu: WCWaifu, chara: CharaData }) {
     <div className={styles.infos}>
       <CharaName chara={chara} />
       <CharaImage chara={chara} />
-      <WaifuProps waifu={waifu} />
-      <CharaProps chara={chara} />
+      <WaifuCharaProps waifu={waifu} chara={chara} />
     </div>
   );
 }
@@ -50,10 +49,14 @@ function CharaImage({ chara }: { chara: CharaData }) {
   );
 }
 
-function WaifuProps({ waifu }: { waifu: WCWaifu }) {
+function WaifuCharaProps({ waifu, chara }: { waifu: WCWaifu, chara: CharaData }) {
   return (
     <>
-      <div className={styles.waifu}>
+      <div className={styles.props}>
+        <h2>ID</h2>
+        <p>{chara.id}</p>
+        <h2>Favourites</h2>
+        <p>{chara.favourites} [<b>{getRank(chara)}</b>]</p>
         <h2>Owner</h2>
         <p>{waifu.owner}</p>
         <h2>Original owner</h2>
@@ -66,16 +69,5 @@ function WaifuProps({ waifu }: { waifu: WCWaifu }) {
         {(waifu.level > 0) && <p>🌟</p>}
       </div>
     </>
-  );
-}
-
-function CharaProps({ chara }: { chara: CharaData }) {
-  return (
-    <div className={styles.chara}>
-      <h2>ID</h2>
-      <p>{chara.id}</p>
-      <h2>Favourites</h2>
-      <p>{chara.favourites} [<b>{getRank(chara)}</b>]</p>
-    </div>
   );
 }
