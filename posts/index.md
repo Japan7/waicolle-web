@@ -5,7 +5,7 @@
 </div>
 
 **Welcome to the *Waifu Collection* companion web app!** \
-You will find here some ressources to help you mastering the game.
+You will find here some resources to help you mastering the game.
 
 ## Collage
 
@@ -17,3 +17,4 @@ If you want, send `7waifu link` in *#bot-room* to force data refresh.
 
 * [Tutorial](/help/tutorial)
 * [Q&A](/help/q-and-a)
+* [List of commands](/help/commands)

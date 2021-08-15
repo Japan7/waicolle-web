@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import MarkdownPage from '../components/MarkdownPage';
 import { getAllPostsSlugs, getPostData } from '../lib/posts';
 import { PostData } from '../lib/types';
@@ -16,6 +17,11 @@ export async function getStaticProps({ params }: { params: { slug: string[] } })
 export default function Home({ postData }: { postData: PostData }) {
   return (
     <MarkdownPage home={postData.slug[0] == 'index'}>
+      <Head>
+        {postData.tags.title &&
+          <title>{postData.tags.title} | Waifu Collection</title>}
+      </Head>
+
       <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
     </MarkdownPage>
   );

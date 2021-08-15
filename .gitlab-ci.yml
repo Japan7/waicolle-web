@@ -4,8 +4,9 @@ stages:
 
 build:
   stage: build
-  script:
+  before_script:
     - npm ci
+  script:
     - npm run build
     - docker build -t waicolle .
 
