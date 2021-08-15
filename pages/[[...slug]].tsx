@@ -15,7 +15,7 @@ export async function getStaticProps({ params }: { params: { slug: string[] } })
 
 export default function Home({ postData }: { postData: PostData }) {
   return (
-    <MarkdownPage>
+    <MarkdownPage home={postData.slug[0] == 'index'}>
       <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
     </MarkdownPage>
   );

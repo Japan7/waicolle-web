@@ -20,7 +20,8 @@ export function getAllPostsSlugs() {
 }
 
 export async function getPostData(slug: string[] | undefined): Promise<PostData> {
-  const fullPath = path.join(postsDirectory, slug ? `${slug.join('/')}.md` : 'index.md');
+  slug ??= ['index'];
+  const fullPath = path.join(postsDirectory, `${path.join(...slug)}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
 
   // Use gray-matter to parse the post metadata section
@@ -31,5 +32,9 @@ export async function getPostData(slug: string[] | undefined): Promise<PostData>
   const contentHtml = processedContent.toString();
 
   // Combine the data with the id and contentHtml
-  return { contentHtml, ...matterResult.data };
+  return {
+    slug,
+    contentHtml,
+    tags: matterResult.data
+  };
 }

@@ -17,7 +17,7 @@ const client = new ApolloClient({
 
 export async function getServerSideProps(context: any) {
   const data = context.params.id === 'test' ?
-    JSON.parse(fs.readFileSync('tests/collage.json', 'utf-8')) :
+    JSON.parse(fs.readFileSync('./tests/collage.json', 'utf-8')) :
     WAICOLLAGE_DATA[context.params.id];
   return { props: { data } };
 }

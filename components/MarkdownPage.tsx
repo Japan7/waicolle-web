@@ -1,13 +1,23 @@
 import Head from 'next/head';
+import Link from 'next/link';
 
-export default function MarkdownPage({ children }: { children: React.ReactNode }) {
+export default function MarkdownPage({ children, home }: { children: React.ReactNode, home?: boolean }) {
   return (
     <div className="markdown-body">
       <Head>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hyrious/github-markdown-css/github-markdown.css" />
       </Head>
 
-      {children}
+      <header>
+        {!home &&
+          <Link href="/">
+            <a>← Back to home</a>
+          </Link>}
+      </header>
+
+      <main>
+        {children}
+      </main>
 
       <style jsx global>{`
         html {

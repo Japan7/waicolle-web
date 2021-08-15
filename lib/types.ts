@@ -97,8 +97,8 @@ export interface Staff {
 
 // Filtering
 export interface CollageFilters {
-  player: string | null,
-  playerIsIncluded: boolean, 
+  player: string | null,
+  playerIsIncluded: boolean,
   charas: number[] | null;
   ascendedOnly: boolean;
   unlockedOnly: boolean;
@@ -109,6 +109,7 @@ export interface CollageFilters {
 
 // Posts
 export interface PostData {
+  slug: string[];
   contentHtml: string;
-  [key: string]: any;
+  tags: { [key: string]: any };
 }
