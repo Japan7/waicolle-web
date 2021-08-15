@@ -12,7 +12,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/logo192.png" />
         <meta name="theme-color" content="#956DA6" />
-        <link rel="manifest" href="/manifest.json" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Japan7/waicolle-web" />

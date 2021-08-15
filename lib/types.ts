@@ -106,3 +106,10 @@ export interface CollageFilters {
   nanaedOnly: boolean;
   lasts: boolean;
 }
+
+// Posts
+export interface PostData {
+  id: string;
+  contentHtml: string;
+  [key: string]: any;
+}

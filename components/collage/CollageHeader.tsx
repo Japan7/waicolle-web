@@ -12,7 +12,7 @@ export default function CollageHeader({ data, filters, setFilters }:
   }) {
 
   const setCharas = useCallback((charas: number[] | null) =>
-    setFilters({ ...filters, charas: charas }), [filters, setFilters]);
+    setFilters({ ...filters, charas }), [filters, setFilters]);
 
   return (
     <div className={styles.header}>
@@ -37,10 +37,10 @@ function UserSelector({ data, filters, setFilters }:
   }, [data]);
 
   const setPlayer = useCallback((player: string | null) =>
-    setFilters({ ...filters, player: player }), [filters, setFilters]);
+    setFilters({ ...filters, player }), [filters, setFilters]);
 
-  const setPlayerIsIncluded = useCallback((isIncluded: boolean) =>
-    setFilters({ ...filters, playerIsIncluded: isIncluded }), [filters, setFilters]);
+  const setPlayerIsIncluded = useCallback((playerIsIncluded: boolean) =>
+    setFilters({ ...filters, playerIsIncluded }), [filters, setFilters]);
 
   return (
     <div className={styles.userSelector}>

@@ -17,8 +17,9 @@ const client = new ApolloClient({
 
 export async function getServerSideProps(context: any) {
   const data = context.params.id === 'test' ?
-    JSON.parse(fs.readFileSync('tests/collage.json', 'utf-8')) : WAICOLLAGE_DATA[context.params.id];
-  return { props: { data: data } };
+    JSON.parse(fs.readFileSync('tests/collage.json', 'utf-8')) :
+    WAICOLLAGE_DATA[context.params.id];
+  return { props: { data } };
 }
 
 export default function Collage({ data }: { data: WCItem[] }) {
@@ -37,16 +38,13 @@ export default function Collage({ data }: { data: WCItem[] }) {
   const router = useRouter();
 
   useEffect(() => {
-    let item;
-    if (item = localStorage.getItem('collageFilters_' + router.query.id)) {
-      setFilters(JSON.parse(item));
-    };
+    const item = localStorage.getItem('collageFilters_' + router.query.id);
+    if (item) setFilters(JSON.parse(item));
   }, [router.query.id]);
 
   useEffect(() => {
-    const filtersCopy: CollageFilters = { ...filters };
-    filtersCopy.charas = null;
-    localStorage.setItem('collageFilters_' + router.query.id, JSON.stringify(filtersCopy));
+    localStorage.setItem('collageFilters_' + router.query.id,
+      JSON.stringify({ ...filters, charas: null }));
   }, [filters, router.query.id]);
 
   return (
