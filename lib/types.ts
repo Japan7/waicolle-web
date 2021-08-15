@@ -109,7 +109,6 @@ export interface CollageFilters {
 
 // Posts
 export interface PostData {
-  id: string;
   contentHtml: string;
   [key: string]: any;
 }

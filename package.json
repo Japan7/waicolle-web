@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.4.7",
+    "glob": "^7.1.7",
     "graphql": "^15.5.1",
     "gray-matter": "^4.0.3",
     "next": "11.1.0",
@@ -21,6 +22,7 @@
     "sass": "^1.37.5"
   },
   "devDependencies": {
+    "@types/glob": "^7.1.4",
     "@types/react": "17.0.17",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.0",
