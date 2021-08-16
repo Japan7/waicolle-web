@@ -111,5 +111,10 @@ export interface CollageFilters {
 export interface PostData {
   slug: string[];
   contentHtml: string;
-  tags: { [key: string]: any };
+  tags: PostTags;
+}
+
+export interface PostTags {
+  title?: string;
+  [key: string]: string | undefined;
 }
