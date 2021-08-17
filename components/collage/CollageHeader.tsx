@@ -33,7 +33,7 @@ function UserSelector({ data, filters, setFilters }:
   const users: string[] = useMemo(() => {
     const userSet = new Set<string>();
     data.forEach(item => userSet.add(item.waifu.owner));
-    return Array.from(userSet).sort((a, b) => a.localeCompare(b));
+    return Array.from(userSet).sort((a, b) => a.localeCompare(b, 'fr', { ignorePunctuation: true }));
   }, [data]);
 
   const setPlayer = useCallback((player: string | null) =>
