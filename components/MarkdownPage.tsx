@@ -19,18 +19,6 @@ export default function MarkdownPage({ children, home }: { children: React.React
         {children}
       </main>
 
-      <style jsx global>{`
-        html {
-          background-color: #ffffff;
-        }
-
-        @media (prefers-color-scheme: dark) {
-          html {
-            background-color: #0d1117;
-          }
-        }
-      `}</style>
-
       <style jsx>{`
         .markdown-body {
           box-sizing: border-box;
@@ -43,6 +31,12 @@ export default function MarkdownPage({ children, home }: { children: React.React
         @media (max-width: 767px) {
           .markdown-body {
             padding: 15px;
+          }
+        }
+
+        @media (prefers-color-scheme: dark) {
+          .markdown-body {
+            background-color: black;
           }
         }
       `}</style>

@@ -68,8 +68,6 @@ export default function Collage({ data }: { data: WCItem[] }) {
         body,
         #__next {
           height: 100%;
-          background-color: black;
-          color: white;
         }
       `}</style>
     </div>
