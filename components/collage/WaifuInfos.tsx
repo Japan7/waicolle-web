@@ -65,8 +65,10 @@ function WaifuCharaProps({ waifu, chara }: { waifu: WCWaifu, chara: CharaData })
         <p>{waifu.timestamp.slice(0, 16)}</p>
       </div>
       <div className={styles.modifiers}>
-        <p>{waifu.locked && '🔒'}</p>
+        {waifu.locked && <p>🔒</p>}
         {(waifu.level > 0) && <p>🌟</p>}
+        {waifu.nanaed && <p>🌈</p>}
+        {waifu.blooded && <p>🩸</p>}
       </div>
     </>
   );

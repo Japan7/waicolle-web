@@ -36,39 +36,22 @@ function UserSelector({ data, filters, setFilters }:
     return Array.from(userSet).sort((a, b) => a.localeCompare(b, 'fr', { ignorePunctuation: true }));
   }, [data]);
 
-  const setPlayer = useCallback((player: string | null) =>
-    setFilters({ ...filters, player }), [filters, setFilters]);
-
-  const setPlayerIsIncluded = useCallback((playerIsIncluded: boolean) =>
-    setFilters({ ...filters, playerIsIncluded }), [filters, setFilters]);
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    let players: string[] | null = Array.from(e.target.selectedOptions, option => option.value);
+    if (players.length == users.length) players = null;
+    setFilters({ ...filters, players });
+  }, [filters, setFilters, users.length]);
 
   return (
     <div className={styles.userSelector}>
-      <div>
-        <input
-          type="radio"
-          id="include"
-          checked={filters.playerIsIncluded}
-          onChange={() => setPlayerIsIncluded(true)}
-        />
-        <label htmlFor="include">Include</label>
-      </div>
-      <div>
-        <input
-          type="radio"
-          id="exclude"
-          checked={!filters.playerIsIncluded}
-          onChange={() => setPlayerIsIncluded(false)}
-        />
-        <label htmlFor="exclude">Exclude</label>
-      </div>
-      <div>
-        <select value={filters.player ?? ''} onChange={e => setPlayer(e.target.value || null)} >
-          <option value="">All players</option>
-          {users.map(user =>
-            <option value={user} key={user}>{user}</option>)}
-        </select>
-      </div>
+      <label>Filter players</label>
+      <select
+        multiple
+        value={filters.players ?? users}
+        onChange={handleChange}
+      >
+        {users.map(user => <option value={user} key={user}>{user}</option>)}
+      </select>
     </div >
   );
 }
@@ -78,6 +61,7 @@ function FiltersSelector({ filters, setFilters }:
 
   return (
     <div className={styles.filtersSelector}>
+      <label>Filter by</label>
       <div>
         <input
           type="checkbox"
@@ -85,7 +69,7 @@ function FiltersSelector({ filters, setFilters }:
           checked={filters.unlockedOnly}
           onChange={() => setFilters({ ...filters, unlockedOnly: !filters.unlockedOnly })}
         />
-        <label htmlFor="unlocked">🔓</label>
+        <label htmlFor="unlocked">🔓 Unlocked</label>
       </div>
       <div>
         <input
@@ -94,7 +78,7 @@ function FiltersSelector({ filters, setFilters }:
           checked={filters.lockedOnly}
           onChange={() => setFilters({ ...filters, lockedOnly: !filters.lockedOnly })}
         />
-        <label htmlFor="locked">🔒</label>
+        <label htmlFor="locked">🔒 Locked</label>
       </div>
       <div>
         <input
@@ -103,7 +87,7 @@ function FiltersSelector({ filters, setFilters }:
           checked={filters.ascendedOnly}
           onChange={() => setFilters({ ...filters, ascendedOnly: !filters.ascendedOnly })}
         />
-        <label htmlFor="ascended">🌟</label>
+        <label htmlFor="ascended">🌟 Ascended</label>
       </div>
       <div>
         <input
@@ -112,7 +96,16 @@ function FiltersSelector({ filters, setFilters }:
           checked={filters.nanaedOnly}
           onChange={() => setFilters({ ...filters, nanaedOnly: !filters.nanaedOnly })}
         />
-        <label htmlFor="nanaed">Nanaed</label>
+        <label htmlFor="nanaed">🌈 Nanaed</label>
+      </div>
+      <div>
+        <input
+          type="checkbox"
+          id="nanaed"
+          checked={filters.blooded}
+          onChange={() => setFilters({ ...filters, blooded: !filters.blooded })}
+        />
+        <label htmlFor="nanaed">🩸 Show blooded</label>
       </div>
       <div>
         <input
@@ -121,7 +114,7 @@ function FiltersSelector({ filters, setFilters }:
           checked={filters.lasts}
           onChange={() => setFilters({ ...filters, lasts: !filters.lasts })}
         />
-        <label htmlFor="lasts">Lasts</label>
+        <label htmlFor="lasts">📆 Sort by lasts</label>
       </div>
     </div>
   );
@@ -142,7 +135,7 @@ function MediaSelector({ charas, setCharas }:
     }
   });
 
-  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = Number.isNaN(e.target.valueAsNumber) ? null : e.target.valueAsNumber;
     setMediaId(inputValue);
     if (inputValue) {
@@ -159,7 +152,7 @@ function MediaSelector({ charas, setCharas }:
         <label>AniList media ID</label>
         <input
           type="number"
-          onChange={onChange}
+          onChange={handleChange}
         />
       </div>
       <div className={styles.infos}>

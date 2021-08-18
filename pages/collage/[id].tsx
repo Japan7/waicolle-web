@@ -24,13 +24,13 @@ export async function getServerSideProps(context: any) {
 
 export default function Collage({ data }: { data: WCItem[] }) {
   const defaultFilters = {
-    player: null,
-    playerIsIncluded: true,
+    players: null,
     charas: null,
     ascendedOnly: false,
     unlockedOnly: false,
     lockedOnly: false,
     nanaedOnly: false,
+    blooded: false,
     lasts: false
   };
   const [filters, setFilters] = useState<CollageFilters>(defaultFilters);

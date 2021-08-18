@@ -1308,7 +1308,7 @@
       "timestamp": "2021-07-12 20:24:32.565186",
       "level": 0,
       "locked": false,
-      "blooded": false,
+      "blooded": true,
       "nanaed": false
     },
     "alchara": {
@@ -1328,7 +1328,7 @@
       "timestamp": "2021-07-12 20:24:32.565265",
       "level": 0,
       "locked": false,
-      "blooded": false,
+      "blooded": true,
       "nanaed": false
     },
     "alchara": {
@@ -1348,7 +1348,7 @@
       "timestamp": "2021-07-12 20:24:32.565334",
       "level": 0,
       "locked": false,
-      "blooded": false,
+      "blooded": true,
       "nanaed": false
     },
     "alchara": {
@@ -1368,7 +1368,7 @@
       "timestamp": "2021-07-12 20:24:32.565377",
       "level": 0,
       "locked": false,
-      "blooded": false,
+      "blooded": true,
       "nanaed": false
     },
     "alchara": {
@@ -1388,7 +1388,7 @@
       "timestamp": "2021-07-12 20:39:24.872711",
       "level": 0,
       "locked": false,
-      "blooded": false,
+      "blooded": true,
       "nanaed": false
     },
     "alchara": {
@@ -1408,7 +1408,7 @@
       "timestamp": "2021-07-12 20:39:24.872801",
       "level": 0,
       "locked": false,
-      "blooded": false,
+      "blooded": true,
       "nanaed": false
     },
     "alchara": {
@@ -1428,7 +1428,7 @@
       "timestamp": "2021-07-12 20:39:24.872841",
       "level": 0,
       "locked": false,
-      "blooded": false,
+      "blooded": true,
       "nanaed": false
     },
     "alchara": {
@@ -1448,7 +1448,7 @@
       "timestamp": "2021-07-12 20:39:24.872876",
       "level": 0,
       "locked": false,
-      "blooded": false,
+      "blooded": true,
       "nanaed": false
     },
     "alchara": {
@@ -1468,7 +1468,7 @@
       "timestamp": "2021-07-12 20:39:24.872911",
       "level": 0,
       "locked": false,
-      "blooded": false,
+      "blooded": true,
       "nanaed": false
     },
     "alchara": {
@@ -1488,7 +1488,7 @@
       "timestamp": "2021-07-12 20:39:24.872947",
       "level": 0,
       "locked": false,
-      "blooded": false,
+      "blooded": true,
       "nanaed": false
     },
     "alchara": {
@@ -1508,7 +1508,7 @@
       "timestamp": "2021-07-12 20:39:24.873017",
       "level": 0,
       "locked": false,
-      "blooded": false,
+      "blooded": true,
       "nanaed": false
     },
     "alchara": {
@@ -1528,7 +1528,7 @@
       "timestamp": "2021-07-12 20:39:24.873053",
       "level": 0,
       "locked": false,
-      "blooded": false,
+      "blooded": true,
       "nanaed": false
     },
     "alchara": {
@@ -1747,7 +1747,7 @@
       "original_owner": "amoethyst#9351",
       "timestamp": "2021-07-12 21:38:50.351105",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -1767,7 +1767,7 @@
       "original_owner": "amoethyst#9351",
       "timestamp": "2021-07-12 21:38:50.351160",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -1787,7 +1787,7 @@
       "original_owner": "amoethyst#9351",
       "timestamp": "2021-07-12 21:38:50.351213",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -1807,7 +1807,7 @@
       "original_owner": "amoethyst#9351",
       "timestamp": "2021-07-12 21:38:50.351266",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -1827,7 +1827,7 @@
       "original_owner": "amoethyst#9351",
       "timestamp": "2021-07-12 21:38:50.351318",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -1847,7 +1847,7 @@
       "original_owner": "amoethyst#9351",
       "timestamp": "2021-07-12 21:38:50.351371",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -1867,7 +1867,7 @@
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.727418",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -1887,7 +1887,7 @@
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.727526",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -1907,7 +1907,7 @@
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.727604",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -1927,7 +1927,7 @@
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.727657",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -1947,7 +1947,7 @@
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.727710",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -1967,7 +1967,7 @@
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.727762",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -1986,8 +1986,8 @@
       "owner": "mistiru#5134",
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.727815",
-      "level": 0,
-      "locked": false,
+      "level": 1,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2007,7 +2007,7 @@
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.727867",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2027,7 +2027,7 @@
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.727920",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2047,7 +2047,7 @@
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.727972",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2067,7 +2067,7 @@
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.728025",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2087,7 +2087,7 @@
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.728206",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2107,7 +2107,7 @@
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.728277",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2127,7 +2127,7 @@
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.728329",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2147,7 +2147,7 @@
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.728382",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2167,7 +2167,7 @@
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.728434",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2187,7 +2187,7 @@
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.728486",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2207,7 +2207,7 @@
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.728539",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2227,7 +2227,7 @@
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.728627",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2247,7 +2247,7 @@
       "original_owner": "mistiru#5134",
       "timestamp": "2021-07-12 21:38:51.728679",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2267,7 +2267,7 @@
       "original_owner": "RhiobeT#4242",
       "timestamp": "2021-07-12 21:38:51.869776",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2287,7 +2287,7 @@
       "original_owner": "RhiobeT#4242",
       "timestamp": "2021-07-12 21:38:51.869857",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2307,7 +2307,7 @@
       "original_owner": "RhiobeT#4242",
       "timestamp": "2021-07-12 21:38:51.869930",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2327,7 +2327,7 @@
       "original_owner": "RhiobeT#4242",
       "timestamp": "2021-07-12 21:38:51.870143",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2347,7 +2347,7 @@
       "original_owner": "RhiobeT#4242",
       "timestamp": "2021-07-12 21:38:51.870197",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2367,7 +2367,7 @@
       "original_owner": "RhiobeT#4242",
       "timestamp": "2021-07-12 21:38:51.870250",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2387,7 +2387,7 @@
       "original_owner": "RhiobeT#4242",
       "timestamp": "2021-07-12 21:38:51.870302",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2407,7 +2407,7 @@
       "original_owner": "RhiobeT#4242",
       "timestamp": "2021-07-12 21:38:51.870354",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2427,7 +2427,7 @@
       "original_owner": "RhiobeT#4242",
       "timestamp": "2021-07-12 21:38:51.870407",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2447,7 +2447,7 @@
       "original_owner": "RhiobeT#4242",
       "timestamp": "2021-07-12 21:38:51.870460",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2467,7 +2467,7 @@
       "original_owner": "RhiobeT#4242",
       "timestamp": "2021-07-12 21:38:51.870512",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2487,7 +2487,7 @@
       "original_owner": "RhiobeT#4242",
       "timestamp": "2021-07-13 08:43:27.150086",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2507,7 +2507,7 @@
       "original_owner": "RhiobeT#4242",
       "timestamp": "2021-07-13 08:43:27.151023",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2527,7 +2527,7 @@
       "original_owner": "RhiobeT#4242",
       "timestamp": "2021-07-13 08:43:27.151161",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2547,7 +2547,7 @@
       "original_owner": "RhiobeT#4242",
       "timestamp": "2021-07-13 08:43:27.151269",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -2969,7 +2969,7 @@
       "level": 0,
       "locked": false,
       "blooded": false,
-      "nanaed": false
+      "nanaed": true
     },
     "alchara": {
       "id": 122951,
@@ -3169,7 +3169,7 @@
       "level": 0,
       "locked": false,
       "blooded": false,
-      "nanaed": false
+      "nanaed": true
     },
     "alchara": {
       "id": 126504,
@@ -3349,7 +3349,7 @@
       "level": 0,
       "locked": false,
       "blooded": false,
-      "nanaed": false
+      "nanaed": true
     },
     "alchara": {
       "id": 123283,
@@ -16247,7 +16247,7 @@
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.702434",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16267,7 +16267,7 @@
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.702561",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16287,7 +16287,7 @@
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.702632",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16307,7 +16307,7 @@
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.702697",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16327,7 +16327,7 @@
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.702760",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16347,7 +16347,7 @@
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.702885",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16367,7 +16367,7 @@
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.702946",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16387,7 +16387,7 @@
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.703019",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16407,7 +16407,7 @@
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.703326",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16427,7 +16427,7 @@
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.703874",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16447,7 +16447,7 @@
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.704440",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16467,7 +16467,7 @@
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.704762",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16487,7 +16487,7 @@
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.704864",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16507,7 +16507,7 @@
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.704964",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16527,7 +16527,7 @@
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.705169",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16547,7 +16547,7 @@
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.705389",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16567,7 +16567,7 @@
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.705535",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16587,7 +16587,7 @@
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.705635",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16607,7 +16607,7 @@
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.705769",
       "level": 0,
-      "locked": false,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16626,8 +16626,8 @@
       "owner": "NextFire#0733",
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.705876",
-      "level": 0,
-      "locked": false,
+      "level": 1,
+      "locked": true,
       "blooded": false,
       "nanaed": false
     },
@@ -16646,7 +16646,7 @@
       "owner": "NextFire#0733",
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.705953",
-      "level": 0,
+      "level": 1,
       "locked": false,
       "blooded": false,
       "nanaed": false
@@ -16666,7 +16666,7 @@
       "owner": "NextFire#0733",
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.706010",
-      "level": 0,
+      "level": 1,
       "locked": false,
       "blooded": false,
       "nanaed": false
@@ -16686,7 +16686,7 @@
       "owner": "NextFire#0733",
       "original_owner": "NextFire#0733",
       "timestamp": "2021-08-18 10:18:59.706101",
-      "level": 0,
+      "level": 1,
       "locked": false,
       "blooded": false,
       "nanaed": false

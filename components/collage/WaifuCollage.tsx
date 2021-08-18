@@ -28,14 +28,9 @@ export default function WaifuCollage({ data, filters, setSelected }:
   const [shown, setShown] = useState<JSX.Element[]>([]);
 
   const isIncluded = useCallback((item: WCItem) => {
-    if (item.waifu.blooded) return false;
+    if (filters.blooded != item.waifu.blooded) return false;
 
-    if (filters.playerIsIncluded) {
-      if (filters.player && filters.player !== item.waifu.owner) return false;
-    } else {
-      if (!filters.player || filters.player === item.waifu.owner) return false;
-    }
-
+    if (filters.players && !filters.players.includes(item.waifu.owner)) return false;
     if (filters.charas && !filters.charas.includes(item.alchara.id)) return false;
 
     if (!item.alchara.image || item.alchara.image.endsWith('default.jpg')) return false;

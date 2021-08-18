@@ -97,13 +97,13 @@ export interface Staff {
 
 // Filtering
 export interface CollageFilters {
-  player: string | null,
-  playerIsIncluded: boolean,
+  players: string[] | null,
   charas: number[] | null;
   ascendedOnly: boolean;
   unlockedOnly: boolean;
   lockedOnly: boolean;
   nanaedOnly: boolean;
+  blooded: boolean;
   lasts: boolean;
 }
 
