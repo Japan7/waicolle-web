@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import CollageHeader from '../../components/collage/CollageHeader';
 import WaifuCollage from '../../components/collage/WaifuCollage';
 import WaifuInfos from '../../components/collage/WaifuInfos';
-import { CollageFilters, WCItem } from '../../lib/types';
+import { CollageFilters, FILTERS_VERSION, WCItem } from '../../lib/types';
 import styles from '../../styles/Collage.module.scss';
 import { WAICOLLAGE_DATA } from '../api/collage/import';
 
@@ -38,13 +38,19 @@ export default function Collage({ data }: { data: WCItem[] }) {
   const router = useRouter();
 
   useEffect(() => {
-    const item = localStorage.getItem('collageFilters_' + router.query.id);
-    if (item) setFilters(JSON.parse(item));
+    const itemName = 'collageFilters_' + router.query.id;
+    const item = localStorage.getItem(itemName);
+    if (item) {
+      const parsed = JSON.parse(item);
+      (parsed.version == FILTERS_VERSION) ?
+        setFilters(parsed) : localStorage.removeItem(itemName);
+    }
   }, [router.query.id]);
 
   useEffect(() => {
-    localStorage.setItem('collageFilters_' + router.query.id,
-      JSON.stringify({ ...filters, charas: null }));
+    const itemName = 'collageFilters_' + router.query.id;
+    localStorage.setItem(itemName,
+      JSON.stringify({ ...filters, charas: null, version: FILTERS_VERSION }));
   }, [filters, router.query.id]);
 
   return (

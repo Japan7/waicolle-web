@@ -107,6 +107,8 @@ export interface CollageFilters {
   lasts: boolean;
 }
 
+export const FILTERS_VERSION = 1;
+
 // Posts
 export interface PostData {
   slug: string[];
