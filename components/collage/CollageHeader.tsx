@@ -101,11 +101,11 @@ function FiltersSelector({ filters, setFilters }:
       <div>
         <input
           type="checkbox"
-          id="nanaed"
+          id="blooded"
           checked={filters.blooded}
           onChange={() => setFilters({ ...filters, blooded: !filters.blooded })}
         />
-        <label htmlFor="nanaed">🩸 Show blooded</label>
+        <label htmlFor="blooded">🩸 Show blooded</label>
       </div>
       <div>
         <input
