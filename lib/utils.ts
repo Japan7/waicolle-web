@@ -1,4 +1,4 @@
-import { CharaData, MediaEdge } from './types';
+import { BaseMediaData, CharaData, MediaEdge } from './types';
 
 export function getRank(chara: CharaData) {
   if (chara.favourites >= 10000) return 'SS';
@@ -18,20 +18,20 @@ function compareEdges(a: MediaEdge, b: MediaEdge) {
 
 export function getCharaMedias(chara: CharaData) {
   const edges = (chara.media?.edges.slice() ?? []).sort(compareEdges);
-  const animes: string[] = [];
-  const mangas: string[] = [];
+  const animes: BaseMediaData[] = [];
+  const mangas: BaseMediaData[] = [];
   let seiyuu: string | null = null;
 
   edges.forEach(e => {
     const node = e.node;
     if (node.type == 'ANIME') {
-      animes.push(node.title.romaji);
+      animes.push(node);
       if (!seiyuu && e.voiceActors.length > 0) {
         const name = e.voiceActors[0].name;
         seiyuu = `${name.userPreferred} (${name.native})`;
       }
     } else {
-      mangas.push(node.title.romaji);
+      mangas.push(node);
     }
   });
 

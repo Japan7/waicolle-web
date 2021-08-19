@@ -98,7 +98,7 @@ export interface Staff {
 // Filtering
 export interface CollageFilters {
   players: string[] | null,
-  charas: number[] | null;
+  mediaId: number | null;
   ascendedOnly: boolean;
   unlockedOnly: boolean;
   lockedOnly: boolean;
@@ -107,7 +107,7 @@ export interface CollageFilters {
   lasts: boolean;
 }
 
-export const FILTERS_VERSION = 1;
+export const FILTERS_VERSION = 2;
 
 // Posts
 export interface PostData {

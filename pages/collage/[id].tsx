@@ -2,7 +2,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import fs from 'fs';
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CollageHeader from '../../components/collage/CollageHeader';
 import WaifuCollage from '../../components/collage/WaifuCollage';
 import WaifuInfos from '../../components/collage/WaifuInfos';
@@ -16,16 +16,18 @@ const client = new ApolloClient({
 });
 
 export async function getServerSideProps(context: any) {
-  const data = context.params.id === 'test' ?
+  const items = context.params.id === 'test' ?
     JSON.parse(fs.readFileSync('./tests/collage.json', 'utf-8')) :
     WAICOLLAGE_DATA[context.params.id];
-  return { props: { data } };
+  return { props: { items } };
 }
 
-export default function Collage({ data }: { data: WCItem[] }) {
+export default function Collage({ items }: { items: WCItem[] }) {
+  const router = useRouter();
+
   const defaultFilters = {
     players: null,
-    charas: null,
+    mediaId: null,
     ascendedOnly: false,
     unlockedOnly: false,
     lockedOnly: false,
@@ -33,9 +35,10 @@ export default function Collage({ data }: { data: WCItem[] }) {
     blooded: false,
     lasts: false
   };
+
   const [filters, setFilters] = useState<CollageFilters>(defaultFilters);
   const [selected, setSelected] = useState<WCItem | null>(null);
-  const router = useRouter();
+  const [mediaInfos, setMediaInfos] = useState<React.ReactNode>(null);
 
   useEffect(() => {
     const itemName = 'collageFilters_' + router.query.id;
@@ -50,7 +53,7 @@ export default function Collage({ data }: { data: WCItem[] }) {
   useEffect(() => {
     const itemName = 'collageFilters_' + router.query.id;
     localStorage.setItem(itemName,
-      JSON.stringify({ ...filters, charas: null, version: FILTERS_VERSION }));
+      JSON.stringify({ ...filters, version: FILTERS_VERSION }));
   }, [filters, router.query.id]);
 
   return (
@@ -61,8 +64,15 @@ export default function Collage({ data }: { data: WCItem[] }) {
 
       <ApolloProvider client={client}>
         <div className={styles.collage}>
-          <CollageHeader data={data} filters={filters} setFilters={setFilters} />
-          <WaifuCollage data={data} filters={filters} setSelected={setSelected} />
+          <CollageHeader items={items} filters={filters} setFilters={setFilters} >
+            {mediaInfos}
+          </CollageHeader>
+          <WaifuCollage
+            items={items}
+            filters={filters}
+            setSelected={setSelected}
+            setMediaInfos={setMediaInfos}
+          />
         </div>
         <div className={styles.infos}>
           <WaifuInfos item={selected} />

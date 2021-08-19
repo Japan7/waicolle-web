@@ -1,9 +1,11 @@
+import { useLazyQuery } from '@apollo/client';
 import { useCallback, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { CollageFilters, WCItem } from '../../lib/types';
+import { MEDIA_DATA_QUERY } from '../../lib/queries';
+import { CollageFilters, MediaData, WCItem } from '../../lib/types';
 import styles from './WaifuCollage.module.scss';
 
-function sortFavourites(a: WCItem, b: WCItem) {
+function compareFavourites(a: WCItem, b: WCItem) {
   if (a.alchara.favourites > b.alchara.favourites) return -1;
   if (a.alchara.favourites < b.alchara.favourites) return 1;
   if (a.alchara.id > b.alchara.id) return -1;
@@ -11,29 +13,64 @@ function sortFavourites(a: WCItem, b: WCItem) {
   return 0;
 }
 
-function sortLasts(a: WCItem, b: WCItem) {
+function compareTimestamp(a: WCItem, b: WCItem) {
   if (a.waifu.timestamp > b.waifu.timestamp) return -1;
   if (a.waifu.timestamp < b.waifu.timestamp) return 1;
   return 0;
 }
 
-export default function WaifuCollage({ data, filters, setSelected }:
+export default function WaifuCollage({ items, filters, setSelected, setMediaInfos }:
   {
-    data: WCItem[],
+    items: WCItem[],
     filters: CollageFilters,
-    setSelected: React.Dispatch<React.SetStateAction<WCItem | null>>
+    setSelected: React.Dispatch<React.SetStateAction<WCItem | null>>,
+    setMediaInfos: React.Dispatch<React.SetStateAction<React.ReactNode>>
   }) {
 
   const [pics, setPics] = useState<JSX.Element[]>([]);
   const [shown, setShown] = useState<JSX.Element[]>([]);
 
+  const [mediaId, setMediaId] = useState<number | null>(null);
+  const [charas, setCharas] = useState<number[] | null>(null);
+
+  const [getCharas, { data, error }] = useLazyQuery<{ Media: MediaData }>(MEDIA_DATA_QUERY, {
+    variables: { id: mediaId },
+    onCompleted: data => {
+      setCharas([...charas!, ...data.Media.characters.nodes.map(n => n.id)]);
+      if (data.Media.characters.pageInfo.hasNextPage) {
+        getCharas({ variables: { chara_page: data.Media.characters.pageInfo.currentPage + 1 } });
+      }
+    }
+  });
+
+  useEffect(() => {
+    setMediaId(filters.mediaId);
+    if (filters.mediaId) {
+      setCharas([]);
+      getCharas({ variables: { chara_page: 1 } });
+    } else {
+      setCharas(null);
+    }
+  }, [filters.mediaId, getCharas]);
+
+  useEffect(() => {
+    if (mediaId) {
+      if (data) {
+        setMediaInfos(<a href={data.Media.siteUrl}>[{data.Media.type}] {data.Media.title.romaji}</a>);
+      } else if (error) {
+        setMediaInfos(<label>No media found with this ID</label>);
+      }
+    } else {
+      setMediaInfos(null);
+    }
+  }, [data, error, mediaId, setMediaInfos]);
+
   const isIncluded = useCallback((item: WCItem) => {
+    if (charas && !charas.includes(item.alchara.id)) return false;
     if (filters.blooded != item.waifu.blooded) return false;
+    if (!item.alchara.image || item.alchara.image.endsWith('default.jpg')) return false;
 
     if (filters.players && !filters.players.includes(item.waifu.owner)) return false;
-    if (filters.charas && !filters.charas.includes(item.alchara.id)) return false;
-
-    if (!item.alchara.image || item.alchara.image.endsWith('default.jpg')) return false;
 
     if (filters.ascendedOnly && item.waifu.level === 0) return false;
     if (filters.unlockedOnly && item.waifu.locked) return false;
@@ -41,12 +78,13 @@ export default function WaifuCollage({ data, filters, setSelected }:
     if (filters.nanaedOnly && !item.waifu.nanaed) return false;
 
     return true;
-  }, [filters]);
+  }, [charas, filters.ascendedOnly, filters.blooded, filters.lockedOnly,
+    filters.nanaedOnly, filters.players, filters.unlockedOnly]);
 
   useEffect(() => {
     const newPics: JSX.Element[] = [];
-    data.sort(filters.lasts ? sortLasts : sortFavourites);
-    data.forEach(item => {
+    items.sort(filters.lasts ? compareTimestamp : compareFavourites);
+    items.forEach(item => {
       if (isIncluded(item)) {
         newPics.push(
           <Pic item={item} setSelected={setSelected} key={item.waifu.id} />
@@ -55,7 +93,7 @@ export default function WaifuCollage({ data, filters, setSelected }:
     });
     setPics(newPics);
     setShown(newPics.slice(0, 500));
-  }, [data, filters.lasts, isIncluded, setSelected]);
+  }, [filters.lasts, isIncluded, items, setSelected]);
 
   return (
     <div className={styles.collageDiv} id="collage">

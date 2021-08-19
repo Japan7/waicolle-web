@@ -87,12 +87,12 @@ function CharaMedias({ chara }: { chara: CharaData }) {
       {animes &&
         <>
           <h2>Animeography Top 5</h2>
-          {animes.slice(0, 5).map((a, i) => <p key={i}>{a}</p>)}
+          {animes.slice(0, 5).map(a=> <p key={a.id}>{a.title.romaji}</p>)}
         </>}
       {mangas &&
         <>
           <h2>Mangaography Top 5</h2>
-          {mangas.slice(0, 5).map((m, i) => <p key={i}>{m}</p>)}
+          {mangas.slice(0, 5).map(m => <p key={m.id}>{m.title.romaji}</p>)}
         </>}
     </div>
   );

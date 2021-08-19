@@ -1,40 +1,37 @@
-import { useLazyQuery } from '@apollo/client';
-import { useCallback, useMemo, useState } from 'react';
-import { MEDIA_DATA_QUERY } from '../../lib/queries';
-import { CollageFilters, MediaData, WCItem } from '../../lib/types';
+import { useCallback, useMemo } from 'react';
+import { CollageFilters, WCItem } from '../../lib/types';
 import styles from './CollageHeader.module.scss';
 
-export default function CollageHeader({ data, filters, setFilters }:
+export default function CollageHeader({ items, filters, setFilters, children }:
   {
-    data: WCItem[],
+    items: WCItem[],
     filters: CollageFilters,
-    setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>
+    setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>,
+    children: React.ReactNode
   }) {
-
-  const setCharas = useCallback((charas: number[] | null) =>
-    setFilters({ ...filters, charas }), [filters, setFilters]);
 
   return (
     <div className={styles.header}>
-      <UserSelector data={data} filters={filters} setFilters={setFilters} />
+      <UserSelector items={items} filters={filters} setFilters={setFilters} />
       <FiltersSelector filters={filters} setFilters={setFilters} />
-      <MediaSelector charas={filters.charas} setCharas={setCharas} />
+      <MediaSelector filters={filters} setFilters={setFilters} />
+      <div className={styles.infos}>{children}</div>
     </div>
   );
 }
 
-function UserSelector({ data, filters, setFilters }:
+function UserSelector({ items, filters, setFilters }:
   {
-    data: WCItem[],
+    items: WCItem[],
     filters: CollageFilters,
     setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>
   }) {
 
   const users: string[] = useMemo(() => {
     const userSet = new Set<string>();
-    data.forEach(item => userSet.add(item.waifu.owner));
+    items.forEach(item => userSet.add(item.waifu.owner));
     return Array.from(userSet).sort((a, b) => a.localeCompare(b, 'fr', { ignorePunctuation: true }));
-  }, [data]);
+  }, [items]);
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
     let players: string[] | null = Array.from(e.target.selectedOptions, option => option.value);
@@ -120,47 +117,22 @@ function FiltersSelector({ filters, setFilters }:
   );
 }
 
-function MediaSelector({ charas, setCharas }:
-  { charas: number[] | null, setCharas: (charas: number[] | null) => void }) {
-
-  const [mediaId, setMediaId] = useState<number | null>(null);
-
-  const [getCharas, { data, error }] = useLazyQuery<{ Media: MediaData }>(MEDIA_DATA_QUERY, {
-    variables: { id: mediaId },
-    onCompleted: data => {
-      setCharas([...charas!, ...data.Media.characters.nodes.map(n => n.id)]);
-      if (data.Media.characters.pageInfo.hasNextPage) {
-        getCharas({ variables: { chara_page: data.Media.characters.pageInfo.currentPage + 1 } });
-      }
-    }
-  });
+function MediaSelector({ filters, setFilters }:
+  { filters: CollageFilters, setFilters: React.Dispatch<React.SetStateAction<CollageFilters>> }) {
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = Number.isNaN(e.target.valueAsNumber) ? null : e.target.valueAsNumber;
-    setMediaId(inputValue);
-    if (inputValue) {
-      setCharas([]);
-      getCharas({ variables: { chara_page: 1 } });
-    } else {
-      setCharas(null);
-    }
-  }, [getCharas, setCharas]);
+    const mediaId = Number.isNaN(e.target.valueAsNumber) ? null : e.target.valueAsNumber;
+    setFilters({ ...filters, mediaId });
+  }, [filters, setFilters]);
 
   return (
-    <>
-      <div className={styles.mediaSelector}>
-        <label>AniList media ID</label>
-        <input
-          type="number"
-          onChange={handleChange}
-        />
-      </div>
-      <div className={styles.infos}>
-        {mediaId &&
-          (data ?
-            <a href={data.Media.siteUrl}>[{data.Media.type}] {data.Media.title.romaji}</a> :
-            error && <label>No media found with this ID</label>)}
-      </div>
-    </>
+    <div className={styles.mediaSelector}>
+      <label>AniList media ID</label>
+      <input
+        type="number"
+        value={filters.mediaId ?? ''}
+        onChange={handleChange}
+      />
+    </div>
   );
 }
