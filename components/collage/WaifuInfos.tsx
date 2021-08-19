@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { CHARA_DATA_QUERY } from '../../lib/queries';
 import { CharaData, WCItem, WCWaifu } from '../../lib/types';
-import { getRank } from '../../lib/utils';
+import { getCharaMedias, getRank } from '../../lib/utils';
 import styles from './WaifuInfos.module.scss';
 
 export default function WaifuInfos({ item }: { item: WCItem | null }) {
@@ -21,6 +21,7 @@ function CharaInfos({ waifu, chara }: { waifu: WCWaifu, chara: CharaData }) {
       <CharaName chara={chara} />
       <CharaImage chara={chara} />
       <WaifuCharaProps waifu={waifu} chara={chara} />
+      <CharaMedias chara={chara} />
     </div>
   );
 }
@@ -71,5 +72,28 @@ function WaifuCharaProps({ waifu, chara }: { waifu: WCWaifu, chara: CharaData })
         {waifu.blooded && <p>🩸</p>}
       </div>
     </>
+  );
+}
+
+function CharaMedias({ chara }: { chara: CharaData }) {
+  const { seiyuu, animes, mangas } = getCharaMedias(chara);
+  return (
+    <div className={styles.medias}>
+      {seiyuu &&
+        <>
+          <h2>Character Voice</h2>
+          <p>{seiyuu}</p>
+        </>}
+      {animes &&
+        <>
+          <h2>Animeography Top 5</h2>
+          {animes.slice(0, 5).map((a, i) => <p key={i}>{a}</p>)}
+        </>}
+      {mangas &&
+        <>
+          <h2>Mangaography Top 5</h2>
+          {mangas.slice(0, 5).map((m, i) => <p key={i}>{m}</p>)}
+        </>}
+    </div>
   );
 }
