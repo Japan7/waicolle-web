@@ -103,7 +103,7 @@ function CharaMedias({ chara, filters, setFilters }:
           <h2>Character Voice</h2>
           <p>{seiyuu}</p>
         </>}
-      {animes &&
+      {animes.length > 0 &&
         <>
           <h2>Animeography Top 5</h2>
           {animes.slice(0, 5).map(a =>
@@ -115,7 +115,7 @@ function CharaMedias({ chara, filters, setFilters }:
               {a.title.romaji}
             </p>)}
         </>}
-      {mangas &&
+      {mangas.length > 0 &&
         <>
           <h2>Mangaography Top 5</h2>
           {mangas.slice(0, 5).map(m =>
