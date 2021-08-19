@@ -75,7 +75,7 @@ export default function Collage({ items }: { items: WCItem[] }) {
           />
         </div>
         <div className={styles.infos}>
-          <WaifuInfos item={selected} />
+          <WaifuInfos item={selected} filters={filters} setFilters={setFilters} />
         </div>
       </ApolloProvider>
 

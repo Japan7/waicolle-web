@@ -1,10 +1,16 @@
 import { useQuery } from '@apollo/client';
 import { CHARA_DATA_QUERY } from '../../lib/queries';
-import { CharaData, WCItem, WCWaifu } from '../../lib/types';
+import { CharaData, CollageFilters, WCItem, WCWaifu } from '../../lib/types';
 import { getCharaMedias, getRank } from '../../lib/utils';
 import styles from './WaifuInfos.module.scss';
 
-export default function WaifuInfos({ item }: { item: WCItem | null }) {
+export default function WaifuInfos({ item, filters, setFilters }:
+  {
+    item: WCItem | null,
+    filters: CollageFilters,
+    setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>
+  }) {
+
   const { data, loading } = useQuery<{ Character: CharaData }>(CHARA_DATA_QUERY, {
     skip: !item,
     variables: { id: item?.waifu.chara_id }
@@ -12,16 +18,23 @@ export default function WaifuInfos({ item }: { item: WCItem | null }) {
 
   if (!item) return <p>Choose a chara to inspect</p>;
   if (loading || !data) return <p>Loading...</p>;
-  return <CharaInfos waifu={item.waifu} chara={data.Character} />;
+  return <CharaInfos waifu={item.waifu} chara={data.Character} filters={filters} setFilters={setFilters} />;
 }
 
-function CharaInfos({ waifu, chara }: { waifu: WCWaifu, chara: CharaData }) {
+function CharaInfos({ waifu, chara, filters, setFilters }:
+  {
+    waifu: WCWaifu,
+    chara: CharaData,
+    filters: CollageFilters,
+    setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>
+  }) {
+
   return (
     <div className={styles.infos}>
       <CharaName chara={chara} />
       <CharaImage chara={chara} />
       <WaifuCharaProps waifu={waifu} chara={chara} />
-      <CharaMedias chara={chara} />
+      <CharaMedias chara={chara} filters={filters} setFilters={setFilters} />
     </div>
   );
 }
@@ -37,16 +50,15 @@ function CharaName({ chara }: { chara: CharaData }) {
 
 function CharaImage({ chara }: { chara: CharaData }) {
   return (
-    <div className={styles.image}>
-      <a href={chara.siteUrl} target="_blank" rel="noreferrer">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={chara.image.large ?? ''}
-          alt={chara.name.userPreferred}
-          loading="lazy"
-        />
-      </a>
-    </div>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      className={styles.image}
+      src={chara.image.large ?? ''}
+      alt={chara.name.userPreferred}
+      loading="lazy"
+      onClick={() => window.open(chara.siteUrl, '_blank')}
+      style={{ cursor: 'pointer' }}
+    />
   );
 }
 
@@ -75,8 +87,15 @@ function WaifuCharaProps({ waifu, chara }: { waifu: WCWaifu, chara: CharaData })
   );
 }
 
-function CharaMedias({ chara }: { chara: CharaData }) {
+function CharaMedias({ chara, filters, setFilters }:
+  {
+    chara: CharaData,
+    filters: CollageFilters,
+    setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>
+  }) {
+
   const { seiyuu, animes, mangas } = getCharaMedias(chara);
+
   return (
     <div className={styles.medias}>
       {seiyuu &&
@@ -87,12 +106,26 @@ function CharaMedias({ chara }: { chara: CharaData }) {
       {animes &&
         <>
           <h2>Animeography Top 5</h2>
-          {animes.slice(0, 5).map(a=> <p key={a.id}>{a.title.romaji}</p>)}
+          {animes.slice(0, 5).map(a =>
+            <p
+              key={a.id}
+              onClick={() => setFilters({ ...filters, mediaId: a.id })}
+              style={{ cursor: 'pointer' }}
+            >
+              {a.title.romaji}
+            </p>)}
         </>}
       {mangas &&
         <>
           <h2>Mangaography Top 5</h2>
-          {mangas.slice(0, 5).map(m => <p key={m.id}>{m.title.romaji}</p>)}
+          {mangas.slice(0, 5).map(m =>
+            <p
+              key={m.id}
+              onClick={() => setFilters({ ...filters, mediaId: m.id })}
+              style={{ cursor: 'pointer' }}
+            >
+              {m.title.romaji}
+            </p>)}
         </>}
     </div>
   );

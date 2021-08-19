@@ -31,15 +31,10 @@
 
 .image {
   grid-area: image;
-  width: 100%;
   padding: 1em 0;
-
-  img {
-    width: 75%;
-    margin: auto;
-    display: block;
-    object-fit: contain;
-  }
+  width: 75%;
+  margin: auto;
+  object-fit: contain;
 }
 
 .props {
