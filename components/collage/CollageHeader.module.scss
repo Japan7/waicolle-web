@@ -27,6 +27,11 @@
   label {
     grid-area: a;
   }
+
+  input,
+  label {
+    cursor: pointer;
+  }
 }
 
 .userSelector,

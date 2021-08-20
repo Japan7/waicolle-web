@@ -16,10 +16,10 @@ export interface WCWaifu {
   nanaed: boolean;
 }
 
-export interface WCCharaData extends BaseCharaData {
+export interface WCCharaData {
+  id: number;
   name: string;
   image: string | null;
-  siteUrl: string;
   favourites: number;
 }
 
