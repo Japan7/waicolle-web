@@ -7,7 +7,7 @@ You will find here some resources to help you mastering the game.
 
 ## Collage
 
-Check the up-to-date online collage [here](/collage). 
+Check the up-to-date online collage [here](/collage/324820379527020540). 
 
 If you want, send `7waifu link` in #bot-room to force data refresh.
 

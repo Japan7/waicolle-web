@@ -90,7 +90,7 @@ Ascended characters are 4 times bigger in Discord collages and obtain the 🌟 b
 
 Collages and albums are visual ways to check your collection and others ones.
 
-An interactive online collage is available [here](/collage).
+An interactive online collage is available [here](/collage/324820379527020540).
 
 *Check the [commands](/help/commands) page for Discord collages and albums.*
 
