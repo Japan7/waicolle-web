@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import 'tailwindcss/tailwind.css';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -19,15 +20,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       </Head>
 
       <style jsx global>{`
-      @tailwind base;
-      @tailwind components;
-      @tailwind utilities;
-
-      @layer base {
         html {
           @apply bg-purple-50 text-gray-800;
         }
-      }
       `}</style>
 
       <Component {...pageProps} />
