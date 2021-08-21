@@ -7,7 +7,6 @@ import CollageHeader from '../../components/collage/CollageHeader';
 import WaifuCollage from '../../components/collage/WaifuCollage';
 import WaifuInfos from '../../components/collage/WaifuInfos';
 import { CollageFilters, FILTERS_VERSION, WCItem } from '../../lib/types';
-import styles from '../../styles/Collage.module.scss';
 import { WAICOLLAGE_DATA } from '../api/collage/import';
 
 const client = new ApolloClient({
@@ -57,13 +56,13 @@ export default function Collage({ items }: { items: WCItem[] }) {
   }, [filters, router.query.id]);
 
   return (
-    <div className={styles.app}>
+    <div className="h-screen overflow-y-hidden grid grid-rows-4 grid-flow-col lg:grid-rows-none lg:grid-cols-4 lg:grid-flow-row">
       <Head>
         <title>Collage | Waifu Collection</title>
       </Head>
 
       <ApolloProvider client={client}>
-        <div className={styles.collage}>
+        <div className="overflow-y-scroll row-span-3 lg:row-span-full lg:col-span-3 flex flex-col">
           <CollageHeader items={items} filters={filters} setFilters={setFilters} >
             {mediaInfos}
           </CollageHeader>
@@ -74,18 +73,10 @@ export default function Collage({ items }: { items: WCItem[] }) {
             setMediaInfos={setMediaInfos}
           />
         </div>
-        <div className={styles.infos}>
+        <div className="overflow-y-scroll">
           <WaifuInfos item={selected} filters={filters} setFilters={setFilters} />
         </div>
       </ApolloProvider>
-
-      <style jsx global>{`
-        html,
-        body,
-        #__next {
-          height: 100%;
-        }
-      `}</style>
     </div>
   );
 };

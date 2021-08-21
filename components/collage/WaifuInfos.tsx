@@ -2,7 +2,6 @@ import { useQuery } from '@apollo/client';
 import { CHARA_DATA_QUERY } from '../../lib/queries';
 import { CharaData, CollageFilters, WCItem, WCWaifu } from '../../lib/types';
 import { getCharaMedias, getRank } from '../../lib/utils';
-import styles from './WaifuInfos.module.scss';
 
 export default function WaifuInfos({ item, filters, setFilters }:
   {
@@ -30,20 +29,44 @@ function CharaInfos({ waifu, chara, filters, setFilters }:
   }) {
 
   return (
-    <div className={styles.infos}>
-      <CharaName chara={chara} />
-      <CharaImage chara={chara} />
-      <WaifuCharaProps waifu={waifu} chara={chara} />
-      <CharaMedias chara={chara} filters={filters} setFilters={setFilters} />
-    </div>
+    <>
+      <div className="infos grid p-2">
+        <CharaName chara={chara} />
+        <CharaImage chara={chara} />
+        <WaifuCharaProps waifu={waifu} chara={chara} />
+        <CharaMedias chara={chara} filters={filters} setFilters={setFilters} />
+      </div>
+
+      <style jsx>{`
+        .infos {
+          grid-template:
+            "name name"
+            "image props"
+            "image modifiers"
+            "medias medias"
+            / 1fr 3fr;
+        }
+
+        @screen lg {
+          .infos {
+            grid-template:
+              "name"
+              "image"
+              "props"
+              "modifiers"
+              "medias";
+          }
+        }
+      `}</style>
+    </>
   );
 }
 
 function CharaName({ chara }: { chara: CharaData }) {
   return (
-    <div className={styles.name}>
-      <h1>{chara.name.userPreferred}</h1>
-      <h2>{chara.name.native}</h2>
+    <div className="flex flex-col m-auto" style={{ gridArea: 'name' }}>
+      <h1 className="m-auto font-bold">{chara.name.userPreferred}</h1>
+      <h2 className="m-auto font-bold">{chara.name.native}</h2>
     </div>
   );
 }
@@ -52,12 +75,12 @@ function CharaImage({ chara }: { chara: CharaData }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      className={styles.image}
+      className="mx-auto my-4 w-2/3 object-contain cursor-pointer"
+      style={{ gridArea: 'image' }}
       src={chara.image.large ?? ''}
       alt={chara.name.userPreferred}
       loading="lazy"
       onClick={() => window.open(chara.siteUrl, '_blank')}
-      style={{ cursor: 'pointer' }}
     />
   );
 }
@@ -65,7 +88,7 @@ function CharaImage({ chara }: { chara: CharaData }) {
 function WaifuCharaProps({ waifu, chara }: { waifu: WCWaifu, chara: CharaData }) {
   return (
     <>
-      <div className={styles.props}>
+      <div className="grid grid-cols-2" style={{ gridArea: 'props' }}>
         <h2>ID</h2>
         <p>{chara.id}</p>
         <h2>Favourites</h2>
@@ -77,11 +100,11 @@ function WaifuCharaProps({ waifu, chara }: { waifu: WCWaifu, chara: CharaData })
         <h2>Timestamp</h2>
         <p>{waifu.timestamp.slice(0, 16)}</p>
       </div>
-      <div className={styles.modifiers}>
-        {waifu.locked && <p>🔒</p>}
-        {(waifu.level > 0) && <p>🌟</p>}
-        {waifu.nanaed && <p>🌈</p>}
-        {waifu.blooded && <p>🩸</p>}
+      <div className="flex text-3xl my-2" style={{ gridArea: 'modifiers' }}>
+        {waifu.locked && <p className="mx-auto">🔒</p>}
+        {(waifu.level > 0) && <p className="mx-auto">🌟</p>}
+        {waifu.nanaed && <p className="mx-auto">🌈</p>}
+        {waifu.blooded && <p className="mx-auto">🩸</p>}
       </div>
     </>
   );
@@ -97,32 +120,32 @@ function CharaMedias({ chara, filters, setFilters }:
   const { seiyuu, animes, mangas } = getCharaMedias(chara);
 
   return (
-    <div className={styles.medias}>
+    <div style={{ gridArea: 'medias' }}>
       {seiyuu &&
         <>
-          <h2>Character Voice</h2>
+          <h2 className="my-2 font-bold">Character Voice</h2>
           <p>{seiyuu}</p>
         </>}
       {animes.length > 0 &&
         <>
-          <h2>Animeography Top 5</h2>
+          <h2 className="my-2 font-bold">Animeography Top 5</h2>
           {animes.slice(0, 5).map(a =>
             <p
               key={a.id}
               onClick={() => setFilters({ ...filters, mediaId: a.id })}
-              style={{ cursor: 'pointer' }}
+              className="cursor-pointer"
             >
               {a.title.romaji}
             </p>)}
         </>}
       {mangas.length > 0 &&
         <>
-          <h2>Mangaography Top 5</h2>
+          <h2 className="my-2 font-bold">Mangaography Top 5</h2>
           {mangas.slice(0, 5).map(m =>
             <p
               key={m.id}
               onClick={() => setFilters({ ...filters, mediaId: m.id })}
-              style={{ cursor: 'pointer' }}
+              className="cursor-pointer"
             >
               {m.title.romaji}
             </p>)}

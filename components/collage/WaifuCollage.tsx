@@ -3,7 +3,6 @@ import { useCallback, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { MEDIA_DATA_QUERY } from '../../lib/queries';
 import { CollageFilters, MediaData, WCItem } from '../../lib/types';
-import styles from './WaifuCollage.module.scss';
 
 function compareFavourites(a: WCItem, b: WCItem) {
   if (a.alchara.favourites > b.alchara.favourites) return -1;
@@ -56,9 +55,12 @@ export default function WaifuCollage({ items, filters, setSelected, setMediaInfo
   useEffect(() => {
     if (mediaId) {
       if (data) {
-        setMediaInfos(<a href={data.Media.siteUrl}>[{data.Media.type}] {data.Media.title.romaji}</a>);
+        setMediaInfos(
+          <a href={data.Media.siteUrl} className="font-bold">
+            [{data.Media.type}] {data.Media.title.romaji}
+          </a>);
       } else if (error) {
-        setMediaInfos(<label>No media found with this ID</label>);
+        setMediaInfos(<label className="font-bold">No media found with this ID</label>);
       }
     } else {
       setMediaInfos(null);
@@ -96,9 +98,9 @@ export default function WaifuCollage({ items, filters, setSelected, setMediaInfo
   }, [filters.lasts, isIncluded, items, setSelected]);
 
   return (
-    <div className={styles.collageDiv} id="collage">
+    <div className="h-full overflow-scroll" id="collage">
       <InfiniteScroll
-        className={styles.collage}
+        className="flex flex-wrap justify-center"
         dataLength={shown.length}
         next={() => setShown(pics.slice(0, shown.length + 200))}
         hasMore={shown.length < pics.length}
@@ -117,7 +119,7 @@ function Pic({ item, setSelected }:
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      className={styles.chara}
+      className="w-16 h-24 cursor-pointer object-cover"
       src={item.alchara.image!}
       alt={item.alchara.name}
       loading="lazy"

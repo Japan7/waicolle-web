@@ -1,6 +1,5 @@
 import { useCallback, useMemo } from 'react';
 import { CollageFilters, WCItem } from '../../lib/types';
-import styles from './CollageHeader.module.scss';
 
 export default function CollageHeader({ items, filters, setFilters, children }:
   {
@@ -11,11 +10,85 @@ export default function CollageHeader({ items, filters, setFilters, children }:
   }) {
 
   return (
-    <div className={styles.header}>
-      <UserSelector items={items} filters={filters} setFilters={setFilters} />
+    <div className="flex flex-row flex-wrap my-1">
       <FiltersSelector filters={filters} setFilters={setFilters} />
+      <UserSelector items={items} filters={filters} setFilters={setFilters} />
       <MediaSelector filters={filters} setFilters={setFilters} />
-      <div className={styles.infos}>{children}</div>
+      <div className="mx-auto">{children}</div>
+    </div>
+  );
+}
+
+function FiltersSelector({ filters, setFilters }:
+  { filters: CollageFilters, setFilters: React.Dispatch<React.SetStateAction<CollageFilters>> }) {
+
+  return (
+    <div className="w-full grid grid-cols-3 grid-rows-3 lg:w-1/2">
+      <label className="col-span-full m-auto">Filter by</label>
+      <div className="checkbox">
+        <input
+          type="checkbox"
+          id="unlocked"
+          checked={filters.unlockedOnly}
+          onChange={() => setFilters({ ...filters, unlockedOnly: !filters.unlockedOnly })}
+        />
+        <label htmlFor="unlocked">🔓 Unlocked</label>
+      </div>
+      <div className="checkbox">
+        <input
+          type="checkbox"
+          id="locked"
+          checked={filters.lockedOnly}
+          onChange={() => setFilters({ ...filters, lockedOnly: !filters.lockedOnly })}
+        />
+        <label htmlFor="locked">🔒 Locked</label>
+      </div>
+      <div className="checkbox">
+        <input
+          type="checkbox"
+          id="ascended"
+          checked={filters.ascendedOnly}
+          onChange={() => setFilters({ ...filters, ascendedOnly: !filters.ascendedOnly })}
+        />
+        <label htmlFor="ascended">🌟 Ascended</label>
+      </div>
+      <div className="checkbox">
+        <input
+          type="checkbox"
+          id="nanaed"
+          checked={filters.nanaedOnly}
+          onChange={() => setFilters({ ...filters, nanaedOnly: !filters.nanaedOnly })}
+        />
+        <label htmlFor="nanaed">🌈 Nanaed</label>
+      </div>
+      <div className="checkbox">
+        <input
+          type="checkbox"
+          id="blooded"
+          checked={filters.blooded}
+          onChange={() => setFilters({ ...filters, blooded: !filters.blooded })}
+        />
+        <label htmlFor="blooded">🩸 Show blooded</label>
+      </div>
+      <div className="checkbox">
+        <input
+          type="checkbox"
+          id="lasts"
+          checked={filters.lasts}
+          onChange={() => setFilters({ ...filters, lasts: !filters.lasts })}
+        />
+        <label htmlFor="lasts">📆 Sort by lasts</label>
+      </div>
+
+      <style jsx>{`
+        .checkbox {
+          @apply m-auto flex flex-col items-center lg:flex-row;
+
+          * {
+            @apply cursor-pointer mx-0.5;
+          }
+        }
+      `}</style>
     </div>
   );
 }
@@ -40,7 +113,7 @@ function UserSelector({ items, filters, setFilters }:
   }, [filters, setFilters, users.length]);
 
   return (
-    <div className={styles.userSelector}>
+    <div className="w-1/2 m-auto flex flex-col items-center lg:w-1/4">
       <label>Filter players</label>
       <select
         multiple
@@ -53,70 +126,6 @@ function UserSelector({ items, filters, setFilters }:
   );
 }
 
-function FiltersSelector({ filters, setFilters }:
-  { filters: CollageFilters, setFilters: React.Dispatch<React.SetStateAction<CollageFilters>> }) {
-
-  return (
-    <div className={styles.filtersSelector}>
-      <label>Filter by</label>
-      <div>
-        <input
-          type="checkbox"
-          id="unlocked"
-          checked={filters.unlockedOnly}
-          onChange={() => setFilters({ ...filters, unlockedOnly: !filters.unlockedOnly })}
-        />
-        <label htmlFor="unlocked">🔓 Unlocked</label>
-      </div>
-      <div>
-        <input
-          type="checkbox"
-          id="locked"
-          checked={filters.lockedOnly}
-          onChange={() => setFilters({ ...filters, lockedOnly: !filters.lockedOnly })}
-        />
-        <label htmlFor="locked">🔒 Locked</label>
-      </div>
-      <div>
-        <input
-          type="checkbox"
-          id="ascended"
-          checked={filters.ascendedOnly}
-          onChange={() => setFilters({ ...filters, ascendedOnly: !filters.ascendedOnly })}
-        />
-        <label htmlFor="ascended">🌟 Ascended</label>
-      </div>
-      <div>
-        <input
-          type="checkbox"
-          id="nanaed"
-          checked={filters.nanaedOnly}
-          onChange={() => setFilters({ ...filters, nanaedOnly: !filters.nanaedOnly })}
-        />
-        <label htmlFor="nanaed">🌈 Nanaed</label>
-      </div>
-      <div>
-        <input
-          type="checkbox"
-          id="blooded"
-          checked={filters.blooded}
-          onChange={() => setFilters({ ...filters, blooded: !filters.blooded })}
-        />
-        <label htmlFor="blooded">🩸 Show blooded</label>
-      </div>
-      <div>
-        <input
-          type="checkbox"
-          id="lasts"
-          checked={filters.lasts}
-          onChange={() => setFilters({ ...filters, lasts: !filters.lasts })}
-        />
-        <label htmlFor="lasts">📆 Sort by lasts</label>
-      </div>
-    </div>
-  );
-}
-
 function MediaSelector({ filters, setFilters }:
   { filters: CollageFilters, setFilters: React.Dispatch<React.SetStateAction<CollageFilters>> }) {
 
@@ -126,7 +135,7 @@ function MediaSelector({ filters, setFilters }:
   }, [filters, setFilters]);
 
   return (
-    <div className={styles.mediaSelector}>
+    <div className="w-1/2 m-auto flex flex-col items-center lg:w-1/4">
       <label>AniList media ID</label>
       <input
         type="number"

@@ -34,13 +34,7 @@ There are serval ways to complete your perfect collection in this game:
 
 ### Random drops
 
-Every `random.randint(0, DROP_RATE)` messages on the server, a 👰‍♀️ will appear in reaction of the last message. You have 10 seconds to react on this emote too and obtain a `random.randint(1, 3)`-drop in #bot-room. 
-
-Some `DROP_ZONE` messages before the drop, the `7waifu counter` command will show this image to inform you of a soon random drop:
-
-<div style="text-align:center">
-  <img src="/images/drpzn.png" style="height:25vh" />
-</div>
+Every `random.randint(0, DROP_RATE)` messages on the server, a 👰‍♀️ will appear in reaction of the last message. You have 30 seconds to react on this emote too and obtain a 1-drop in #bot-room. 
 
 ### Event drops
 

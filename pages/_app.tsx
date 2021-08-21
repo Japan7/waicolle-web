@@ -1,6 +1,5 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import '../styles/globals.scss';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -18,6 +17,19 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <meta property="og:site_name" content="Japan7/waicolle-web" />
         <meta property="og:image" content="https://waicolle.yuru.moe/logo512.png" />
       </Head>
+
+      <style jsx global>{`
+      @tailwind base;
+      @tailwind components;
+      @tailwind utilities;
+
+      @layer base {
+        html {
+          @apply bg-purple-50 text-gray-800;
+        }
+      }
+      `}</style>
+
       <Component {...pageProps} />
     </>
   );

@@ -1,6 +1,4 @@
-<div style="text-align:center">
-  <img src="/images/drpzn.png" style="height:25vh" />
-</div>
+<img src="/images/drpzn.png" class="mx-auto" style="width:75%" />
 
 # Waifu Collection
 
