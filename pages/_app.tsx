@@ -6,7 +6,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <meta charSet="utf-8" />
         <title>Waifu Collection</title>
         <meta name="description" content="WaiColle companion web app" />
         <link rel="icon" href="/favicon.ico" />
@@ -18,12 +17,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <meta property="og:site_name" content="Japan7/waicolle-web" />
         <meta property="og:image" content="https://waicolle.yuru.moe/logo512.png" />
       </Head>
-
-      <style jsx global>{`
-        html {
-          @apply bg-purple-50 text-gray-800;
-        }
-      `}</style>
 
       <Component {...pageProps} />
     </>
