@@ -56,7 +56,7 @@ export default function Collage({ items }: { items: WCItem[] }) {
   }, [filters, router.query.id]);
 
   return (
-    <div className="h-screen overflow-y-hidden grid grid-rows-3 grid-flow-col lg:grid-rows-none lg:grid-cols-4 lg:grid-flow-row">
+    <div className="h-screen grid grid-rows-3 grid-flow-col lg:grid-rows-none lg:grid-cols-4 lg:grid-flow-row">
       <Head>
         <title>Collage | Waifu Collection</title>
       </Head>

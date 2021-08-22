@@ -35,7 +35,7 @@ function FiltersSelector({ filters, setFilters }:
   { filters: CollageFilters, setFilters: React.Dispatch<React.SetStateAction<CollageFilters>> }) {
 
   return (
-    <div className="w-full grid grid-cols-3 grid-rows-3 lg:w-1/2">
+    <div className="w-full grid grid-cols-3 grid-rows-3 grid-flow-col lg:w-1/2">
       <label className="col-span-full m-auto">Filters and sort</label>
       <div className="checkbox">
         <input
@@ -89,14 +89,14 @@ function FiltersSelector({ filters, setFilters }:
           checked={filters.lasts}
           onChange={() => setFilters({ ...filters, lasts: !filters.lasts })}
         />
-        <label htmlFor="lasts">📆 Sort by lasts</label>
+        <label htmlFor="lasts">📆 ↓ Timestamp</label>
       </div>
 
       <style jsx>{`
         .checkbox {
-          @apply m-auto flex flex-col items-center lg:flex-row;
+          @apply m-auto space-x-1 flex flex-col items-center lg:flex-row text-sm lg:text-base;
           * {
-            @apply cursor-pointer mx-0.5;
+            @apply cursor-pointer;
           }
         }
       `}</style>
