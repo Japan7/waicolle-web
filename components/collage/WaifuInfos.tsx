@@ -29,13 +29,11 @@ function CharaInfos({ waifu, chara, filters, setFilters }:
   }) {
 
   return (
-    <>
-      <div className="infos grid p-2">
-        <CharaName chara={chara} />
-        <CharaImage chara={chara} />
-        <WaifuCharaProps waifu={waifu} chara={chara} />
-        <CharaMedias chara={chara} filters={filters} setFilters={setFilters} />
-      </div>
+    <div className="infos grid p-2">
+      <CharaName chara={chara} />
+      <CharaImage chara={chara} />
+      <WaifuCharaProps waifu={waifu} chara={chara} />
+      <CharaMedias chara={chara} filters={filters} setFilters={setFilters} />
 
       <style jsx>{`
         .infos {
@@ -46,7 +44,6 @@ function CharaInfos({ waifu, chara, filters, setFilters }:
             "medias medias"
             / 1fr 3fr;
         }
-
         @screen lg {
           .infos {
             grid-template:
@@ -58,7 +55,7 @@ function CharaInfos({ waifu, chara, filters, setFilters }:
           }
         }
       `}</style>
-    </>
+    </div>
   );
 }
 
@@ -100,6 +97,7 @@ function WaifuCharaProps({ waifu, chara }: { waifu: WCWaifu, chara: CharaData })
         <h2>Timestamp</h2>
         <p>{waifu.timestamp.slice(0, 16)}</p>
       </div>
+
       <div className="flex text-3xl my-2" style={{ gridArea: 'modifiers' }}>
         {waifu.locked && <p className="mx-auto">🔒</p>}
         {(waifu.level > 0) && <p className="mx-auto">🌟</p>}
@@ -126,6 +124,7 @@ function CharaMedias({ chara, filters, setFilters }:
           <h2 className="my-2 font-bold">Character Voice</h2>
           <p>{seiyuu}</p>
         </>}
+
       {animes.length > 0 &&
         <>
           <h2 className="my-2 font-bold">Animeography Top 5</h2>
@@ -138,6 +137,7 @@ function CharaMedias({ chara, filters, setFilters }:
               {a.title.romaji}
             </p>)}
         </>}
+
       {mangas.length > 0 &&
         <>
           <h2 className="my-2 font-bold">Mangaography Top 5</h2>

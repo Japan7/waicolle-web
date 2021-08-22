@@ -83,7 +83,6 @@ function FiltersSelector({ filters, setFilters }:
       <style jsx>{`
         .checkbox {
           @apply m-auto flex flex-col items-center lg:flex-row;
-
           * {
             @apply cursor-pointer mx-0.5;
           }

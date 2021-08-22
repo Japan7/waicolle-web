@@ -66,6 +66,7 @@ export default function Collage({ items }: { items: WCItem[] }) {
           <CollageHeader items={items} filters={filters} setFilters={setFilters} >
             {mediaInfos}
           </CollageHeader>
+
           <WaifuCollage
             items={items}
             filters={filters}
@@ -73,6 +74,7 @@ export default function Collage({ items }: { items: WCItem[] }) {
             setMediaInfos={setMediaInfos}
           />
         </div>
+
         <div className="overflow-y-scroll">
           <WaifuInfos item={selected} filters={filters} setFilters={setFilters} />
         </div>
