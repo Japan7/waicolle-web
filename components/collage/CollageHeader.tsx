@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { CollageFilters, WCItem } from '../../lib/types';
 
 export default function CollageHeader({ items, filters, setFilters, children }:
@@ -9,12 +9,24 @@ export default function CollageHeader({ items, filters, setFilters, children }:
     children: React.ReactNode
   }) {
 
+  const [showMenu, setShowMenu] = useState<boolean>(false);
+
   return (
-    <div className="flex flex-row flex-wrap my-1">
-      <FiltersSelector filters={filters} setFilters={setFilters} />
-      <UserSelector items={items} filters={filters} setFilters={setFilters} />
-      <MediaSelector filters={filters} setFilters={setFilters} />
-      <div className="mx-auto">{children}</div>
+    <div>
+      <button
+        className="w-full h-10 opacity-50 lg:hidden"
+        onClick={() => setShowMenu(!showMenu)}
+      >
+        Toggle menu
+      </button>
+
+      <div className={`${showMenu ? 'flex' : 'hidden'} lg:flex flex-row flex-wrap my-1`}>
+        <FiltersSelector filters={filters} setFilters={setFilters} />
+        <UserSelector items={items} filters={filters} setFilters={setFilters} />
+        <MediaSelector filters={filters} setFilters={setFilters} />
+      </div>
+
+      <div className="w-full flex justify-center">{children}</div>
     </div>
   );
 }
@@ -24,7 +36,7 @@ function FiltersSelector({ filters, setFilters }:
 
   return (
     <div className="w-full grid grid-cols-3 grid-rows-3 lg:w-1/2">
-      <label className="col-span-full m-auto">Filter by</label>
+      <label className="col-span-full m-auto">Filters and sort</label>
       <div className="checkbox">
         <input
           type="checkbox"
@@ -113,7 +125,7 @@ function UserSelector({ items, filters, setFilters }:
 
   return (
     <div className="w-1/2 m-auto flex flex-col items-center lg:w-1/4">
-      <label>Filter players</label>
+      <label>Players</label>
       <select
         multiple
         value={filters.players ?? users}
