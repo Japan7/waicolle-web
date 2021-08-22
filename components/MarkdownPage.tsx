@@ -7,7 +7,7 @@ export default function MarkdownPage({ children, home }: { children: React.React
         {!home && <Link href="/"><a>← Back to home</a></Link>}
       </header>
 
-      <article className="prose dark:prose-light max-w-none">
+      <article className="prose dark:prose-dark max-w-none">
         {children}
       </article>
     </div>

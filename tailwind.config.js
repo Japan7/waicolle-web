@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     extend: {
       typography: (theme) => ({
-        light: {
+        dark: {
           css: [
             {
               color: theme('colors.gray.400'),
