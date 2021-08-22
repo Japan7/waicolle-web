@@ -56,13 +56,13 @@ export default function Collage({ items }: { items: WCItem[] }) {
   }, [filters, router.query.id]);
 
   return (
-    <div className="h-screen overflow-y-hidden grid grid-rows-4 grid-flow-col lg:grid-rows-none lg:grid-cols-4 lg:grid-flow-row">
+    <div className="h-screen overflow-y-hidden grid grid-rows-3 grid-flow-col lg:grid-rows-none lg:grid-cols-4 lg:grid-flow-row">
       <Head>
         <title>Collage | Waifu Collection</title>
       </Head>
 
       <ApolloProvider client={client}>
-        <div className="overflow-y-scroll row-span-3 lg:row-span-full lg:col-span-3 flex flex-col">
+        <div className="overflow-y-scroll row-span-2 lg:row-span-full lg:col-span-3 flex flex-col">
           <CollageHeader items={items} filters={filters} setFilters={setFilters} >
             {mediaInfos}
           </CollageHeader>
