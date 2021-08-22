@@ -20,7 +20,12 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
       <style jsx global>{`
         html {
-          @apply bg-purple-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100;
+          @apply bg-purple-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
+        }
+
+        option, 
+        input {
+          @apply text-gray-900;
         }
       `}</style>
 
