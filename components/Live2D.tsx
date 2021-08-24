@@ -7,7 +7,7 @@ const ReactLive2d = dynamic<any>(() => import('react-live2d'), { ssr: false });
 export default function Live2D() {
   const touchStrings = ['What are you doing?', 'Humph'];
   return (
-    <ErrorBoundary fallback={null}>
+    <ErrorBoundary fallback={<></>}>
       <Script src="/live2d/live2dcubismcore.min.js" />
 
       <ReactLive2d
