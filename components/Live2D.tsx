@@ -5,7 +5,18 @@ import { ErrorBoundary } from 'react-error-boundary';
 const ReactLive2d = dynamic<any>(() => import('react-live2d'), { ssr: false });
 
 export default function Live2D() {
-  const touchStrings = ['What are you doing?', 'Humph'];
+
+  const touchStrings = [
+    'DRP ZN?',
+    'moe moe coin',
+    "z0gl0gl0'd",
+    'frtt?',
+    '1',
+    ':saladedefruits:',
+    'moyenned',
+    "rng'ed",
+  ];
+
   return (
     <ErrorBoundary fallback={<></>}>
       <Script src="/live2d/live2dcubismcore.min.js" strategy="beforeInteractive" />

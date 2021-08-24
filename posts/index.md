@@ -1,4 +1,4 @@
-<img src="/images/drpzn.png" class="mx-auto w-3/4" />
+<img src="/images/drpzn.png" class="mx-auto w-1/2" />
 
 # Waifu Collection
 

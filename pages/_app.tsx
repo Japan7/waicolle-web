@@ -21,7 +21,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <Component {...pageProps} />
 
       <style jsx global>{`
-        html {
+        body {
           @apply bg-purple-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
         }
         option, 
