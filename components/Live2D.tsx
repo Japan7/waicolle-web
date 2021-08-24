@@ -1,15 +1,14 @@
 import dynamic from 'next/dynamic';
 import Script from 'next/script';
+import { ErrorBoundary } from 'react-error-boundary';
 
 const ReactLive2d = dynamic<any>(() => import('react-live2d'), { ssr: false });
 
-export default function Live2D({ children }: { children: React.ReactNode }) {
+export default function Live2D() {
   const touchStrings = ['What are you doing?', 'Humph'];
   return (
-    <>
+    <ErrorBoundary fallback={null}>
       <Script src="/live2d/live2dcubismcore.min.js" />
-
-      {children}
 
       <ReactLive2d
         width={300}
@@ -29,6 +28,6 @@ export default function Live2D({ children }: { children: React.ReactNode }) {
           @apply bg-opacity-50 bg-gray-900 text-gray-100 top-16 right-0 left-auto !important;
         }
       `}</style>
-    </>
+    </ErrorBoundary>
   );
 }

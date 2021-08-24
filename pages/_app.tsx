@@ -18,6 +18,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <meta property="og:image" content="https://waicolle.yuru.moe/logo512.png" />
       </Head>
 
+      <Component {...pageProps} />
+
       <style jsx global>{`
         html {
           @apply bg-purple-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
@@ -27,8 +29,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           @apply text-gray-900;
         }
       `}</style>
-
-      <Component {...pageProps} />
     </>
   );
 }
