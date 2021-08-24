@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { CollageFilters, WCItem } from '../../lib/types';
 
 export default function CollageHeader({ items, filters, setFilters, children }:
@@ -80,7 +80,7 @@ function FiltersSelector({ filters, setFilters }:
           checked={filters.blooded}
           onChange={() => setFilters({ ...filters, blooded: !filters.blooded })}
         />
-        <label htmlFor="blooded">🩸 Show blooded</label>
+        <label htmlFor="blooded">🩸 Blooded</label>
       </div>
       <div className="checkbox">
         <input

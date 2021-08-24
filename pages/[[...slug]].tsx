@@ -1,5 +1,6 @@
 import Head from 'next/head';
-import MarkdownPage from '../components/MarkdownPage';
+import Live2D from '../components/layouts/Live2D';
+import Markdown from '../components/layouts/Markdown';
 import { getAllPostsSlugs, getPostData } from '../lib/posts';
 import { PostData } from '../lib/types';
 
@@ -16,13 +17,15 @@ export async function getStaticProps({ params }: { params: { slug: string[] } })
 
 export default function Home({ postData }: { postData: PostData }) {
   return (
-    <MarkdownPage home={postData.slug[0] == 'index'}>
-      <Head>
-        {postData.tags.title &&
-          <title>{postData.tags.title} | Waifu Collection</title>}
-      </Head>
+    <Live2D>
+      <Markdown home={postData.slug[0] == 'index'}>
+        <Head>
+          {postData.tags.title &&
+            <title>{postData.tags.title} | Waifu Collection</title>}
+        </Head>
 
-      <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
-    </MarkdownPage>
+        <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
+      </Markdown>
+    </Live2D>
   );
 };
