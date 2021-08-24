@@ -7,7 +7,7 @@ export default function Live2D({ children }: { children: React.ReactNode }) {
   const touchStrings = ['What are you doing?', 'Humph'];
   return (
     <>
-      <Script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js" />
+      <Script src="/live2d/live2dcubismcore.min.js" />
 
       {children}
 
