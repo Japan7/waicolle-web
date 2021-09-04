@@ -35,6 +35,9 @@ export default function Live2D() {
       />
 
       <style jsx global>{`
+        #live2d-container {
+          @apply hidden lg:block;
+        }
         #live2d-print {
           @apply bg-opacity-50 bg-gray-900 text-gray-100 top-16 right-0 left-auto !important;
         }
