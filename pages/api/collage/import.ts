@@ -12,7 +12,6 @@ export const config = {
 export const WAICOLLAGE_DATA: { [key: number]: WCItem[] } = {};
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const body = JSON.parse(req.body);
-  WAICOLLAGE_DATA[body.bot] = body.data;
-  res.status(200).json({ url: 'https://waicolle.yuru.moe/collage/' + body.bot });
+  WAICOLLAGE_DATA[req.body.bot] = req.body.data;
+  res.status(200).json({ url: 'https://waicolle.yuru.moe/collage/' + req.body.bot });
 }
