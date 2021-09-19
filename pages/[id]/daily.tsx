@@ -1,10 +1,10 @@
 import Head from 'next/head';
 import React, { useState } from 'react';
-import ALApolloLayout from '../../../components/ALApolloLayout';
-import CharaCollage from '../../../components/collage/CharaCollage';
-import InfosPanel from '../../../components/collage/InfosPanel';
-import { WCCharaData } from '../../../lib/types';
-import { DAILY_DATA } from '../../api/collage/import';
+import CharaCollage from '../../components/collage/CharaCollage';
+import InfosPanel from '../../components/collage/InfosPanel';
+import ALApolloLayout from '../../components/layouts/ALApolloLayout';
+import { WCCharaData } from '../../lib/types';
+import { DAILY_DATA } from '../api/collage/import';
 
 export async function getServerSideProps(context: any) {
   const charas = DAILY_DATA[context.params.id];

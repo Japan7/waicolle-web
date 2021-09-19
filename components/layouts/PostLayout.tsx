@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Live2D from './Live2D';
+import Live2D from '../Live2D';
 
 export default function PostLayout({ children, home }: { children: React.ReactNode, home?: boolean }) {
   return (

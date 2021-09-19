@@ -2,10 +2,10 @@ import fs from 'fs';
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import ALApolloLayout from '../../components/ALApolloLayout';
 import InfosPanel from '../../components/collage/InfosPanel';
 import WaifuCollage from '../../components/collage/WaifuCollage';
 import WaifuFiltersHeader from '../../components/collage/WaifuFiltersHeader';
+import ALApolloLayout from '../../components/layouts/ALApolloLayout';
 import { CollageFilters, FILTERS_VERSION, WCItem } from '../../lib/types';
 import { WAICOLLAGE_DATA } from '../api/collage/import';
 

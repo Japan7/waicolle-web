@@ -7,9 +7,9 @@ You will find here some resources to help you mastering the game.
 
 ## Collage
 
-Check the up-to-date online collage [here](/collage/324820379527020540). 
+Check the up-to-date online collage [here](/324820379527020540/collage).
 
-The daily tag collage is available [here](/collage/daily/324820379527020540).
+The daily tag collage is available [here](/324820379527020540/daily).
 
 If you want, send `7waifu link` in #bot-room to force data refresh.
 

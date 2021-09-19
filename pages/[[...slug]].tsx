@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import PostLayout from '../components/PostLayout';
+import PostLayout from '../components/layouts/PostLayout';
 import { getAllPostsSlugs, getPostData } from '../lib/posts';
 import { PostData } from '../lib/types';
 
