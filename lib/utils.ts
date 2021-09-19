@@ -1,4 +1,4 @@
-import { BaseMediaData, CharaData, MediaEdge } from './types';
+import { BaseCharaData, BaseMediaData, CharaData, MediaEdge } from './types';
 
 export function getRank(chara: CharaData) {
   if (chara.favourites >= 10000) return 'SS';
@@ -8,6 +8,14 @@ export function getRank(chara: CharaData) {
   if (chara.favourites >= 20) return 'C';
   if (chara.favourites >= 1) return 'D';
   return 'E';
+}
+
+export function compareCharaFavourites(a: BaseCharaData, b: BaseCharaData) {
+  if (a.favourites > b.favourites) return -1;
+  if (a.favourites < b.favourites) return 1;
+  if (a.id > b.id) return -1;
+  if (a.id < b.id) return 1;
+  return 0;
 }
 
 function compareEdges(a: MediaEdge, b: MediaEdge) {

@@ -16,11 +16,9 @@ export interface WCWaifu {
   nanaed: boolean;
 }
 
-export interface WCCharaData {
-  id: number;
+export interface WCCharaData extends BaseCharaData {
   name: string;
   image: string | null;
-  favourites: number;
 }
 
 // Media filtering
@@ -35,7 +33,7 @@ export interface MediaTitle {
 
 export interface CharacterConnection {
   pageInfo: PageInfo;
-  nodes: BaseCharaData[];
+  nodes: { id: number }[];
 }
 
 export interface PageInfo {
@@ -45,6 +43,7 @@ export interface PageInfo {
 
 export interface BaseCharaData {
   id: number;
+  favourites: number;
 }
 
 // Infos
@@ -56,7 +55,6 @@ export interface CharaData extends BaseCharaData {
   dateOfBirth: FuzzyDate;
   age: string | null;
   siteUrl: string;
-  favourites: number;
   media: MediaConnection | null;
 }
 

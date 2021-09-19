@@ -1,18 +1,13 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import fs from 'fs';
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import CollageHeader from '../../components/collage/CollageHeader';
+import ALApolloLayout from '../../components/ALApolloLayout';
+import InfosPanel from '../../components/collage/InfosPanel';
 import WaifuCollage from '../../components/collage/WaifuCollage';
-import WaifuInfos from '../../components/collage/WaifuInfos';
+import WaifuFiltersHeader from '../../components/collage/WaifuFiltersHeader';
 import { CollageFilters, FILTERS_VERSION, WCItem } from '../../lib/types';
 import { WAICOLLAGE_DATA } from '../api/collage/import';
-
-const client = new ApolloClient({
-  uri: 'https://graphql.anilist.co',
-  cache: new InMemoryCache()
-});
 
 export async function getServerSideProps(context: any) {
   const items = context.params.id === 'test' ?
@@ -36,7 +31,7 @@ export default function Collage({ items }: { items: WCItem[] }) {
   };
 
   const [filters, setFilters] = useState<CollageFilters>(defaultFilters);
-  const [selected, setSelected] = useState<WCItem | null>(null);
+  const [selected, setSelected] = useState<WCItem>();
   const [mediaInfos, setMediaInfos] = useState<React.ReactNode>(null);
 
   useEffect(() => {
@@ -56,16 +51,16 @@ export default function Collage({ items }: { items: WCItem[] }) {
   }, [filters, router.query.id]);
 
   return (
-    <div className="h-screen grid grid-rows-3 grid-flow-col lg:grid-rows-none lg:grid-cols-4 lg:grid-flow-row">
-      <Head>
-        <title>Collage | Waifu Collection</title>
-      </Head>
+    <ALApolloLayout>
+      <div className="h-screen grid grid-rows-3 grid-flow-col lg:grid-rows-none lg:grid-cols-4 lg:grid-flow-row">
+        <Head>
+          <title>Collage | Waifu Collection</title>
+        </Head>
 
-      <ApolloProvider client={client}>
         <div className="overflow-y-scroll row-span-2 lg:row-span-full lg:col-span-3 flex flex-col">
-          <CollageHeader items={items} filters={filters} setFilters={setFilters} >
+          <WaifuFiltersHeader items={items} filters={filters} setFilters={setFilters} >
             {mediaInfos}
-          </CollageHeader>
+          </WaifuFiltersHeader>
 
           <WaifuCollage
             items={items}
@@ -76,9 +71,14 @@ export default function Collage({ items }: { items: WCItem[] }) {
         </div>
 
         <div className="overflow-y-scroll">
-          <WaifuInfos item={selected} filters={filters} setFilters={setFilters} />
+          <InfosPanel
+            charaId={selected?.waifu.chara_id}
+            waifu={selected?.waifu}
+            filters={filters}
+            setFilters={setFilters}
+          />
         </div>
-      </ApolloProvider>
-    </div>
+      </div>
+    </ALApolloLayout>
   );
 };

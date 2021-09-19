@@ -3,13 +3,10 @@ import { useCallback, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { MEDIA_DATA_QUERY } from '../../lib/queries';
 import { CollageFilters, MediaData, WCItem } from '../../lib/types';
+import { compareCharaFavourites } from '../../lib/utils';
 
 function compareFavourites(a: WCItem, b: WCItem) {
-  if (a.alchara.favourites > b.alchara.favourites) return -1;
-  if (a.alchara.favourites < b.alchara.favourites) return 1;
-  if (a.alchara.id > b.alchara.id) return -1;
-  if (a.alchara.id < b.alchara.id) return 1;
-  return 0;
+  return compareCharaFavourites(a.alchara, b.alchara);
 }
 
 function compareTimestamp(a: WCItem, b: WCItem) {
@@ -22,7 +19,7 @@ export default function WaifuCollage({ items, filters, setSelected, setMediaInfo
   {
     items: WCItem[],
     filters: CollageFilters,
-    setSelected: React.Dispatch<React.SetStateAction<WCItem | null>>,
+    setSelected: React.Dispatch<React.SetStateAction<WCItem | undefined>>,
     setMediaInfos: React.Dispatch<React.SetStateAction<React.ReactNode>>
   }) {
 
@@ -115,7 +112,7 @@ export default function WaifuCollage({ items, filters, setSelected, setMediaInfo
 }
 
 function Pic({ item, setSelected }:
-  { item: WCItem, setSelected: React.Dispatch<React.SetStateAction<WCItem | null>> }) {
+  { item: WCItem, setSelected: React.Dispatch<React.SetStateAction<WCItem | undefined>> }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img

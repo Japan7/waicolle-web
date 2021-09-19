@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { CollageFilters, WCItem } from '../../lib/types';
 
-export default function CollageHeader({ items, filters, setFilters, children }:
+export default function WaifuFiltersHeader({ items, filters, setFilters, children }:
   {
     items: WCItem[],
     filters: CollageFilters,

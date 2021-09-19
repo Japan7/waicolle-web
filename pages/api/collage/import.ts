@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { WCItem } from '../../../lib/types';
+import { WCCharaData, WCItem } from '../../../lib/types';
 
 export const config = {
   api: {
@@ -10,8 +10,10 @@ export const config = {
 };
 
 export const WAICOLLAGE_DATA: { [key: number]: WCItem[] } = {};
+export const DAILY_DATA: { [key: number]: WCCharaData[] } = {};
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   WAICOLLAGE_DATA[req.body.bot] = req.body.data;
-  res.status(200).json({ url: 'https://waicolle.yuru.moe/collage/' + req.body.bot });
+  DAILY_DATA[req.body.bot] = req.body.daily;
+  res.status(200).json({ id: req.body.bot });
 }

@@ -1,38 +1,39 @@
 import { useQuery } from '@apollo/client';
 import { CHARA_DATA_QUERY } from '../../lib/queries';
-import { CharaData, CollageFilters, WCItem, WCWaifu } from '../../lib/types';
+import { CharaData, CollageFilters, WCWaifu } from '../../lib/types';
 import { getCharaMedias, getRank } from '../../lib/utils';
 
-export default function WaifuInfos({ item, filters, setFilters }:
+export default function InfosPanel({ charaId, waifu, filters, setFilters }:
   {
-    item: WCItem | null,
-    filters: CollageFilters,
-    setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>
+    charaId?: number,
+    waifu?: WCWaifu,
+    filters?: CollageFilters,
+    setFilters?: React.Dispatch<React.SetStateAction<CollageFilters>>
   }) {
 
   const { data, loading } = useQuery<{ Character: CharaData }>(CHARA_DATA_QUERY, {
-    skip: !item,
-    variables: { id: item?.waifu.chara_id }
+    skip: !charaId,
+    variables: { id: charaId }
   });
 
-  if (!item) return <p>Choose a chara to inspect</p>;
+  if (!charaId) return <p>Choose a chara to inspect</p>;
   if (loading || !data) return <p>Loading...</p>;
-  return <CharaInfos waifu={item.waifu} chara={data.Character} filters={filters} setFilters={setFilters} />;
+  return <CharaInfos chara={data.Character} waifu={waifu} filters={filters} setFilters={setFilters} />;
 }
 
-function CharaInfos({ waifu, chara, filters, setFilters }:
+function CharaInfos({ chara, waifu, filters, setFilters }:
   {
-    waifu: WCWaifu,
     chara: CharaData,
-    filters: CollageFilters,
-    setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>
+    waifu?: WCWaifu,
+    filters?: CollageFilters,
+    setFilters?: React.Dispatch<React.SetStateAction<CollageFilters>>
   }) {
 
   return (
     <div className="infos grid p-2">
       <CharaName chara={chara} />
       <CharaImage chara={chara} />
-      <WaifuCharaProps waifu={waifu} chara={chara} />
+      <WaifuCharaProps chara={chara} waifu={waifu} />
       <CharaMedias chara={chara} filters={filters} setFilters={setFilters} />
 
       <style jsx>{`
@@ -82,7 +83,7 @@ function CharaImage({ chara }: { chara: CharaData }) {
   );
 }
 
-function WaifuCharaProps({ waifu, chara }: { waifu: WCWaifu, chara: CharaData }) {
+function WaifuCharaProps({ chara, waifu }: { chara: CharaData, waifu?: WCWaifu }) {
   return (
     <>
       <div className="grid grid-cols-2" style={{ gridArea: 'props' }}>
@@ -90,20 +91,23 @@ function WaifuCharaProps({ waifu, chara }: { waifu: WCWaifu, chara: CharaData })
         <p>{chara.id}</p>
         <h2>Favourites</h2>
         <p>{chara.favourites} [<b>{getRank(chara)}</b>]</p>
-        <h2>Owner</h2>
-        <p>{waifu.owner}</p>
-        <h2>Original owner</h2>
-        <p>{waifu.original_owner}</p>
-        <h2>Timestamp</h2>
-        <p>{waifu.timestamp.slice(0, 16)}</p>
+        {waifu && <>
+          <h2>Owner</h2>
+          <p>{waifu.owner}</p>
+          <h2>Original owner</h2>
+          <p>{waifu.original_owner}</p>
+          <h2>Timestamp</h2>
+          <p>{waifu.timestamp.slice(0, 16)}</p>
+        </>}
       </div>
 
-      <div className="flex text-3xl my-2" style={{ gridArea: 'modifiers' }}>
-        {waifu.locked && <p className="mx-auto">🔒</p>}
-        {(waifu.level > 0) && <p className="mx-auto">🌟</p>}
-        {waifu.nanaed && <p className="mx-auto">🌈</p>}
-        {waifu.blooded && <p className="mx-auto">🩸</p>}
-      </div>
+      {waifu &&
+        <div className="flex text-3xl my-2" style={{ gridArea: 'modifiers' }}>
+          {waifu.locked && <p className="mx-auto">🔒</p>}
+          {(waifu.level > 0) && <p className="mx-auto">🌟</p>}
+          {waifu.nanaed && <p className="mx-auto">🌈</p>}
+          {waifu.blooded && <p className="mx-auto">🩸</p>}
+        </div>}
     </>
   );
 }
@@ -111,8 +115,8 @@ function WaifuCharaProps({ waifu, chara }: { waifu: WCWaifu, chara: CharaData })
 function CharaMedias({ chara, filters, setFilters }:
   {
     chara: CharaData,
-    filters: CollageFilters,
-    setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>
+    filters?: CollageFilters,
+    setFilters?: React.Dispatch<React.SetStateAction<CollageFilters>>
   }) {
 
   const { seiyuu, animes, mangas } = getCharaMedias(chara);
@@ -131,8 +135,8 @@ function CharaMedias({ chara, filters, setFilters }:
           {animes.slice(0, 5).map(a =>
             <p
               key={a.id}
-              onClick={() => setFilters({ ...filters, mediaId: a.id })}
-              className="cursor-pointer"
+              onClick={() => setFilters?.({ ...filters!, mediaId: a.id })}
+              className={setFilters && "cursor-pointer"}
             >
               {a.title.romaji}
             </p>)}
@@ -144,8 +148,8 @@ function CharaMedias({ chara, filters, setFilters }:
           {mangas.slice(0, 5).map(m =>
             <p
               key={m.id}
-              onClick={() => setFilters({ ...filters, mediaId: m.id })}
-              className="cursor-pointer"
+              onClick={() => setFilters?.({ ...filters!, mediaId: m.id })}
+              className={setFilters && "cursor-pointer"}
             >
               {m.title.romaji}
             </p>)}
