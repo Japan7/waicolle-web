@@ -13,8 +13,8 @@ export default function WaifuCollage({ charas, setSelected }:
   const [shown, setShown] = useState<JSX.Element[]>([]);
 
   useEffect(() => {
-    charas.sort(compareCharaFavourites);
-    const newPics = charas.map(chara => <Pic chara={chara} setSelected={setSelected} key={chara.id} />);
+    const filtered = charas.filter(c => c.image).sort(compareCharaFavourites);
+    const newPics = filtered.map(chara => <Pic chara={chara} setSelected={setSelected} key={chara.id} />);
     setPics(newPics);
     setShown(newPics.slice(0, 500));
   }, [charas, setSelected]);
