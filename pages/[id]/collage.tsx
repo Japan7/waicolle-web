@@ -1,4 +1,3 @@
-import fs from 'fs';
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
@@ -7,13 +6,14 @@ import WaifuCollage from '../../components/collage/WaifuCollage';
 import WaifuFiltersHeader from '../../components/collage/WaifuFiltersHeader';
 import ALApolloLayout from '../../components/layouts/ALApolloLayout';
 import { CollageFilters, FILTERS_VERSION, WCItem } from '../../lib/types';
-import { WAICOLLAGE_DATA } from '../api/collage/import';
+import { WAICOLLE_DATA } from '../api/collage/import';
 
 export async function getServerSideProps(context: any) {
-  const items = context.params.id === 'test' ?
-    JSON.parse(fs.readFileSync('./tests/waicolle_export.json', 'utf-8')) :
-    WAICOLLAGE_DATA[context.params.id];
-  return { props: { items } };
+  return {
+    props: {
+      items: WAICOLLE_DATA[context.params.id].data
+    }
+  };
 }
 
 export default function Collage({ items }: { items: WCItem[] }) {

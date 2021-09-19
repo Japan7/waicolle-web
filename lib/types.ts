@@ -1,4 +1,10 @@
 // Imported data
+export interface WCData {
+  bot: number;
+  data: WCItem[];
+  daily: WCCharaData[];
+}
+
 export interface WCItem {
   waifu: WCWaifu;
   alchara: WCCharaData;

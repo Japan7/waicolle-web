@@ -4,11 +4,14 @@ import CharaCollage from '../../components/collage/CharaCollage';
 import InfosPanel from '../../components/collage/InfosPanel';
 import ALApolloLayout from '../../components/layouts/ALApolloLayout';
 import { WCCharaData } from '../../lib/types';
-import { DAILY_DATA } from '../api/collage/import';
+import { WAICOLLE_DATA } from '../api/collage/import';
 
 export async function getServerSideProps(context: any) {
-  const charas = DAILY_DATA[context.params.id];
-  return { props: { charas } };
+  return {
+    props: {
+      charas: WAICOLLE_DATA[context.params.id].daily
+    }
+  };
 }
 
 export default function Tags({ charas }: { charas: WCCharaData[] }) {
