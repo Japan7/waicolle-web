@@ -5,18 +5,19 @@ import InfosPanel from '../../components/collage/InfosPanel';
 import WaifuCollage from '../../components/collage/WaifuCollage';
 import WaifuFiltersHeader from '../../components/collage/WaifuFiltersHeader';
 import ALApolloLayout from '../../components/layouts/ALApolloLayout';
-import { CollageFilters, FILTERS_VERSION, WCItem } from '../../lib/types';
+import { CollageFilters, FILTERS_VERSION, WCItem, WCTracklists } from '../../lib/types';
 import { WAICOLLE_DATA } from '../api/collage/import';
 
 export async function getServerSideProps(context: any) {
   return {
     props: {
-      items: WAICOLLE_DATA[context.params.id].data
+      items: WAICOLLE_DATA[context.params.id].data,
+      tracklists: WAICOLLE_DATA[context.params.id].tracklists,
     }
   };
 }
 
-export default function Collage({ items }: { items: WCItem[] }) {
+export default function Collage({ items, tracklists }: { items: WCItem[], tracklists: WCTracklists }) {
   const router = useRouter();
 
   const defaultFilters = {
@@ -74,6 +75,7 @@ export default function Collage({ items }: { items: WCItem[] }) {
           <InfosPanel
             charaId={selected?.waifu.chara_id}
             waifu={selected?.waifu}
+            tracklists={tracklists}
             filters={filters}
             setFilters={setFilters}
           />

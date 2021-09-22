@@ -1,12 +1,13 @@
 import { useQuery } from '@apollo/client';
 import { CHARA_DATA_QUERY } from '../../lib/queries';
-import { CharaData, CollageFilters, WCWaifu } from '../../lib/types';
+import { CharaData, CollageFilters, WCTracklists, WCWaifu } from '../../lib/types';
 import { getCharaMedias, getRank } from '../../lib/utils';
 
-export default function InfosPanel({ charaId, waifu, filters, setFilters }:
+export default function InfosPanel({ charaId, waifu, tracklists, filters, setFilters }:
   {
     charaId?: number,
     waifu?: WCWaifu,
+    tracklists?: WCTracklists,
     filters?: CollageFilters,
     setFilters?: React.Dispatch<React.SetStateAction<CollageFilters>>
   }) {
@@ -18,13 +19,22 @@ export default function InfosPanel({ charaId, waifu, filters, setFilters }:
 
   if (!charaId) return <p>Choose a chara to inspect</p>;
   if (loading || !data) return <p>Loading...</p>;
-  return <CharaInfos chara={data.Character} waifu={waifu} filters={filters} setFilters={setFilters} />;
+  return (
+    <CharaInfos
+      chara={data.Character}
+      waifu={waifu}
+      tracklists={tracklists}
+      filters={filters}
+      setFilters={setFilters}
+    />
+  );
 }
 
-function CharaInfos({ chara, waifu, filters, setFilters }:
+function CharaInfos({ chara, waifu, tracklists, filters, setFilters }:
   {
     chara: CharaData,
     waifu?: WCWaifu,
+    tracklists?: WCTracklists,
     filters?: CollageFilters,
     setFilters?: React.Dispatch<React.SetStateAction<CollageFilters>>
   }) {
@@ -34,6 +44,7 @@ function CharaInfos({ chara, waifu, filters, setFilters }:
       <CharaName chara={chara} />
       <CharaImage chara={chara} />
       <WaifuCharaProps chara={chara} waifu={waifu} />
+      {tracklists && <WaifuTracklist chara={chara} tracklists={tracklists} />}
       <CharaMedias chara={chara} filters={filters} setFilters={setFilters} />
 
       <style jsx>{`
@@ -42,6 +53,7 @@ function CharaInfos({ chara, waifu, filters, setFilters }:
             "name name"
             "image props"
             "image modifiers"
+            "tracklists tracklists"
             "medias medias"
             / 1fr 3fr;
         }
@@ -52,6 +64,7 @@ function CharaInfos({ chara, waifu, filters, setFilters }:
               "image"
               "props"
               "modifiers"
+              "tracklists"
               "medias";
           }
         }
@@ -154,6 +167,33 @@ function CharaMedias({ chara, filters, setFilters }:
               {m.title.romaji}
             </p>)}
         </>}
+    </div>
+  );
+}
+
+function WaifuTracklist({ chara, tracklists }: { chara: CharaData, tracklists: WCTracklists }) {
+  const medias = chara.media?.edges.map(e => e.node.id);
+
+  let names: string[] = [];
+
+  tracklists.media.forEach(m => {
+    if (medias?.includes(m.media_id)) names.push(m.player);
+  });
+
+  Object.values(tracklists.collection).forEach(c =>
+    c.medias.forEach(m => {
+      if (medias?.includes(m)) names.push(c.player);
+    }));
+
+  names = Array.from(new Set(names));
+  names.sort((a, b) => a.localeCompare(b, 'fr', { ignorePunctuation: true }));
+
+  return (
+    <div style={{ gridArea: 'tracklists' }}>
+      {names.length > 0 && <>
+        <h2 className="my-2 font-bold">In tracking list of</h2>
+        <p>{names.join(' • ')}</p>
+      </>}
     </div>
   );
 }

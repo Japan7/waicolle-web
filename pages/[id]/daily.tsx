@@ -3,18 +3,19 @@ import React, { useState } from 'react';
 import CharaCollage from '../../components/collage/CharaCollage';
 import InfosPanel from '../../components/collage/InfosPanel';
 import ALApolloLayout from '../../components/layouts/ALApolloLayout';
-import { WCCharaData } from '../../lib/types';
+import { WCCharaData, WCTracklists } from '../../lib/types';
 import { WAICOLLE_DATA } from '../api/collage/import';
 
 export async function getServerSideProps(context: any) {
   return {
     props: {
-      charas: WAICOLLE_DATA[context.params.id].daily
+      charas: WAICOLLE_DATA[context.params.id].daily,
+      tracklists: WAICOLLE_DATA[context.params.id].tracklists,
     }
   };
 }
 
-export default function Tags({ charas }: { charas: WCCharaData[] }) {
+export default function Tags({ charas, tracklists }: { charas: WCCharaData[], tracklists: WCTracklists }) {
   const [selected, setSelected] = useState<number>();
 
   return (
@@ -29,7 +30,7 @@ export default function Tags({ charas }: { charas: WCCharaData[] }) {
         </div>
 
         <div className="overflow-y-scroll">
-          <InfosPanel charaId={selected} />
+          <InfosPanel charaId={selected} tracklists={tracklists} />
         </div>
       </div>
     </ALApolloLayout>
