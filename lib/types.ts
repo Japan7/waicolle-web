@@ -3,6 +3,8 @@ export interface WCData {
   bot: number;
   data: WCItem[];
   daily: WCCharaData[];
+  tracklists: WCTracklists;
+  lists: WCList[];
 }
 
 export interface WCItem {
@@ -25,6 +27,29 @@ export interface WCWaifu {
 export interface WCCharaData extends BaseCharaData {
   name: string;
   image: string | null;
+}
+
+export interface WCTracklists {
+  media: WCTLMedia[];
+  collection: { [key: number]: WCTLCollectionItem };
+}
+
+export interface WCTLMedia {
+  media_id: number;
+  player: string;
+}
+
+
+export interface WCTLCollectionItem {
+  name: string;
+  player: string;
+  medias: number[];
+}
+
+export interface WCList {
+  username: string;
+  user: string;
+  service: 'AniList' | 'MyAnimeList';
 }
 
 // Media filtering
