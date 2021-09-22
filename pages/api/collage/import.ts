@@ -11,7 +11,9 @@ export const config = {
 };
 
 export const WAICOLLE_DATA: { [key: number]: WCData } = {};
-WAICOLLE_DATA[0] = JSON.parse(fs.readFileSync('./tests/waicolle_export.json', 'utf-8'));
+
+const TEST_FILE = './tests/waicolle_export.json';
+if (fs.existsSync(TEST_FILE)) WAICOLLE_DATA[0] = JSON.parse(fs.readFileSync(TEST_FILE, 'utf-8'));
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   WAICOLLE_DATA[req.body.bot] = req.body;
