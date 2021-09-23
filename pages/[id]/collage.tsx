@@ -75,6 +75,7 @@ export default function Collage({ items, tracklists }: { items: WCItem[], trackl
           <InfosPanel
             charaId={selected?.waifu.chara_id}
             waifu={selected?.waifu}
+            items={items}
             tracklists={tracklists}
             filters={filters}
             setFilters={setFilters}

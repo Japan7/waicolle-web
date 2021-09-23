@@ -1,12 +1,13 @@
 import { useQuery } from '@apollo/client';
 import { CHARA_DATA_QUERY } from '../../lib/queries';
-import { CharaData, CollageFilters, WCTracklists, WCWaifu } from '../../lib/types';
-import { getCharaMedias, getRank } from '../../lib/utils';
+import { CharaData, CollageFilters, WCItem, WCTracklists, WCWaifu } from '../../lib/types';
+import { getCharaMedias, getOwners, getRank, getTracklisters } from '../../lib/utils';
 
-export default function InfosPanel({ charaId, waifu, tracklists, filters, setFilters }:
+export default function InfosPanel({ charaId, waifu, items, tracklists, filters, setFilters }:
   {
     charaId?: number,
     waifu?: WCWaifu,
+    items: WCItem[],
     tracklists?: WCTracklists,
     filters?: CollageFilters,
     setFilters?: React.Dispatch<React.SetStateAction<CollageFilters>>
@@ -23,6 +24,7 @@ export default function InfosPanel({ charaId, waifu, tracklists, filters, setFil
     <CharaInfos
       chara={data.Character}
       waifu={waifu}
+      items={items}
       tracklists={tracklists}
       filters={filters}
       setFilters={setFilters}
@@ -30,10 +32,11 @@ export default function InfosPanel({ charaId, waifu, tracklists, filters, setFil
   );
 }
 
-function CharaInfos({ chara, waifu, tracklists, filters, setFilters }:
+function CharaInfos({ chara, waifu, items, tracklists, filters, setFilters }:
   {
     chara: CharaData,
     waifu?: WCWaifu,
+    items: WCItem[],
     tracklists?: WCTracklists,
     filters?: CollageFilters,
     setFilters?: React.Dispatch<React.SetStateAction<CollageFilters>>
@@ -44,7 +47,8 @@ function CharaInfos({ chara, waifu, tracklists, filters, setFilters }:
       <CharaName chara={chara} />
       <CharaImage chara={chara} />
       <WaifuCharaProps chara={chara} waifu={waifu} />
-      {tracklists && <WaifuTracklist chara={chara} tracklists={tracklists} />}
+      <WaifuOwners chara={chara} items={items} />
+      {tracklists && <WaifuTracklisters chara={chara} tracklists={tracklists} />}
       <CharaMedias chara={chara} filters={filters} setFilters={setFilters} />
 
       <style jsx>{`
@@ -53,6 +57,7 @@ function CharaInfos({ chara, waifu, tracklists, filters, setFilters }:
             "name name"
             "image props"
             "image modifiers"
+            "owners owners"
             "tracklists tracklists"
             "medias medias"
             / 1fr 3fr;
@@ -64,6 +69,7 @@ function CharaInfos({ chara, waifu, tracklists, filters, setFilters }:
               "image"
               "props"
               "modifiers"
+              "owners"
               "tracklists"
               "medias";
           }
@@ -171,28 +177,25 @@ function CharaMedias({ chara, filters, setFilters }:
   );
 }
 
-function WaifuTracklist({ chara, tracklists }: { chara: CharaData, tracklists: WCTracklists }) {
-  const medias = chara.media?.edges.map(e => e.node.id);
+function WaifuOwners({ chara, items }: { chara: CharaData, items: WCItem[] }) {
+  const names = getOwners(chara.id, items);
+  return (
+    <div style={{ gridArea: 'owners' }}>
+      {names && <>
+        <h2 className="my-2 font-bold">Owned by</h2>
+        <p>{names}</p>
+      </>}
+    </div>
+  );
+}
 
-  let names: string[] = [];
-
-  tracklists.media.forEach(m => {
-    if (medias?.includes(m.media_id)) names.push(m.player);
-  });
-
-  Object.values(tracklists.collection).forEach(c =>
-    c.medias.forEach(m => {
-      if (medias?.includes(m)) names.push(c.player);
-    }));
-
-  names = Array.from(new Set(names));
-  names.sort((a, b) => a.localeCompare(b, 'fr', { ignorePunctuation: true }));
-
+function WaifuTracklisters({ chara, tracklists }: { chara: CharaData, tracklists: WCTracklists }) {
+  const names = getTracklisters(chara, tracklists);
   return (
     <div style={{ gridArea: 'tracklists' }}>
-      {names.length > 0 && <>
+      {names && <>
         <h2 className="my-2 font-bold">In tracking list of</h2>
-        <p>{names.join(' • ')}</p>
+        <p>{names}</p>
       </>}
     </div>
   );
