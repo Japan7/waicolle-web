@@ -85,6 +85,7 @@ export function getOwners(charaId: number, items: WCItem[]) {
     names.push(subtext);
   });
 
+  names.sort((a, b) => a.localeCompare(b, 'fr', { ignorePunctuation: true }));
   if (nbBlooded > 0) names.push(`🩸 (x${nbBlooded})`);
   return names.join(' • ');
 }
