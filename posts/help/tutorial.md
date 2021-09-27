@@ -46,6 +46,8 @@ When registered to WaiColle, you earn 1 moecoin on each message sent on Discord,
 
 You can spend this money on rolls via `/waifu roll` and check how many moecoins you have with `/waifu coins`.
 
+In addition, there is a Daily roll on a random tag that costs 75 moecoins the first time of the day.
+
 ### Rerolls and trades
 
 If you possess one or more characters you don't like, you can reroll them with `/waifu reroll`.
