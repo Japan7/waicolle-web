@@ -9,8 +9,8 @@ module.exports = {
         permanent: true
       },
       {
-        source: '/mails/:slug',
-        destination: '/emails/:slug',
+        source: '/(e?)mails/:slug',
+        destination: 'https://japan7.bde.enseeiht.fr/emails/:slug',
         permanent: true
       },
     ];
