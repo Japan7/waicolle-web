@@ -11,6 +11,8 @@ Check the up-to-date online collage [here](/collage).
 
 The daily tag collage is available [here](/daily).
 
+Check your character pool [here](/pool).
+
 If you want, send `/waifu link` in #bot-room to force data refresh.
 
 ## Resources

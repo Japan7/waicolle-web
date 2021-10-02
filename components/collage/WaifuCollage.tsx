@@ -1,13 +1,7 @@
-import { useLazyQuery } from '@apollo/client';
 import { useCallback, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { MEDIA_DATA_QUERY } from '../../lib/queries';
-import { CollageFilters, MediaData, WCCharaData, WCWaifu } from '../../lib/types';
+import { CollageFilters, WCCharaData, WCWaifu } from '../../lib/types';
 import { compareCharaFavourites } from '../../lib/utils';
-
-function compareFavourites(charas: { [key: number]: WCCharaData }, a: WCWaifu, b: WCWaifu) {
-  return compareCharaFavourites(charas[a.chara_id], charas[b.chara_id]);
-}
 
 function compareTimestamp(a: WCWaifu, b: WCWaifu) {
   if (a.timestamp > b.timestamp) return -1;
@@ -15,55 +9,17 @@ function compareTimestamp(a: WCWaifu, b: WCWaifu) {
   return 0;
 }
 
-export default function WaifuCollage({ waifus, charas, filters, setSelected, setMediaInfos }:
+export default function WaifuCollage({ waifus, charas, filters, mediaCharas, setSelected }:
   {
     waifus: WCWaifu[],
     charas: { [key: number]: WCCharaData },
     filters: CollageFilters,
-    setSelected: React.Dispatch<React.SetStateAction<WCWaifu | undefined>>,
-    setMediaInfos: React.Dispatch<React.SetStateAction<React.ReactNode>>
+    mediaCharas: number[] | null,
+    setSelected: React.Dispatch<React.SetStateAction<WCWaifu | undefined>>
   }) {
 
   const [pics, setPics] = useState<JSX.Element[]>([]);
   const [shown, setShown] = useState<JSX.Element[]>([]);
-
-  const [mediaId, setMediaId] = useState<number | null>(null);
-  const [mediaCharas, setMediaCharas] = useState<number[] | null>(null);
-
-  const [getMediaCharas, { data, error }] = useLazyQuery<{ Media: MediaData }>(MEDIA_DATA_QUERY, {
-    variables: { id: mediaId },
-    onCompleted: data => {
-      setMediaCharas([...mediaCharas!, ...data.Media.characters.nodes.map(n => n.id)]);
-      if (data.Media.characters.pageInfo.hasNextPage) {
-        getMediaCharas({ variables: { chara_page: data.Media.characters.pageInfo.currentPage + 1 } });
-      }
-    }
-  });
-
-  useEffect(() => {
-    setMediaId(filters.mediaId);
-    if (filters.mediaId) {
-      setMediaCharas([]);
-      getMediaCharas({ variables: { chara_page: 1 } });
-    } else {
-      setMediaCharas(null);
-    }
-  }, [filters.mediaId, getMediaCharas]);
-
-  useEffect(() => {
-    if (mediaId) {
-      if (data) {
-        setMediaInfos(
-          <a href={data.Media.siteUrl} className="font-bold">
-            [{data.Media.type}] {data.Media.title.romaji}
-          </a>);
-      } else if (error) {
-        setMediaInfos(<label className="font-bold">No media found with this ID</label>);
-      }
-    } else {
-      setMediaInfos(null);
-    }
-  }, [data, error, mediaId, setMediaInfos]);
 
   const isIncluded = useCallback((waifu: WCWaifu) => {
     if (mediaCharas && !mediaCharas.includes(waifu.chara_id)) return false;
@@ -82,7 +38,8 @@ export default function WaifuCollage({ waifus, charas, filters, setSelected, set
 
   useEffect(() => {
     const newPics: JSX.Element[] = [];
-    waifus.sort(filters.lasts ? compareTimestamp : (a, b) => compareFavourites(charas, a, b));
+    waifus.sort(filters.lasts ?
+      compareTimestamp : (a, b) => compareCharaFavourites(charas[a.chara_id], charas[b.chara_id]));
     waifus.forEach(waifu => {
       if (isIncluded(waifu)) {
         newPics.push(
@@ -112,7 +69,11 @@ export default function WaifuCollage({ waifus, charas, filters, setSelected, set
 }
 
 function Pic({ waifu, chara, setSelected }:
-  { waifu: WCWaifu, chara: WCCharaData, setSelected: React.Dispatch<React.SetStateAction<WCWaifu | undefined>> }) {
+  {
+    waifu: WCWaifu,
+    chara: WCCharaData,
+    setSelected: React.Dispatch<React.SetStateAction<WCWaifu | undefined>>
+  }) {
 
   const src = `https://s4.anilist.co/file/anilistcdn/character/medium/${chara.image}`;
 

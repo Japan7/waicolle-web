@@ -1,4 +1,27 @@
-import { BaseCharaData, BaseMediaData, CharaData, MediaEdge, WCTracklists, WCWaifu } from './types';
+import { useEffect, useState } from 'react';
+import { BaseCharaData, BaseMediaData, CharaData, FILTERS_VERSION, MediaEdge, WCTracklists, WCWaifu } from './types';
+
+export function useLocalStorageState<T>(name: string, defaultFilters: T):
+  [T, React.Dispatch<React.SetStateAction<T>>] {
+
+  const [state, setState] = useState<T>(defaultFilters);
+
+  useEffect(() => {
+    const item = localStorage.getItem(name);
+    if (item) {
+      const parsed = JSON.parse(item);
+      (parsed.version == FILTERS_VERSION) ?
+        setState(parsed) : localStorage.removeItem(name);
+    }
+  }, [name]);
+
+  useEffect(() => {
+    localStorage.setItem(name,
+      JSON.stringify({ ...state, version: FILTERS_VERSION }));
+  }, [name, state]);
+
+  return [state, setState];
+}
 
 export function getRank(chara: CharaData) {
   if (chara.favourites >= 10000) return 'SS';

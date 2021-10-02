@@ -1,16 +1,16 @@
 import { useQuery } from '@apollo/client';
 import { CHARA_DATA_QUERY } from '../../lib/queries';
-import { CharaData, CollageFilters, WCTracklists, WCWaifu } from '../../lib/types';
+import { BaseFilters, CharaData, WCTracklists, WCWaifu } from '../../lib/types';
 import { getCharaMedias, getOwners, getRank, getTracklisters } from '../../lib/utils';
 
-export default function InfosPanel({ charaId, waifu, waifus, tracklists, filters, setFilters }:
+export default function InfosPanel<T extends BaseFilters>({charaId, waifu, waifus, tracklists, filters, setFilters}:
   {
     charaId?: number,
     waifu?: WCWaifu,
     waifus: WCWaifu[],
     tracklists?: WCTracklists,
-    filters?: CollageFilters,
-    setFilters?: React.Dispatch<React.SetStateAction<CollageFilters>>
+    filters?: T,
+    setFilters?: React.Dispatch<React.SetStateAction<T>>
   }) {
 
   const { data, loading } = useQuery<{ Character: CharaData }>(CHARA_DATA_QUERY, {
@@ -32,14 +32,14 @@ export default function InfosPanel({ charaId, waifu, waifus, tracklists, filters
   );
 }
 
-function CharaInfos({ chara, waifu, waifus, tracklists, filters, setFilters }:
+function CharaInfos<T extends BaseFilters>({ chara, waifu, waifus, tracklists, filters, setFilters }:
   {
     chara: CharaData,
     waifu?: WCWaifu,
     waifus: WCWaifu[],
     tracklists?: WCTracklists,
-    filters?: CollageFilters,
-    setFilters?: React.Dispatch<React.SetStateAction<CollageFilters>>
+    filters?: T,
+    setFilters?: React.Dispatch<React.SetStateAction<T>>
   }) {
 
   return (
@@ -131,11 +131,11 @@ function WaifuCharaProps({ chara, waifu }: { chara: CharaData, waifu?: WCWaifu }
   );
 }
 
-function CharaMedias({ chara, filters, setFilters }:
+function CharaMedias<T extends BaseFilters>({ chara, filters, setFilters }:
   {
     chara: CharaData,
-    filters?: CollageFilters,
-    setFilters?: React.Dispatch<React.SetStateAction<CollageFilters>>
+    filters?: T,
+    setFilters?: React.Dispatch<React.SetStateAction<T>>
   }) {
 
   const { seiyuu, animes, mangas } = getCharaMedias(chara);

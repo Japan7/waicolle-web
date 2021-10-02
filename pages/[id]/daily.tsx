@@ -20,7 +20,7 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-export default function Tags({ charas, waifus, tracklists }:
+export default function Daily({ charas, waifus, tracklists }:
   { charas: WCCharaData[], waifus: WCWaifu[], tracklists: WCTracklists }) {
 
   const [selected, setSelected] = useState<number>();

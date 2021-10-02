@@ -242,12 +242,6 @@ Update (this) website data.
 
 Get a copy of the game data.
 
-### utils charadf
-
-`/waifu utils charadf [member]`
-
-Lookup the character pool of a player.
-
 ### utils prune
 
 `/waifu utils prune`

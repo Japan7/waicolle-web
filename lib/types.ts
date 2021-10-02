@@ -3,6 +3,7 @@ export interface WCData {
   bot: number;
   waifus: WCWaifu[];
   daily: number[];
+  pools: { [key: string]: number[] };
   tracklists: WCTracklists;
   lists: WCList[];
   charas: { [key: number]: WCCharaData };
@@ -121,9 +122,12 @@ export interface Staff {
 }
 
 // Filtering
-export interface CollageFilters {
+export interface BaseFilters {
   players: string[] | null,
   mediaId: number | null;
+}
+
+export interface CollageFilters extends BaseFilters {
   ascendedOnly: boolean;
   unlockedOnly: boolean;
   lockedOnly: boolean;
