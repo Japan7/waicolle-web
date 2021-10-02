@@ -4,7 +4,7 @@ module.exports = {
   async redirects() {
     return [
       {
-        source: '/:path(collage|daily)',
+        source: '/:path(collage|daily|pool)',
         destination: '/324820379527020540/:path',
         permanent: true
       },
