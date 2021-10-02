@@ -1,5 +1,6 @@
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
+import Link from 'next/link';
 import PostLayout from '../../components/layouts/PostLayout';
 
 export default function Index() {
@@ -15,13 +16,13 @@ export default function Index() {
       <h1>Collage portal</h1>
 
       <h2>Waifu Collage</h2>
-      <a href={`/${id}/collage`}>Click here.</a>
+      <Link href={`/${id}/collage`}><a>Click here.</a></Link>
 
       <h2>Daily tag</h2>
-      <a href={`/${id}/daily`}>Click here.</a>
+      <Link href={`/${id}/daily`}><a>Click here.</a></Link>
 
       <h2>Character pool</h2>
-      <a href={`/${id}/pool`}>Click here.</a>
-    </PostLayout >
+      <Link href={`/${id}/pool`}><a>Click here.</a></Link>
+    </PostLayout>
   );
 }
