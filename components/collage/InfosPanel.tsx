@@ -3,7 +3,7 @@ import { CHARA_DATA_QUERY } from '../../lib/queries';
 import { BaseFilters, CharaData, WCTracklists, WCWaifu } from '../../lib/types';
 import { getCharaMedias, getOwners, getRank, getTracklisters } from '../../lib/utils';
 
-export default function InfosPanel<T extends BaseFilters>({charaId, waifu, waifus, tracklists, filters, setFilters}:
+export default function InfosPanel<T extends BaseFilters>({ charaId, waifu, waifus, tracklists, filters, setFilters }:
   {
     charaId?: number,
     waifu?: WCWaifu,
@@ -18,8 +18,8 @@ export default function InfosPanel<T extends BaseFilters>({charaId, waifu, waifu
     variables: { id: charaId }
   });
 
-  if (!charaId) return <p>Choose a chara to inspect</p>;
-  if (loading || !data) return <p>Loading...</p>;
+  if (!charaId) return <p className="p-2">Choose a character to inspect</p>;
+  if (loading || !data) return <p className="p-2">Loading...</p>;
   return (
     <CharaInfos
       chara={data.Character}

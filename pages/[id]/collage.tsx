@@ -27,7 +27,7 @@ export default function Collage({ waifus, charas, tracklists }:
   }) {
 
   const defaultFilters = {
-    players: null,
+    players: [],
     mediaId: null,
     ascendedOnly: false,
     unlockedOnly: false,
@@ -58,13 +58,15 @@ export default function Collage({ waifus, charas, tracklists }:
             setMediaCharas={setMediaCharas}
           />
 
-          <WaifuCollage
-            waifus={waifus}
-            charas={charas}
-            filters={filters}
-            mediaCharas={mediaCharas}
-            setSelected={setSelected}
-          />
+          {filters.players.length > 0 ?
+            <WaifuCollage
+              waifus={waifus}
+              charas={charas}
+              filters={filters}
+              mediaCharas={mediaCharas}
+              setSelected={setSelected}
+            /> :
+            <p className="p-2">Choose a player</p>}
         </div>
 
         <div className="overflow-y-scroll">

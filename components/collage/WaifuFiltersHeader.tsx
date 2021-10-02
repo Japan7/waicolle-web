@@ -128,10 +128,9 @@ export function UserSelector<T extends BaseFilters>({ users, filters, setFilters
   }) {
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-    let players: string[] | null = Array.from(e.target.selectedOptions, option => option.value);
-    if (players.length == users.length) players = null;
+    const players = Array.from(e.target.selectedOptions, option => option.value);
     setFilters({ ...filters, players });
-  }, [filters, setFilters, users.length]);
+  }, [filters, setFilters]);
 
   return (
     <div className="w-1/2 m-auto flex flex-col items-center lg:w-1/4">

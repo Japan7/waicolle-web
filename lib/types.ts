@@ -123,7 +123,7 @@ export interface Staff {
 
 // Filtering
 export interface BaseFilters {
-  players: string[] | null,
+  players: string[],
   mediaId: number | null;
 }
 
@@ -136,7 +136,7 @@ export interface CollageFilters extends BaseFilters {
   lasts: boolean;
 }
 
-export const FILTERS_VERSION = 2;
+export const FILTERS_VERSION = 3;
 
 // Posts
 export interface PostData {

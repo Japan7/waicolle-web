@@ -29,7 +29,7 @@ export default function Pool({ pools, charas, waifus, tracklists }:
   }) {
 
   const defaultFilters = {
-    players: null,
+    players: [],
     mediaId: null,
   };
 
@@ -41,7 +41,7 @@ export default function Pool({ pools, charas, waifus, tracklists }:
 
   useEffect(() => {
     const filteredIds = new Set<number>();
-    filters.players?.forEach(p => {
+    filters.players.forEach(p => {
       pools[p].forEach(id => {
         if (!mediaCharas || mediaCharas.includes(id)) filteredIds.add(id);
       });
@@ -66,8 +66,9 @@ export default function Pool({ pools, charas, waifus, tracklists }:
             mediaCharas={mediaCharas}
             setMediaCharas={setMediaCharas}
           />
-
-          <CharaCollage charas={selectedCharas} setSelected={setSelected} />
+          {filters.players.length > 0 ?
+            <CharaCollage charas={selectedCharas} setSelected={setSelected} /> :
+            <p className="p-2">Choose a player</p>}
         </div>
 
         <div className="overflow-y-scroll">
