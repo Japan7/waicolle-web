@@ -1,15 +1,11 @@
 // Imported data
 export interface WCData {
   bot: number;
-  data: WCItem[];
-  daily: WCCharaData[];
+  waifus: WCWaifu[];
+  daily: number[];
   tracklists: WCTracklists;
   lists: WCList[];
-}
-
-export interface WCItem {
-  waifu: WCWaifu;
-  alchara: WCCharaData;
+  charas: { [key: number]: WCCharaData };
 }
 
 export interface WCWaifu {
@@ -24,11 +20,6 @@ export interface WCWaifu {
   nanaed: boolean;
 }
 
-export interface WCCharaData extends BaseCharaData {
-  name: string;
-  image: string | null;
-}
-
 export interface WCTracklists {
   media: WCTLMedia[];
   collection: { [key: number]: WCTLCollectionItem };
@@ -37,6 +28,11 @@ export interface WCTracklists {
 export interface WCTLMedia {
   media_id: number;
   player: string;
+}
+
+export interface WCCharaData extends BaseCharaData {
+  name: string;
+  image: string | null;
 }
 
 

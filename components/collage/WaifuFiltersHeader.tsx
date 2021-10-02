@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useState } from 'react';
-import { CollageFilters, WCItem } from '../../lib/types';
+import { CollageFilters, WCWaifu } from '../../lib/types';
 
-export default function WaifuFiltersHeader({ items, filters, setFilters, children }:
+export default function WaifuFiltersHeader({ waifus, filters, setFilters, children }:
   {
-    items: WCItem[],
+    waifus: WCWaifu[],
     filters: CollageFilters,
     setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>,
     children: React.ReactNode
@@ -22,7 +22,7 @@ export default function WaifuFiltersHeader({ items, filters, setFilters, childre
 
       <div className={`${showMenu ? 'flex' : 'hidden'} lg:flex flex-row flex-wrap my-1`}>
         <FiltersSelector filters={filters} setFilters={setFilters} />
-        <UserSelector items={items} filters={filters} setFilters={setFilters} />
+        <UserSelector waifus={waifus} filters={filters} setFilters={setFilters} />
         <MediaSelector filters={filters} setFilters={setFilters} />
       </div>
 
@@ -104,18 +104,18 @@ function FiltersSelector({ filters, setFilters }:
   );
 }
 
-function UserSelector({ items, filters, setFilters }:
+function UserSelector({ waifus, filters, setFilters }:
   {
-    items: WCItem[],
+    waifus: WCWaifu[],
     filters: CollageFilters,
     setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>
   }) {
 
   const users: string[] = useMemo(() => {
     const userSet = new Set<string>();
-    items.forEach(item => userSet.add(item.waifu.owner));
+    waifus.forEach(waifu => userSet.add(waifu.owner));
     return Array.from(userSet).sort((a, b) => a.localeCompare(b, 'fr', { ignorePunctuation: true }));
-  }, [items]);
+  }, [waifus]);
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
     let players: string[] | null = Array.from(e.target.selectedOptions, option => option.value);

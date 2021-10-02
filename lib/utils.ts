@@ -1,4 +1,4 @@
-import { BaseCharaData, BaseMediaData, CharaData, MediaEdge, WCItem, WCTracklists } from './types';
+import { BaseCharaData, BaseMediaData, CharaData, MediaEdge, WCTracklists, WCWaifu } from './types';
 
 export function getRank(chara: CharaData) {
   if (chara.favourites >= 10000) return 'SS';
@@ -46,11 +46,11 @@ export function getCharaMedias(chara: CharaData) {
   return { seiyuu, animes, mangas };
 }
 
-export function getOwners(charaId: number, items: WCItem[]) {
-  const filtered = items.filter(item => item.waifu.chara_id === charaId);
+export function getOwners(charaId: number, waifus: WCWaifu[]) {
+  const filtered = waifus.filter(waifu => waifu.chara_id === charaId);
   let nbBlooded = 0;
-  const alive: WCItem[] = [];
-  filtered.forEach(item => item.waifu.blooded ? nbBlooded++ : alive.push(item));
+  const alive: WCWaifu[] = [];
+  filtered.forEach(waifu => waifu.blooded ? nbBlooded++ : alive.push(waifu));
 
   const owners: {
     [key: string]: {
@@ -61,13 +61,13 @@ export function getOwners(charaId: number, items: WCItem[]) {
     }
   } = {};
 
-  alive.forEach(item => {
-    const entry = owners[item.waifu.owner] ?? { count: 0, locked: 0, ascended: 0, nanaed: 0 };
+  alive.forEach(waifu => {
+    const entry = owners[waifu.owner] ?? { count: 0, locked: 0, ascended: 0, nanaed: 0 };
     entry.count++;
-    if (item.waifu.locked) entry.locked++;
-    if (item.waifu.level > 0) entry.ascended++;
-    if (item.waifu.nanaed) entry.nanaed++;
-    owners[item.waifu.owner] = entry;
+    if (waifu.locked) entry.locked++;
+    if (waifu.level > 0) entry.ascended++;
+    if (waifu.nanaed) entry.nanaed++;
+    owners[waifu.owner] = entry;
   });
 
   const names: string[] = [];

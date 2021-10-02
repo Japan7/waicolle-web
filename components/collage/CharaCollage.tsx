@@ -3,7 +3,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { WCCharaData } from '../../lib/types';
 import { compareCharaFavourites } from '../../lib/utils';
 
-export default function WaifuCollage({ charas, setSelected }:
+export default function CharaCollage({ charas, setSelected }:
   {
     charas: WCCharaData[],
     setSelected: React.Dispatch<React.SetStateAction<number | undefined>>,
@@ -38,14 +38,17 @@ export default function WaifuCollage({ charas, setSelected }:
 
 function Pic({ chara, setSelected }:
   { chara: WCCharaData, setSelected: React.Dispatch<React.SetStateAction<number | undefined>> }) {
+
+  const src = `https://s4.anilist.co/file/anilistcdn/character/medium/${chara.image!}`;
+
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
       className="w-16 h-24 cursor-pointer object-cover"
-      src={chara.image!}
+      src={src}
       alt={chara.name}
       loading="lazy"
-      onClick={e => setSelected(chara.id)}
+      onClick={_ => setSelected(chara.id)}
     />
   );
 }
