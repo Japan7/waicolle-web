@@ -13,8 +13,8 @@ export default function CollageLayout({ page, children }: { page?: string, child
 
   return (
     <ApolloProvider client={client}>
-      <div className="h-screen">
-        <div className="w-full p-2 flex space-x-2 absolute">
+      <div className="h-screen collage-grid">
+        <div className="w-full p-2 flex space-x-2">
           <Link href={`/${id}/collage`}>
             <a className={page === 'collage' ? 'selected' : 'button'}>Collage</a>
           </Link>
@@ -24,21 +24,25 @@ export default function CollageLayout({ page, children }: { page?: string, child
           <Link href={`/${id}/pool`}>
             <a className={page === 'pool' ? 'selected' : 'button'}>Character pool</a>
           </Link>
-
-          <style jsx>{`
-            .selected {
-              @apply flex-grow text-center rounded-md bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900;
-            }
-            .button {
-              @apply flex-grow text-center rounded-md border border-gray-400;
-            }
-          `}</style>
         </div>
 
-        <div className="h-full pt-10">
+        <div>
           {children}
         </div>
       </div>
+
+      <style jsx>{`
+        .collage-grid {
+          display: grid;
+          grid-template-rows: 42px calc(100% - 42px);
+        }
+        .selected {
+          @apply flex-grow text-center rounded-md bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900;
+        }
+        .button {
+          @apply flex-grow text-center rounded-md border border-gray-400;
+        }
+      `}</style>
     </ApolloProvider>
   );
 }
