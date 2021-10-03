@@ -7,7 +7,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-export default function CollageLayout({ page, children }: { page: string, children: React.ReactNode }) {
+export default function CollageLayout({ page, children }: { page?: string, children: React.ReactNode }) {
   const router = useRouter();
   const { id } = router.query;
 

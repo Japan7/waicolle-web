@@ -24,7 +24,7 @@ export default function WaifuFiltersHeader({waifus, filters, setFilters, mediaCh
   return (
     <div>
       <button
-        className="w-full h-10 opacity-50 lg:hidden"
+        className="w-full h-10 opacity-75 lg:hidden"
         onClick={() => setShowMenu(!showMenu)}
       >
         Toggle menu

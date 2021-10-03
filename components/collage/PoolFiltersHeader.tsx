@@ -21,7 +21,7 @@ export default function PoolFiltersHeader({ pools, filters, setFilters, mediaCha
   return (
     <div>
       <button
-        className="w-full h-10 opacity-50 lg:hidden"
+        className="w-full h-10 opacity-75 lg:hidden"
         onClick={() => setShowMenu(!showMenu)}
       >
         Toggle menu

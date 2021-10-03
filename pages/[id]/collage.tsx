@@ -66,7 +66,7 @@ export default function Collage({ waifus, charas, tracklists }:
               mediaCharas={mediaCharas}
               setSelected={setSelected}
             /> :
-            <p className="p-2">Choose a player</p>}
+            <p className="p-2">Select a player</p>}
         </div>
 
         <div className="overflow-y-scroll">

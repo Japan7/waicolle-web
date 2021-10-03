@@ -18,7 +18,7 @@ export default function InfosPanel<T extends BaseFilters>({ charaId, waifu, waif
     variables: { id: charaId }
   });
 
-  if (!charaId) return <p className="p-2">Choose a character to inspect</p>;
+  if (!charaId) return <p className="p-2">Select a character to inspect</p>;
   if (loading || !data) return <p className="p-2">Loading...</p>;
   return (
     <CharaInfos
