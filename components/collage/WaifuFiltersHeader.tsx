@@ -30,7 +30,7 @@ export default function WaifuFiltersHeader({waifus, filters, setFilters, mediaCh
         Toggle menu
       </button>
 
-      <div className={`${showMenu ? 'flex' : 'hidden'} lg:flex flex-row flex-wrap mb-1`}>
+      <div className={`${showMenu ? 'flex' : 'hidden'} lg:flex flex-row flex-wrap mb-2`}>
         <FiltersSelector filters={filters} setFilters={setFilters} />
         <UserSelector users={users} filters={filters} setFilters={setFilters} />
         <MediaSelector
