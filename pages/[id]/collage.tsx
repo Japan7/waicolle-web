@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import InfosPanel from '../../components/collage/InfosPanel';
 import WaifuCollage from '../../components/collage/WaifuCollage';
 import WaifuFiltersHeader from '../../components/collage/WaifuFiltersHeader';
-import ALApolloLayout from '../../components/layouts/ALApolloLayout';
+import CollageLayout from '../../components/layouts/CollageLayout';
 import { CollageFilters, WCCharaData, WCTracklists, WCWaifu } from '../../lib/types';
 import { useLocalStorageState } from '../../lib/utils';
 import { WAICOLLE_DATA } from '../api/collage/import';
@@ -43,7 +43,7 @@ export default function Collage({ waifus, charas, tracklists }:
   const [selected, setSelected] = useState<WCWaifu>();
 
   return (
-    <ALApolloLayout>
+    <CollageLayout page="collage">
       <div className="h-screen grid grid-rows-3 grid-flow-col lg:grid-rows-none lg:grid-cols-4 lg:grid-flow-row">
         <Head>
           <title>Collage | Waifu Collection</title>
@@ -80,6 +80,6 @@ export default function Collage({ waifus, charas, tracklists }:
           />
         </div>
       </div>
-    </ALApolloLayout>
+    </CollageLayout>
   );
 };

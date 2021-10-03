@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import CharaCollage from '../../components/collage/CharaCollage';
 import InfosPanel from '../../components/collage/InfosPanel';
 import PoolFiltersHeader from '../../components/collage/PoolFiltersHeader';
-import ALApolloLayout from '../../components/layouts/ALApolloLayout';
+import CollageLayout from '../../components/layouts/CollageLayout';
 import { BaseFilters, WCCharaData, WCTracklists, WCWaifu } from '../../lib/types';
 import { useLocalStorageState } from '../../lib/utils';
 import { WAICOLLE_DATA } from '../api/collage/import';
@@ -52,7 +52,7 @@ export default function Pool({ pools, charas, waifus, tracklists }:
   }, [charas, filters, mediaCharas, pools]);
 
   return (
-    <ALApolloLayout>
+    <CollageLayout page="pool">
       <div className="h-screen grid grid-rows-3 grid-flow-col lg:grid-rows-none lg:grid-cols-4 lg:grid-flow-row">
         <Head>
           <title>Character pool | Waifu Collection</title>
@@ -81,6 +81,6 @@ export default function Pool({ pools, charas, waifus, tracklists }:
           />
         </div>
       </div>
-    </ALApolloLayout>
+    </CollageLayout>
   );
 };

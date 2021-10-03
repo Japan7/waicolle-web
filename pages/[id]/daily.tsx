@@ -2,7 +2,7 @@ import Head from 'next/head';
 import React, { useState } from 'react';
 import CharaCollage from '../../components/collage/CharaCollage';
 import InfosPanel from '../../components/collage/InfosPanel';
-import ALApolloLayout from '../../components/layouts/ALApolloLayout';
+import CollageLayout from '../../components/layouts/CollageLayout';
 import { WCCharaData, WCTracklists, WCWaifu } from '../../lib/types';
 import { WAICOLLE_DATA } from '../api/collage/import';
 
@@ -26,7 +26,7 @@ export default function Daily({ charas, waifus, tracklists }:
   const [selected, setSelected] = useState<number>();
 
   return (
-    <ALApolloLayout>
+    <CollageLayout page="daily">
       <div className="h-screen grid grid-rows-3 grid-flow-col lg:grid-rows-none lg:grid-cols-4 lg:grid-flow-row">
         <Head>
           <title>Daily tag | Waifu Collection</title>
@@ -40,6 +40,6 @@ export default function Daily({ charas, waifus, tracklists }:
           <InfosPanel charaId={selected} waifus={waifus} tracklists={tracklists} />
         </div>
       </div>
-    </ALApolloLayout>
+    </CollageLayout>
   );
 };
