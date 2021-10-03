@@ -44,7 +44,7 @@ export default function Collage({ waifus, charas, tracklists }:
 
   return (
     <CollageLayout page="collage">
-      <div className="h-screen grid grid-rows-3 grid-flow-col lg:grid-rows-none lg:grid-cols-4 lg:grid-flow-row">
+      <div className="h-full grid grid-rows-3 grid-flow-col lg:grid-rows-none lg:grid-cols-4 lg:grid-flow-row">
         <Head>
           <title>Collage | Waifu Collection</title>
         </Head>

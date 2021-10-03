@@ -27,7 +27,7 @@ export default function PoolFiltersHeader({ pools, filters, setFilters, mediaCha
         Toggle menu
       </button>
 
-      <div className={`${showMenu ? 'flex' : 'hidden'} lg:flex flex-row flex-wrap my-1`}>
+      <div className={`${showMenu ? 'flex' : 'hidden'} lg:flex flex-row flex-wrap mb-1`}>
         <UserSelector users={users} filters={filters} setFilters={setFilters} />
         <MediaSelector
           filters={filters}

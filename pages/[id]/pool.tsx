@@ -53,7 +53,7 @@ export default function Pool({ pools, charas, waifus, tracklists }:
 
   return (
     <CollageLayout page="pool">
-      <div className="h-screen grid grid-rows-3 grid-flow-col lg:grid-rows-none lg:grid-cols-4 lg:grid-flow-row">
+      <div className="h-full grid grid-rows-3 grid-flow-col lg:grid-rows-none lg:grid-cols-4 lg:grid-flow-row">
         <Head>
           <title>Character pool | Waifu Collection</title>
         </Head>

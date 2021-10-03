@@ -27,7 +27,7 @@ export default function Daily({ charas, waifus, tracklists }:
 
   return (
     <CollageLayout page="daily">
-      <div className="h-screen grid grid-rows-3 grid-flow-col lg:grid-rows-none lg:grid-cols-4 lg:grid-flow-row">
+      <div className="h-full grid grid-rows-3 grid-flow-col lg:grid-rows-none lg:grid-cols-4 lg:grid-flow-row">
         <Head>
           <title>Daily tag | Waifu Collection</title>
         </Head>

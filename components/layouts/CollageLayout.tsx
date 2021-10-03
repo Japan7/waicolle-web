@@ -13,8 +13,8 @@ export default function CollageLayout({ page, children }: { page?: string, child
 
   return (
     <ApolloProvider client={client}>
-      <div className="flex flex-col">
-        <div className="w-full p-2 flex space-x-2">
+      <div className="h-screen">
+        <div className="w-full p-2 flex space-x-2 absolute">
           <Link href={`/${id}/collage`}>
             <a className={page === 'collage' ? 'selected' : 'button'}>Collage</a>
           </Link>
@@ -26,7 +26,7 @@ export default function CollageLayout({ page, children }: { page?: string, child
           </Link>
 
           <style jsx>{`
-            .selected{
+            .selected {
               @apply flex-grow text-center rounded-md bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900;
             }
             .button {
@@ -35,7 +35,9 @@ export default function CollageLayout({ page, children }: { page?: string, child
           `}</style>
         </div>
 
-        {children}
+        <div className="h-full pt-10">
+          {children}
+        </div>
       </div>
     </ApolloProvider>
   );
