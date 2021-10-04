@@ -30,18 +30,21 @@ export function useCollageHotkeys<T>(
   setSelected: React.Dispatch<React.SetStateAction<T | undefined>>
 ) {
   useHotkeys('up,down,left,right', (handler) => {
-    if (!selected) return;
-    const index = filtered.indexOf(selected);
+    const index = filtered.indexOf(selected!);
+    const div = document.getElementById('collage');
+    const nb_width = Math.floor(div!.offsetWidth / 64);
     switch (handler.key) {
       case 'ArrowUp':
+        if (index > nb_width) setSelected(filtered[index - nb_width]);
         break;
       case 'ArrowDown':
+        if (index < filtered.length - nb_width) setSelected(filtered[index + nb_width]);
         break;
       case 'ArrowLeft':
-        if (index - 1 >= 0) setSelected(filtered[index - 1]);
+        if (index > 0) setSelected(filtered[index - 1]);
         break;
       case 'ArrowRight':
-        if (index + 1 < filtered.length) setSelected(filtered[index + 1]);
+        if (index < filtered.length - 1) setSelected(filtered[index + 1]);
         break;
     }
   }, { enabled: selected !== undefined }, [selected, setSelected]);
