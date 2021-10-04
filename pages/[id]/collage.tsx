@@ -64,6 +64,7 @@ export default function Collage({ waifus, charas, tracklists }:
               charas={charas}
               filters={filters}
               mediaCharas={mediaCharas}
+              selected={selected}
               setSelected={setSelected}
             /> :
             <p className="p-2">Select a player</p>}

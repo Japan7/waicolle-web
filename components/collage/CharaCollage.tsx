@@ -1,23 +1,34 @@
 import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { WCCharaData } from '../../lib/types';
-import { compareCharaFavourites } from '../../lib/utils';
+import { compareCharaFavourites, useCollageHotkeys } from '../../lib/utils';
 
-export default function CharaCollage({ charas, setSelected }:
+export default function CharaCollage({ charas, selected, setSelected }:
   {
     charas: WCCharaData[],
+    selected: number | undefined,
     setSelected: React.Dispatch<React.SetStateAction<number | undefined>>,
   }) {
 
+  const [filtered, setFiltered] = useState<number[]>([]);
   const [pics, setPics] = useState<JSX.Element[]>([]);
   const [shown, setShown] = useState<JSX.Element[]>([]);
 
   useEffect(() => {
-    const filtered = charas.filter(c => c.image).sort(compareCharaFavourites);
-    const newPics = filtered.map(chara => <Pic chara={chara} setSelected={setSelected} key={chara.id} />);
+    const newFiltered = charas.filter(c => c.image).sort(compareCharaFavourites);
+    const newPics = newFiltered.map(chara =>
+      <Pic
+        chara={chara}
+        selected={selected}
+        setSelected={setSelected}
+        key={chara.id}
+      />);
+    setFiltered(newFiltered.map(c => c.id));
     setPics(newPics);
     setShown(newPics.slice(0, 500));
-  }, [charas, setSelected]);
+  }, [charas, selected, setSelected]);
+
+  useCollageHotkeys(filtered, selected, setSelected);
 
   return (
     <div className="h-full overflow-scroll" id="collage">
@@ -36,19 +47,23 @@ export default function CharaCollage({ charas, setSelected }:
   );
 }
 
-function Pic({ chara, setSelected }:
-  { chara: WCCharaData, setSelected: React.Dispatch<React.SetStateAction<number | undefined>> }) {
+function Pic({ chara, selected, setSelected }:
+  {
+    chara: WCCharaData,
+    selected: number | undefined,
+    setSelected: React.Dispatch<React.SetStateAction<number | undefined>>
+  }) {
 
   const src = `https://s4.anilist.co/file/anilistcdn/character/medium/${chara.image!}`;
 
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      className="w-16 h-24 cursor-pointer object-cover"
+      className={'w-16 h-24 cursor-pointer object-cover' + (chara.id === selected && ' border-2 border-purple-400')}
       src={src}
       alt={chara.name}
       loading="lazy"
-      onClick={_ => setSelected(chara.id)}
+      onClick={_ => setSelected(chara.id !== selected ? chara.id : undefined)}
     />
   );
 }

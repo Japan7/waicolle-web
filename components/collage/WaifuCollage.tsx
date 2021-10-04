@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { CollageFilters, WCCharaData, WCWaifu } from '../../lib/types';
-import { compareCharaFavourites } from '../../lib/utils';
+import { compareCharaFavourites, useCollageHotkeys } from '../../lib/utils';
 
 function compareTimestamp(a: WCWaifu, b: WCWaifu) {
   if (a.timestamp > b.timestamp) return -1;
@@ -9,15 +9,17 @@ function compareTimestamp(a: WCWaifu, b: WCWaifu) {
   return 0;
 }
 
-export default function WaifuCollage({ waifus, charas, filters, mediaCharas, setSelected }:
+export default function WaifuCollage({ waifus, charas, filters, mediaCharas, selected, setSelected }:
   {
     waifus: WCWaifu[],
     charas: { [key: number]: WCCharaData },
     filters: CollageFilters,
     mediaCharas: number[] | null,
+    selected: WCWaifu | undefined,
     setSelected: React.Dispatch<React.SetStateAction<WCWaifu | undefined>>
   }) {
 
+  const [filtered, setFiltered] = useState<WCWaifu[]>([]);
   const [pics, setPics] = useState<JSX.Element[]>([]);
   const [shown, setShown] = useState<JSX.Element[]>([]);
 
@@ -37,19 +39,23 @@ export default function WaifuCollage({ waifus, charas, filters, mediaCharas, set
   }, [mediaCharas, charas, filters]);
 
   useEffect(() => {
-    const newPics: JSX.Element[] = [];
-    waifus.sort(filters.lasts ?
-      compareTimestamp : (a, b) => compareCharaFavourites(charas[a.chara_id], charas[b.chara_id]));
-    waifus.forEach(waifu => {
-      if (isIncluded(waifu)) {
-        newPics.push(
-          <Pic waifu={waifu} chara={charas[waifu.chara_id]} setSelected={setSelected} key={waifu.id} />
-        );
-      }
-    });
+    waifus.sort(filters.lasts ? compareTimestamp :
+      (a, b) => compareCharaFavourites(charas[a.chara_id], charas[b.chara_id]));
+    const newFiltered = waifus.filter(isIncluded);
+    const newPics = newFiltered.map(waifu =>
+      <Pic
+        waifu={waifu}
+        chara={charas[waifu.chara_id]}
+        selected={selected}
+        setSelected={setSelected}
+        key={waifu.id}
+      />);
+    setFiltered(newFiltered);
     setPics(newPics);
     setShown(newPics.slice(0, 500));
-  }, [filters.lasts, isIncluded, waifus, setSelected, charas]);
+  }, [charas, filters.lasts, isIncluded, selected, setSelected, waifus]);
+
+  useCollageHotkeys(filtered, selected, setSelected);
 
   return (
     <div className="h-full overflow-scroll" id="collage">
@@ -68,10 +74,11 @@ export default function WaifuCollage({ waifus, charas, filters, mediaCharas, set
   );
 }
 
-function Pic({ waifu, chara, setSelected }:
+function Pic({ waifu, chara, selected, setSelected }:
   {
     waifu: WCWaifu,
     chara: WCCharaData,
+    selected: WCWaifu | undefined,
     setSelected: React.Dispatch<React.SetStateAction<WCWaifu | undefined>>
   }) {
 
@@ -80,11 +87,11 @@ function Pic({ waifu, chara, setSelected }:
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      className="w-16 h-24 cursor-pointer object-cover"
+      className={'w-16 h-24 cursor-pointer object-cover' + (waifu === selected && ' border-2 border-purple-400')}
       src={src}
       alt={chara.name}
       loading="lazy"
-      onClick={() => setSelected(waifu)}
+      onClick={() => setSelected(waifu !== selected ? waifu : undefined)}
     />
   );
 }

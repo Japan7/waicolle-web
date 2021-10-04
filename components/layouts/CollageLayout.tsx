@@ -14,7 +14,7 @@ export default function CollageLayout({ page, children }: { page?: string, child
   return (
     <ApolloProvider client={client}>
       <div className="h-screen collage-grid">
-        <div className="w-full p-2 flex space-x-2">
+        <nav className="w-full p-2 flex space-x-2">
           <Link href={`/${id}/collage`}>
             <a className={page === 'collage' ? 'selected' : 'button'}>Collage</a>
           </Link>
@@ -24,11 +24,11 @@ export default function CollageLayout({ page, children }: { page?: string, child
           <Link href={`/${id}/pool`}>
             <a className={page === 'pool' ? 'selected' : 'button'}>Character pool</a>
           </Link>
-        </div>
+        </nav>
 
-        <div>
+        <main>
           {children}
-        </div>
+        </main>
       </div>
 
       <style jsx>{`

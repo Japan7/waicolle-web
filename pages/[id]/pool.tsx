@@ -67,7 +67,7 @@ export default function Pool({ pools, charas, waifus, tracklists }:
             setMediaCharas={setMediaCharas}
           />
           {filters.players.length > 0 ?
-            <CharaCollage charas={selectedCharas} setSelected={setSelected} /> :
+            <CharaCollage charas={selectedCharas} selected={selected} setSelected={setSelected} /> :
             <p className="p-2">Select a player</p>}
         </div>
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { BaseCharaData, BaseMediaData, CharaData, FILTERS_VERSION, MediaEdge, WCTracklists, WCWaifu } from './types';
 
 export function useLocalStorageState<T>(name: string, defaultFilters: T):
@@ -21,6 +22,29 @@ export function useLocalStorageState<T>(name: string, defaultFilters: T):
   }, [name, state]);
 
   return [state, setState];
+}
+
+export function useCollageHotkeys<T>(
+  filtered: T[],
+  selected: T | undefined,
+  setSelected: React.Dispatch<React.SetStateAction<T | undefined>>
+) {
+  useHotkeys('up,down,left,right', (handler) => {
+    if (!selected) return;
+    const index = filtered.indexOf(selected);
+    switch (handler.key) {
+      case 'ArrowUp':
+        break;
+      case 'ArrowDown':
+        break;
+      case 'ArrowLeft':
+        if (index - 1 >= 0) setSelected(filtered[index - 1]);
+        break;
+      case 'ArrowRight':
+        if (index + 1 < filtered.length) setSelected(filtered[index + 1]);
+        break;
+    }
+  }, { enabled: selected !== undefined }, [selected, setSelected]);
 }
 
 export function getRank(chara: CharaData) {
