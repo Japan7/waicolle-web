@@ -7,14 +7,14 @@ import WaifuFiltersHeader from '../../components/collage/WaifuFiltersHeader';
 import CollageLayout from '../../components/layouts/CollageLayout';
 import { CollageFilters, WCCharaData, WCTracklists, WCWaifu } from '../../lib/types';
 import { useLocalStorageState } from '../../lib/utils';
-import { WAICOLLE_DATA } from '../api/collage/import';
+import { IMPORTED_WAIFUS } from '../api/import/waifus';
 
 export async function getServerSideProps(context: any) {
   return {
     props: {
-      waifus: WAICOLLE_DATA[context.params.id].waifus,
-      charas: WAICOLLE_DATA[context.params.id].charas,
-      tracklists: WAICOLLE_DATA[context.params.id].tracklists,
+      waifus: IMPORTED_WAIFUS[context.params.id].waifus,
+      charas: IMPORTED_WAIFUS[context.params.id].charas,
+      tracklists: IMPORTED_WAIFUS[context.params.id].tracklists,
     }
   };
 }

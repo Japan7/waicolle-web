@@ -4,18 +4,19 @@ import CharaCollage from '../../components/collage/CharaCollage';
 import InfosPanel from '../../components/collage/InfosPanel';
 import CollageLayout from '../../components/layouts/CollageLayout';
 import { WCCharaData, WCTracklists, WCWaifu } from '../../lib/types';
-import { WAICOLLE_DATA } from '../api/collage/import';
+import { IMPORTED_DAILY } from '../api/import/daily';
+import { IMPORTED_WAIFUS } from '../api/import/waifus';
 
 export async function getServerSideProps(context: any) {
-  const daily = WAICOLLE_DATA[context.params.id].daily;
-  const charaDict = WAICOLLE_DATA[context.params.id].charas;
+  const daily = IMPORTED_DAILY[context.params.id].daily;
+  const charaDict = IMPORTED_DAILY[context.params.id].charas;
   const charas = daily.map(id => charaDict[id]);
 
   return {
     props: {
       charas,
-      waifus: WAICOLLE_DATA[context.params.id].waifus,
-      tracklists: WAICOLLE_DATA[context.params.id].tracklists,
+      waifus: IMPORTED_WAIFUS[context.params.id].waifus,
+      tracklists: IMPORTED_WAIFUS[context.params.id].tracklists,
     }
   };
 }

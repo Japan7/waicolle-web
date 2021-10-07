@@ -1,10 +1,20 @@
 // Imported data
-export interface WCData {
+export interface WCWaifus {
   bot: number;
   waifus: WCWaifu[];
-  daily: number[];
-  pools: { [key: string]: number[] };
   tracklists: WCTracklists;
+  charas: { [key: number]: WCCharaData };
+}
+
+export interface WCDaily {
+  bot: number;
+  daily: number[];
+  charas: { [key: number]: WCCharaData };
+}
+
+export interface WCPools {
+  bot: number;
+  pools: { [key: string]: number[] };
   lists: WCList[];
   charas: { [key: number]: WCCharaData };
 }
