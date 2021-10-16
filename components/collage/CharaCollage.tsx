@@ -59,7 +59,7 @@ function Pic({ chara, selected, setSelected }:
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      className={'w-16 h-24 cursor-pointer object-cover' + (chara.id === selected && ' border-2 border-purple-400')}
+      className={'w-16 h-24 cursor-pointer object-cover' + (chara.id === selected ? ' border-2 border-purple-400' : '')}
       src={src}
       alt={chara.name}
       loading="lazy"
