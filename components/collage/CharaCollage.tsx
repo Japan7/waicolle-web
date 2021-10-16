@@ -25,8 +25,8 @@ export default function CharaCollage({ charas, selected, setSelected }:
       />);
     setFiltered(newFiltered.map(c => c.id));
     setPics(newPics);
-    setShown(newPics.slice(0, 500));
-  }, [charas, selected, setSelected]);
+    setShown(newPics.slice(0, shown.length || 500));
+  }, [charas, selected, setSelected, shown.length]);
 
   useCollageHotkeys(filtered, selected, setSelected);
 

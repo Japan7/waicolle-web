@@ -52,8 +52,8 @@ export default function WaifuCollage({ waifus, charas, filters, mediaCharas, sel
       />);
     setFiltered(newFiltered);
     setPics(newPics);
-    setShown(newPics.slice(0, 500));
-  }, [charas, filters.lasts, isIncluded, selected, setSelected, waifus]);
+    setShown(newPics.slice(0, shown.length || 500));
+  }, [charas, filters.lasts, isIncluded, selected, setSelected, shown.length, waifus]);
 
   useCollageHotkeys(filtered, selected, setSelected);
 
