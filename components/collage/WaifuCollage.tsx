@@ -1,6 +1,7 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { CollageFilters, WCCharaData, WCWaifu } from '../../lib/types';
-import { compareCharaFavourites, useCollageScroll } from '../../lib/utils';
+import { compareCharaFavourites, useCollageHotkeys } from '../../lib/utils';
 import { Pic } from './CharaCollage';
 
 function compareTimestamp(a: WCWaifu, b: WCWaifu) {
@@ -19,7 +20,9 @@ export default function WaifuCollage({ waifus, charas, filters, mediaCharas, sel
     setSelected: React.Dispatch<React.SetStateAction<WCWaifu | undefined>>
   }) {
 
-  const [setFiltered, setPics, infScroll] = useCollageScroll(selected, setSelected);
+  const [pics, setPics] = useState<JSX.Element[]>([]);
+  const [shown, setShown] = useState<JSX.Element[]>([]);
+  const [setFiltered] = useCollageHotkeys(selected, setSelected);
 
   const isIncluded = useCallback((waifu: WCWaifu) => {
     if (mediaCharas && !mediaCharas.includes(waifu.chara_id)) return false;
@@ -52,9 +55,23 @@ export default function WaifuCollage({ waifus, charas, filters, mediaCharas, sel
     setPics(newPics);
   }, [charas, filters.lasts, isIncluded, selected, setFiltered, setPics, setSelected, waifus]);
 
+  useEffect(() => {
+    setShown(pics.slice(0, Math.max(500, shown.length)));
+  }, [pics, shown.length]);
+
   return (
     <div className="h-full overflow-scroll" id="collage">
-      {infScroll}
+      <InfiniteScroll
+        className="flex flex-wrap justify-center"
+        dataLength={shown.length}
+        next={() => setShown(pics.slice(0, shown.length + 200))}
+        hasMore={shown.length < pics.length}
+        loader={null}
+        scrollThreshold={0.25}
+        scrollableTarget="collage"
+      >
+        {shown}
+      </InfiniteScroll>
     </div>
   );
 }

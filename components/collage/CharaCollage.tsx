@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { WCCharaData, WCWaifu } from '../../lib/types';
-import { compareCharaFavourites, useCollageScroll } from '../../lib/utils';
+import { compareCharaFavourites, useCollageHotkeys } from '../../lib/utils';
 
 export default function CharaCollage({ charas, selected, setSelected }:
   {
@@ -9,7 +10,9 @@ export default function CharaCollage({ charas, selected, setSelected }:
     setSelected: React.Dispatch<React.SetStateAction<number | undefined>>,
   }) {
 
-  const [setFiltered, setPics, infScroll] = useCollageScroll(selected, setSelected);
+  const [pics, setPics] = useState<JSX.Element[]>([]);
+  const [shown, setShown] = useState<JSX.Element[]>([]);
+  const [setFiltered] = useCollageHotkeys(selected, setSelected);
 
   useEffect(() => {
     const newFiltered = charas.filter(c => c.image).sort(compareCharaFavourites);
@@ -24,9 +27,23 @@ export default function CharaCollage({ charas, selected, setSelected }:
     setPics(newPics);
   }, [charas, selected, setFiltered, setPics, setSelected]);
 
+  useEffect(() => {
+    setShown(pics.slice(0, Math.max(500, shown.length)));
+  }, [pics, shown.length]);
+
   return (
     <div className="h-full overflow-scroll" id="collage">
-      {infScroll}
+      <InfiniteScroll
+        className="flex flex-wrap justify-center"
+        dataLength={shown.length}
+        next={() => setShown(pics.slice(0, shown.length + 200))}
+        hasMore={shown.length < pics.length}
+        loader={null}
+        scrollThreshold={0.25}
+        scrollableTarget="collage"
+      >
+        {shown}
+      </InfiniteScroll>
     </div>
   );
 }

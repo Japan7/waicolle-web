@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { BaseCharaData, BaseMediaData, CharaData, CollageFilters, DEFAULT_FILTERS, FILTERS_VERSION, MediaEdge, WCTracklists, WCWaifu } from './types';
 
 export function useLocalStorageFilters(name: string):
@@ -53,36 +52,6 @@ export function useCollageHotkeys<T>(
   }, { enabled: selected !== undefined }, [selected, setSelected]);
 
   return [setFiltered];
-}
-
-export function useCollageScroll<T>(
-  selected: T | undefined,
-  setSelected: React.Dispatch<React.SetStateAction<T | undefined>>
-): [React.Dispatch<React.SetStateAction<T[]>>, React.Dispatch<React.SetStateAction<JSX.Element[]>>, JSX.Element] {
-
-  const [setFiltered] = useCollageHotkeys<T>(selected, setSelected);
-  const [pics, setPics] = useState<JSX.Element[]>([]);
-  const [shown, setShown] = useState<JSX.Element[]>([]);
-
-  useEffect(() => {
-    setShown(pics.slice(0, Math.max(500, shown.length)));
-  }, [pics, shown.length]);
-
-  const infScroll = (
-    <InfiniteScroll
-      className="flex flex-wrap justify-center"
-      dataLength={shown.length}
-      next={() => setShown(pics.slice(0, shown.length + 200))}
-      hasMore={shown.length < pics.length}
-      loader={null}
-      scrollThreshold={0.25}
-      scrollableTarget="collage"
-    >
-      {shown}
-    </InfiniteScroll>
-  );
-
-  return [setFiltered, setPics, infScroll];
 }
 
 export function getRank(chara: CharaData) {
