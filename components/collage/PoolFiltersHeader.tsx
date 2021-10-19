@@ -1,12 +1,12 @@
 import { useMemo, useState } from 'react';
-import { BaseFilters } from '../../lib/types';
+import { CollageFilters } from '../../lib/types';
 import { MediaSelector, UserSelector } from './WaifuFiltersHeader';
 
 export default function PoolFiltersHeader({ pools, filters, setFilters, mediaCharas, setMediaCharas }:
   {
     pools: { [key: string]: number[] },
-    filters: BaseFilters,
-    setFilters: React.Dispatch<React.SetStateAction<BaseFilters>>,
+    filters: CollageFilters,
+    setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>,
     mediaCharas: number[] | null,
     setMediaCharas: React.Dispatch<React.SetStateAction<number[] | null>>,
   }) {

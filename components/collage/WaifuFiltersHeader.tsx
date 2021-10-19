@@ -1,9 +1,9 @@
 import { useLazyQuery } from '@apollo/client';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { MEDIA_DATA_QUERY } from '../../lib/queries';
-import { BaseFilters, CollageFilters, MediaData, WCWaifu } from '../../lib/types';
+import { CollageFilters, MediaData, WCWaifu } from '../../lib/types';
 
-export default function WaifuFiltersHeader({waifus, filters, setFilters, mediaCharas, setMediaCharas}:
+export default function WaifuFiltersHeader({ waifus, filters, setFilters, mediaCharas, setMediaCharas }:
   {
     waifus: WCWaifu[],
     filters: CollageFilters,
@@ -120,11 +120,11 @@ export function FiltersSelector({ filters, setFilters }:
   );
 }
 
-export function UserSelector<T extends BaseFilters>({ users, filters, setFilters }:
+export function UserSelector({ users, filters, setFilters }:
   {
     users: string[],
-    filters: T,
-    setFilters: React.Dispatch<React.SetStateAction<T>>
+    filters: CollageFilters,
+    setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>
   }) {
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -146,14 +146,15 @@ export function UserSelector<T extends BaseFilters>({ users, filters, setFilters
   );
 }
 
-export function MediaSelector<T extends BaseFilters>({filters, setFilters, mediaCharas, setMediaCharas, setMediaInfos}:
-  {
-    filters: T,
-    setFilters: React.Dispatch<React.SetStateAction<T>>,
-    mediaCharas: number[] | null,
-    setMediaCharas: React.Dispatch<React.SetStateAction<number[] | null>>,
-    setMediaInfos: React.Dispatch<React.SetStateAction<React.ReactNode>>,
-  }) {
+export function MediaSelector({
+  filters, setFilters, mediaCharas, setMediaCharas, setMediaInfos
+}: {
+  filters: CollageFilters,
+  setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>,
+  mediaCharas: number[] | null,
+  setMediaCharas: React.Dispatch<React.SetStateAction<number[] | null>>,
+  setMediaInfos: React.Dispatch<React.SetStateAction<React.ReactNode>>,
+}) {
 
   const [mediaId, setMediaId] = useState<number | null>(null);
 

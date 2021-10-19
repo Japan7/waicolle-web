@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { BaseCharaData, BaseMediaData, CharaData, FILTERS_VERSION, MediaEdge, WCTracklists, WCWaifu } from './types';
+import { BaseCharaData, BaseMediaData, CharaData, CollageFilters, DEFAULT_FILTERS, FILTERS_VERSION, MediaEdge, WCTracklists, WCWaifu } from './types';
 
-export function useLocalStorageState<T>(name: string, defaultFilters: T):
-  [T, React.Dispatch<React.SetStateAction<T>>] {
+export function useLocalStorageFilters(name: string):
+  [CollageFilters, React.Dispatch<React.SetStateAction<CollageFilters>>] {
 
-  const [state, setState] = useState<T>(defaultFilters);
+  const [state, setState] = useState<CollageFilters>(DEFAULT_FILTERS);
 
   useEffect(() => {
     const item = localStorage.getItem(name);

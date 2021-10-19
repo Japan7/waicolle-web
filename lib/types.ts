@@ -132,12 +132,22 @@ export interface Staff {
 }
 
 // Filtering
-export interface BaseFilters {
-  players: string[],
-  mediaId: number | null;
-}
+export const FILTERS_VERSION = 4;
 
-export interface CollageFilters extends BaseFilters {
+export const DEFAULT_FILTERS = {
+  players: [],
+  mediaId: null,
+  ascendedOnly: false,
+  unlockedOnly: false,
+  lockedOnly: false,
+  nanaedOnly: false,
+  blooded: false,
+  lasts: false
+};
+
+export interface CollageFilters {
+  players: string[];
+  mediaId: number | null;
   ascendedOnly: boolean;
   unlockedOnly: boolean;
   lockedOnly: boolean;
@@ -145,8 +155,6 @@ export interface CollageFilters extends BaseFilters {
   blooded: boolean;
   lasts: boolean;
 }
-
-export const FILTERS_VERSION = 3;
 
 // Posts
 export interface PostData {

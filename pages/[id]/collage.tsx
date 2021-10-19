@@ -5,8 +5,8 @@ import InfosPanel from '../../components/collage/InfosPanel';
 import WaifuCollage from '../../components/collage/WaifuCollage';
 import WaifuFiltersHeader from '../../components/collage/WaifuFiltersHeader';
 import CollageLayout from '../../components/layouts/CollageLayout';
-import { CollageFilters, WCCharaData, WCTracklists, WCWaifu } from '../../lib/types';
-import { useLocalStorageState } from '../../lib/utils';
+import { WCCharaData, WCTracklists, WCWaifu } from '../../lib/types';
+import { useLocalStorageFilters } from '../../lib/utils';
 import { IMPORTED_WAIFUS } from '../api/import/waifus';
 
 export async function getServerSideProps(context: any) {
@@ -26,19 +26,8 @@ export default function Collage({ waifus, charas, tracklists }:
     tracklists: WCTracklists
   }) {
 
-  const defaultFilters = {
-    players: [],
-    mediaId: null,
-    ascendedOnly: false,
-    unlockedOnly: false,
-    lockedOnly: false,
-    nanaedOnly: false,
-    blooded: false,
-    lasts: false
-  };
-
   const router = useRouter();
-  const [filters, setFilters] = useLocalStorageState<CollageFilters>(`collageFilters_${router.query.id}`, defaultFilters);
+  const [filters, setFilters] = useLocalStorageFilters(`collageFilters_${router.query.id}`);
   const [mediaCharas, setMediaCharas] = useState<number[] | null>(null);
   const [selected, setSelected] = useState<WCWaifu>();
 

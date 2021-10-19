@@ -5,8 +5,8 @@ import CharaCollage from '../../components/collage/CharaCollage';
 import InfosPanel from '../../components/collage/InfosPanel';
 import PoolFiltersHeader from '../../components/collage/PoolFiltersHeader';
 import CollageLayout from '../../components/layouts/CollageLayout';
-import { BaseFilters, WCCharaData, WCTracklists, WCWaifu } from '../../lib/types';
-import { useLocalStorageState } from '../../lib/utils';
+import { WCCharaData, WCTracklists, WCWaifu } from '../../lib/types';
+import { useLocalStorageFilters } from '../../lib/utils';
 import { IMPORTED_POOLS } from '../api/import/pools';
 import { IMPORTED_WAIFUS } from '../api/import/waifus';
 
@@ -29,13 +29,8 @@ export default function Pool({ pools, charas, waifus, tracklists }:
     tracklists: WCTracklists
   }) {
 
-  const defaultFilters = {
-    players: [],
-    mediaId: null,
-  };
-
   const router = useRouter();
-  const [filters, setFilters] = useLocalStorageState<BaseFilters>(`poolFilters_${router.query.id}`, defaultFilters);
+  const [filters, setFilters] = useLocalStorageFilters(`poolFilters_${router.query.id}`);
   const [mediaCharas, setMediaCharas] = useState<number[] | null>(null);
   const [selectedCharas, setSelectedCharas] = useState<WCCharaData[]>([]);
   const [selected, setSelected] = useState<number>();
