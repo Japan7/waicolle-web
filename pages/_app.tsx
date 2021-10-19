@@ -24,6 +24,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         body {
           @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100;
         }
+        select,
         option, 
         input {
           @apply text-gray-900;

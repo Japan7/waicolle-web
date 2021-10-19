@@ -134,7 +134,7 @@ export interface Staff {
 // Filtering
 export const FILTERS_VERSION = 4;
 
-export const DEFAULT_FILTERS = {
+export const DEFAULT_FILTERS: CollageFilters = {
   players: [],
   mediaId: null,
   ascendedOnly: false,

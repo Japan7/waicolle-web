@@ -181,9 +181,9 @@ function WaifuOwners({ chara, waifus }: { chara: CharaData, waifus: WCWaifu[] })
   const names = getOwners(chara.id, waifus);
   return (
     <div style={{ gridArea: 'owners' }}>
-      {names && <>
+      {names.length > 0 && <>
         <h2 className="my-2 font-bold">Owned by</h2>
-        <p>{names}</p>
+        <p>{names.join(' • ')}</p>
       </>}
     </div>
   );
@@ -193,9 +193,9 @@ function WaifuTracklisters({ chara, tracklists }: { chara: CharaData, tracklists
   const names = getTracklisters(chara, tracklists);
   return (
     <div style={{ gridArea: 'tracklists' }}>
-      {names && <>
+      {names.length > 0 && <>
         <h2 className="my-2 font-bold">In tracking list of</h2>
-        <p>{names}</p>
+        <p>{names.join(' • ')}</p>
       </>}
     </div>
   );

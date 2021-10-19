@@ -172,7 +172,7 @@ export function getOwners(charaId: number, waifus: WCWaifu[]) {
 
   names.sort((a, b) => a.localeCompare(b, 'fr', { ignorePunctuation: true }));
   if (nbBlooded > 0) names.push(`🩸 (x${nbBlooded})`);
-  return names.join(' • ');
+  return names;
 }
 
 export function getTracklisters(chara: CharaData, tracklists: WCTracklists) {
@@ -192,5 +192,5 @@ export function getTracklisters(chara: CharaData, tracklists: WCTracklists) {
   names = Array.from(new Set(names));
   names.sort((a, b) => a.localeCompare(b, 'fr', { ignorePunctuation: true }));
 
-  return names.join(' • ');
+  return names;
 }

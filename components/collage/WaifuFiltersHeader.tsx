@@ -22,15 +22,12 @@ export default function WaifuFiltersHeader({ waifus, filters, setFilters, mediaC
   }, [waifus]);
 
   return (
-    <div>
-      <button
-        className="w-full h-10 opacity-75 lg:hidden"
-        onClick={() => setShowMenu(!showMenu)}
-      >
+    <div className="mb-2">
+      <button className="w-full opacity-75 text-sm lg:hidden" onClick={() => setShowMenu(!showMenu)}>
         Toggle menu
       </button>
 
-      <div className={`${showMenu ? 'flex' : 'hidden'} lg:flex flex-row flex-wrap mb-2`}>
+      <div className={`${showMenu ? 'grid' : 'hidden'} lg:grid grid-cols-2 grid-rows-2 grid-flow-row lg:grid-cols-4 lg:grid-rows-1`}>
         <FiltersSelector filters={filters} setFilters={setFilters} />
         <UserSelector users={users} filters={filters} setFilters={setFilters} />
         <MediaSelector
@@ -43,7 +40,7 @@ export default function WaifuFiltersHeader({ waifus, filters, setFilters, mediaC
       </div>
 
       <div className="w-full flex justify-center">{mediaInfos}</div>
-    </div>
+    </div >
   );
 }
 
@@ -51,8 +48,7 @@ export function FiltersSelector({ filters, setFilters }:
   { filters: CollageFilters, setFilters: React.Dispatch<React.SetStateAction<CollageFilters>> }) {
 
   return (
-    <div className="w-full grid grid-cols-3 grid-rows-3 grid-flow-col lg:w-1/2">
-      <label className="col-span-full m-auto">Filters and sort</label>
+    <div className="col-span-2 grid grid-cols-3 grid-rows-2 grid-flow-col">
       <div className="checkbox">
         <input
           type="checkbox"
@@ -133,14 +129,13 @@ export function UserSelector({ users, filters, setFilters }:
   }, [filters, setFilters]);
 
   return (
-    <div className="w-1/2 m-auto flex flex-col items-center lg:w-1/4">
-      <label>Players</label>
+    <div className="flex flex-col items-center">
       <select
         multiple
         value={filters.players ?? users}
         onChange={handleChange}
       >
-        {users.map(user => <option value={user} key={user}>{user}</option>)}
+        {users.map(user => <option key={user}>{user}</option>)}
       </select>
     </div >
   );
@@ -199,10 +194,10 @@ export function MediaSelector({
   }, [filters, setFilters]);
 
   return (
-    <div className="w-1/2 m-auto flex flex-col items-center lg:w-1/4">
-      <label>AniList media ID</label>
+    <div className="flex flex-col items-center m-auto">
       <input
         type="number"
+        placeholder="AniList media ID"
         value={filters.mediaId ?? ''}
         onChange={handleChange}
       />

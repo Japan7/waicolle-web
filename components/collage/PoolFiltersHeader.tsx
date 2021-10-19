@@ -19,15 +19,12 @@ export default function PoolFiltersHeader({ pools, filters, setFilters, mediaCha
   }, [pools]);
 
   return (
-    <div>
-      <button
-        className="w-full h-10 opacity-75 lg:hidden"
-        onClick={() => setShowMenu(!showMenu)}
-      >
+    <div className="mb-2">
+      <button className="w-full opacity-75 text-sm lg:hidden" onClick={() => setShowMenu(!showMenu)}>
         Toggle menu
       </button>
 
-      <div className={`${showMenu ? 'flex' : 'hidden'} lg:flex flex-row flex-wrap mb-2`}>
+      <div className={`${showMenu ? 'grid' : 'hidden'} lg:grid grid-cols-2 grid-flow-row`}>
         <UserSelector users={users} filters={filters} setFilters={setFilters} />
         <MediaSelector
           filters={filters}
