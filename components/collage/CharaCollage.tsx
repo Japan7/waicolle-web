@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { WCCharaData } from '../../lib/types';
-import { compareCharaFavourites, useCollageHotkeys } from '../../lib/utils';
+import { useEffect } from 'react';
+import { WCCharaData, WCWaifu } from '../../lib/types';
+import { compareCharaFavourites, useCollageScroll } from '../../lib/utils';
 
 export default function CharaCollage({ charas, selected, setSelected }:
   {
@@ -10,9 +9,7 @@ export default function CharaCollage({ charas, selected, setSelected }:
     setSelected: React.Dispatch<React.SetStateAction<number | undefined>>,
   }) {
 
-  const [filtered, setFiltered] = useState<number[]>([]);
-  const [pics, setPics] = useState<JSX.Element[]>([]);
-  const [shown, setShown] = useState<JSX.Element[]>([]);
+  const [setFiltered, setPics, scrollDiv] = useCollageScroll(selected, setSelected);
 
   useEffect(() => {
     const newFiltered = charas.filter(c => c.image).sort(compareCharaFavourites);
@@ -25,45 +22,30 @@ export default function CharaCollage({ charas, selected, setSelected }:
       />);
     setFiltered(newFiltered.map(c => c.id));
     setPics(newPics);
-    setShown(newPics.slice(0, Math.max(500, shown.length)));
-  }, [charas, selected, setSelected, shown.length]);
+  }, [charas, selected, setFiltered, setPics, setSelected]);
 
-  useCollageHotkeys(filtered, selected, setSelected);
-
-  return (
-    <div className="h-full overflow-scroll" id="collage">
-      <InfiniteScroll
-        className="flex flex-wrap justify-center"
-        dataLength={shown.length}
-        next={() => setShown(pics.slice(0, shown.length + 200))}
-        hasMore={shown.length < pics.length}
-        loader={null}
-        scrollThreshold={0.25}
-        scrollableTarget="collage"
-      >
-        {shown}
-      </InfiniteScroll>
-    </div>
-  );
+  return scrollDiv;
 }
 
-function Pic({ chara, selected, setSelected }:
+export function Pic({ waifu, chara, selected, setSelected }:
   {
+    waifu?: WCWaifu,
     chara: WCCharaData,
-    selected: number | undefined,
-    setSelected: React.Dispatch<React.SetStateAction<number | undefined>>
+    selected: WCWaifu | number | undefined,
+    setSelected: React.Dispatch<React.SetStateAction<any | undefined>>
   }) {
 
-  const src = `https://s4.anilist.co/file/anilistcdn/character/medium/${chara.image!}`;
+  const src = `https://s4.anilist.co/file/anilistcdn/character/medium/${chara.image}`;
+  const item = waifu ?? chara.id;
 
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      className={'w-16 h-24 cursor-pointer object-cover' + (chara.id === selected ? ' border-2 border-purple-400' : '')}
+      className={'w-16 h-24 cursor-pointer object-cover' + (item === selected ? ' border-2 border-purple-400' : '')}
       src={src}
       alt={chara.name}
       loading="lazy"
-      onClick={_ => setSelected(chara.id !== selected ? chara.id : undefined)}
+      onClick={() => setSelected(item !== selected ? item : undefined)}
     />
   );
 }

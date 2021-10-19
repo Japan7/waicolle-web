@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import { useCallback, useEffect } from 'react';
 import { CollageFilters, WCCharaData, WCWaifu } from '../../lib/types';
-import { compareCharaFavourites, useCollageHotkeys } from '../../lib/utils';
+import { compareCharaFavourites, useCollageScroll } from '../../lib/utils';
+import { Pic } from './CharaCollage';
 
 function compareTimestamp(a: WCWaifu, b: WCWaifu) {
   if (a.timestamp > b.timestamp) return -1;
@@ -19,9 +19,7 @@ export default function WaifuCollage({ waifus, charas, filters, mediaCharas, sel
     setSelected: React.Dispatch<React.SetStateAction<WCWaifu | undefined>>
   }) {
 
-  const [filtered, setFiltered] = useState<WCWaifu[]>([]);
-  const [pics, setPics] = useState<JSX.Element[]>([]);
-  const [shown, setShown] = useState<JSX.Element[]>([]);
+  const [setFiltered, setPics, scrollDiv] = useCollageScroll(selected, setSelected);
 
   const isIncluded = useCallback((waifu: WCWaifu) => {
     if (mediaCharas && !mediaCharas.includes(waifu.chara_id)) return false;
@@ -52,46 +50,7 @@ export default function WaifuCollage({ waifus, charas, filters, mediaCharas, sel
       />);
     setFiltered(newFiltered);
     setPics(newPics);
-    setShown(newPics.slice(0, Math.max(500, shown.length)));
-  }, [charas, filters.lasts, isIncluded, selected, setSelected, shown.length, waifus]);
+  }, [charas, filters.lasts, isIncluded, selected, setFiltered, setPics, setSelected, waifus]);
 
-  useCollageHotkeys(filtered, selected, setSelected);
-
-  return (
-    <div className="h-full overflow-scroll" id="collage">
-      <InfiniteScroll
-        className="flex flex-wrap justify-center"
-        dataLength={shown.length}
-        next={() => setShown(pics.slice(0, shown.length + 200))}
-        hasMore={shown.length < pics.length}
-        loader={null}
-        scrollThreshold={0.25}
-        scrollableTarget="collage"
-      >
-        {shown}
-      </InfiniteScroll>
-    </div>
-  );
-}
-
-function Pic({ waifu, chara, selected, setSelected }:
-  {
-    waifu: WCWaifu,
-    chara: WCCharaData,
-    selected: WCWaifu | undefined,
-    setSelected: React.Dispatch<React.SetStateAction<WCWaifu | undefined>>
-  }) {
-
-  const src = `https://s4.anilist.co/file/anilistcdn/character/medium/${chara.image}`;
-
-  return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      className={'w-16 h-24 cursor-pointer object-cover' + (waifu === selected ? ' border-2 border-purple-400' : '')}
-      src={src}
-      alt={chara.name}
-      loading="lazy"
-      onClick={() => setSelected(waifu !== selected ? waifu : undefined)}
-    />
-  );
+  return scrollDiv;
 }

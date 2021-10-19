@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { BaseCharaData, BaseMediaData, CharaData, FILTERS_VERSION, MediaEdge, WCTracklists, WCWaifu } from './types';
 
 export function useLocalStorageState<T>(name: string, defaultFilters: T):
@@ -25,29 +26,65 @@ export function useLocalStorageState<T>(name: string, defaultFilters: T):
 }
 
 export function useCollageHotkeys<T>(
-  filtered: T[],
   selected: T | undefined,
   setSelected: React.Dispatch<React.SetStateAction<T | undefined>>
 ) {
+
+  const [filtered, setFiltered] = useState<T[]>([]);
+
   useHotkeys('up,down,left,right', (handler) => {
     const index = filtered.indexOf(selected!);
     const div = document.getElementById('collage');
     const nb_width = Math.floor(div!.offsetWidth / 64);
     switch (handler.key) {
-      case 'ArrowUp':
-        if (index > nb_width) setSelected(filtered[index - nb_width]);
-        break;
-      case 'ArrowDown':
-        if (index < filtered.length - nb_width) setSelected(filtered[index + nb_width]);
-        break;
-      case 'ArrowLeft':
-        if (index > 0) setSelected(filtered[index - 1]);
-        break;
-      case 'ArrowRight':
-        if (index < filtered.length - 1) setSelected(filtered[index + 1]);
-        break;
+    case 'ArrowUp':
+      if (index > nb_width) setSelected(filtered[index - nb_width]);
+      break;
+    case 'ArrowDown':
+      if (index < filtered.length - nb_width) setSelected(filtered[index + nb_width]);
+      break;
+    case 'ArrowLeft':
+      if (index > 0) setSelected(filtered[index - 1]);
+      break;
+    case 'ArrowRight':
+      if (index < filtered.length - 1) setSelected(filtered[index + 1]);
+      break;
     }
   }, { enabled: selected !== undefined }, [selected, setSelected]);
+
+  return [setFiltered];
+}
+
+export function useCollageScroll<T>(
+  selected: T | undefined,
+  setSelected: React.Dispatch<React.SetStateAction<T | undefined>>
+): [React.Dispatch<React.SetStateAction<T[]>>, React.Dispatch<React.SetStateAction<JSX.Element[]>>, JSX.Element] {
+
+  const [setFiltered] = useCollageHotkeys<T>(selected, setSelected);
+  const [pics, setPics] = useState<JSX.Element[]>([]);
+  const [shown, setShown] = useState<JSX.Element[]>([]);
+
+  useEffect(() => {
+    setShown(pics.slice(0, Math.max(500, shown.length)));
+  }, [pics, shown.length]);
+
+  const scrollDiv = (
+    <div className="h-full overflow-scroll" id="collage">
+      <InfiniteScroll
+        className="flex flex-wrap justify-center"
+        dataLength={shown.length}
+        next={() => setShown(pics.slice(0, shown.length + 200))}
+        hasMore={shown.length < pics.length}
+        loader={null}
+        scrollThreshold={0.25}
+        scrollableTarget="collage"
+      >
+        {shown}
+      </InfiniteScroll>
+    </div>
+  );
+
+  return [setFiltered, setPics, scrollDiv];
 }
 
 export function getRank(chara: CharaData) {
