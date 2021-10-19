@@ -9,7 +9,7 @@ export default function CharaCollage({ charas, selected, setSelected }:
     setSelected: React.Dispatch<React.SetStateAction<number | undefined>>,
   }) {
 
-  const [setFiltered, setPics, scrollDiv] = useCollageScroll(selected, setSelected);
+  const [setFiltered, setPics, infScroll] = useCollageScroll(selected, setSelected);
 
   useEffect(() => {
     const newFiltered = charas.filter(c => c.image).sort(compareCharaFavourites);
@@ -24,7 +24,11 @@ export default function CharaCollage({ charas, selected, setSelected }:
     setPics(newPics);
   }, [charas, selected, setFiltered, setPics, setSelected]);
 
-  return scrollDiv;
+  return (
+    <div className="h-full overflow-scroll" id="collage">
+      {infScroll}
+    </div>
+  );
 }
 
 export function Pic({ waifu, chara, selected, setSelected }:

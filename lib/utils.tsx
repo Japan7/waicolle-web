@@ -68,23 +68,21 @@ export function useCollageScroll<T>(
     setShown(pics.slice(0, Math.max(500, shown.length)));
   }, [pics, shown.length]);
 
-  const scrollDiv = (
-    <div className="h-full overflow-scroll" id="collage">
-      <InfiniteScroll
-        className="flex flex-wrap justify-center"
-        dataLength={shown.length}
-        next={() => setShown(pics.slice(0, shown.length + 200))}
-        hasMore={shown.length < pics.length}
-        loader={null}
-        scrollThreshold={0.25}
-        scrollableTarget="collage"
-      >
-        {shown}
-      </InfiniteScroll>
-    </div>
+  const infScroll = (
+    <InfiniteScroll
+      className="flex flex-wrap justify-center"
+      dataLength={shown.length}
+      next={() => setShown(pics.slice(0, shown.length + 200))}
+      hasMore={shown.length < pics.length}
+      loader={null}
+      scrollThreshold={0.25}
+      scrollableTarget="collage"
+    >
+      {shown}
+    </InfiniteScroll>
   );
 
-  return [setFiltered, setPics, scrollDiv];
+  return [setFiltered, setPics, infScroll];
 }
 
 export function getRank(chara: CharaData) {

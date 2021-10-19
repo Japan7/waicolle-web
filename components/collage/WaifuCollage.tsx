@@ -19,7 +19,7 @@ export default function WaifuCollage({ waifus, charas, filters, mediaCharas, sel
     setSelected: React.Dispatch<React.SetStateAction<WCWaifu | undefined>>
   }) {
 
-  const [setFiltered, setPics, scrollDiv] = useCollageScroll(selected, setSelected);
+  const [setFiltered, setPics, infScroll] = useCollageScroll(selected, setSelected);
 
   const isIncluded = useCallback((waifu: WCWaifu) => {
     if (mediaCharas && !mediaCharas.includes(waifu.chara_id)) return false;
@@ -52,5 +52,9 @@ export default function WaifuCollage({ waifus, charas, filters, mediaCharas, sel
     setPics(newPics);
   }, [charas, filters.lasts, isIncluded, selected, setFiltered, setPics, setSelected, waifus]);
 
-  return scrollDiv;
+  return (
+    <div className="h-full overflow-scroll" id="collage">
+      {infScroll}
+    </div>
+  );
 }
