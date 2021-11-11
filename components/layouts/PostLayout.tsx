@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Live2D from '../Live2D';
 
 export default function PostLayout({ children, home }: { children: React.ReactNode, home?: boolean }) {
   return (
@@ -12,8 +11,6 @@ export default function PostLayout({ children, home }: { children: React.ReactNo
       <article>
         {children}
       </article>
-
-      <Live2D />
     </div>
   );
 }
