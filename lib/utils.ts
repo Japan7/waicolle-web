@@ -106,35 +106,50 @@ export function getOwners(charaId: number, waifus: WCWaifu[]) {
   const alive: WCWaifu[] = [];
   filtered.forEach(waifu => waifu.blooded ? nbBlooded++ : alive.push(waifu));
 
-  const owners: {
-    [key: string]: {
-      count: number,
-      locked: number,
-      ascended: number,
-      nanaed: number
+  const owners = new Map<
+    string,
+    {
+      count: number;
+      locked: number;
+      ascended: number;
+      nanaed: number;
     }
-  } = {};
+  >();
 
   alive.forEach(waifu => {
-    const entry = owners[waifu.owner] ?? { count: 0, locked: 0, ascended: 0, nanaed: 0 };
+    const entry = owners.get(waifu.owner) ?? { count: 0, locked: 0, ascended: 0, nanaed: 0 };
     entry.count++;
     if (waifu.locked) entry.locked++;
     if (waifu.level > 0) entry.ascended++;
     if (waifu.nanaed) entry.nanaed++;
-    owners[waifu.owner] = entry;
+    owners.set(waifu.owner, entry);
   });
 
   const names: string[] = [];
 
-  Object.entries(owners).forEach(([name, entry]) => {
+  owners.forEach((entry, name) => {
     let subtext = name;
-    if (entry.count > 1) subtext += ` (x${entry.count})`;
+
+    let counttext = '';
+    if (entry.count > 1 || entry.ascended > 0) {
+      const baseNb = entry.count - entry.ascended;
+      counttext = '(';
+      if (entry.ascended > 1) counttext += entry.ascended;
+      if (entry.ascended > 0) {
+        counttext += '🌟';
+        if (baseNb > 0) counttext += '+';
+      } else {
+        counttext += 'x';
+      }
+      if (baseNb > 0) counttext += baseNb;
+      counttext += ')';
+    }
+    if (counttext) subtext += ' ' + counttext;
 
     let modifier = '';
     if (entry.locked === entry.count) modifier += '🔒';
-    if (entry.ascended) modifier += '🌟';
     if (entry.nanaed) modifier += '🌈';
-    if (modifier) subtext += ` ${modifier}`;
+    if (modifier) subtext += ' ' + modifier;
 
     names.push(subtext);
   });
