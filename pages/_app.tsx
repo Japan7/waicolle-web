@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import 'tailwindcss/tailwind.css';
+import '../styles/globals.css';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -19,17 +19,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       </Head>
 
       <Component {...pageProps} />
-
-      <style jsx global>{`
-        body {
-          @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100;
-        }
-        select,
-        option, 
-        input {
-          @apply text-gray-900;
-        }
-      `}</style>
     </>
   );
 }
