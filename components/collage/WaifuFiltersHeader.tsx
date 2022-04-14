@@ -75,7 +75,7 @@ export function FiltersSelector({ filters, setFilters }:
           checked={filters.ascendedOnly}
           onChange={() => setFilters({ ...filters, ascendedOnly: !filters.ascendedOnly })}
         />
-        <label htmlFor="ascended">🌟 Ascended</label>
+        <label htmlFor="ascended">⭐ Ascended</label>
       </div>
       <div className={styles.checkbox}>
         <input

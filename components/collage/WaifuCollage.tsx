@@ -28,7 +28,7 @@ export default function WaifuCollage({ waifus, charas, filters, mediaCharas, sel
     if (mediaCharas && !mediaCharas.includes(waifu.chara_id)) return false;
     if (!charas[waifu.chara_id].image || charas[waifu.chara_id].image!.endsWith('default.jpg')) return false;
 
-    if (filters.blooded != waifu.blooded) return false;
+    if (filters.blooded !== waifu.blooded) return false;
     if (!filters.players.includes(waifu.owner)) return false;
 
     if (filters.ascendedOnly && waifu.level === 0) return false;

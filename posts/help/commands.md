@@ -122,7 +122,7 @@ Unlock previously locked characters.
 
 `/waifu ascend`
 
-Ascend characters you own 4 times so they appear 4 times bigger on the collage and obtain the 🌟 badge.
+Ascend characters you own 4 times so they appear 4 times bigger on the collage and obtain the ⭐ badge.
 
 ### customize
 

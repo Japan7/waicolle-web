@@ -60,7 +60,6 @@ export function Pic({ waifu, chara, selected, setSelected }:
   const item = waifu ?? chara.id;
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
     <img
       className={'w-16 h-24 cursor-pointer object-cover' + (item === selected ? ' border-2 border-purple-400' : '')}
       src={src}

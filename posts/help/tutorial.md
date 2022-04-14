@@ -86,7 +86,7 @@ You can unlock characters at any time with `/waifu unlock`.
 
 If you have 4 copies of the same character you can exchange them for an ascended version of this character with `/waifu ascend`.
 
-Ascended characters are 4 times bigger in Discord collages and obtain the 🌟 badge.
+Ascended characters are 4 times bigger in Discord collages and obtain the ⭐ badge.
 
 ### Collages and albums
 

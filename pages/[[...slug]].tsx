@@ -16,7 +16,7 @@ export async function getStaticProps({ params }: { params: { slug: string[] } })
 
 export default function Home({ postData }: { postData: PostData }) {
   return (
-    <PostLayout home={postData.slug[0] == 'index'}>
+    <PostLayout home={postData.slug[0] === 'index'}>
       <Head>
         {postData.tags.title &&
           <title>{postData.tags.title} | Waifu Collection</title>}

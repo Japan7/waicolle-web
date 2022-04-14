@@ -66,15 +66,17 @@ function CharaName({ chara }: { chara: CharaData }) {
 
 function CharaImage({ chara }: { chara: CharaData }) {
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      className="mx-auto my-4 w-2/3 object-contain cursor-pointer"
-      style={{ gridArea: 'image' }}
-      src={chara.image.large ?? ''}
-      alt={chara.name.userPreferred}
-      loading="lazy"
-      onClick={() => window.open(chara.siteUrl, '_blank')}
-    />
+    <a
+      href={chara.siteUrl}
+      className="block mx-auto my-4 w-2/3 object-contain cursor-pointer"
+    >
+      <img
+        style={{ gridArea: "image" }}
+        src={chara.image.large ?? ""}
+        alt={chara.name.userPreferred}
+        loading="lazy"
+      />
+    </a>
   );
 }
 
@@ -99,7 +101,8 @@ function WaifuCharaProps({ chara, waifu }: { chara: CharaData, waifu?: WCWaifu }
       {waifu &&
         <div className="flex text-3xl my-2" style={{ gridArea: 'modifiers' }}>
           {waifu.locked && <p className="mx-auto">🔒</p>}
-          {(waifu.level > 0) && <p className="mx-auto">🌟</p>}
+          {(waifu.level === 1) && <p className="mx-auto">⭐</p>}
+          {(waifu.level > 1) && <p className="mx-auto">🌟</p>}
           {waifu.nanaed && <p className="mx-auto">🌈</p>}
           {waifu.blooded && <p className="mx-auto">🩸</p>}
         </div>}
