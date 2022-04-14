@@ -1,0 +1,7 @@
+.checkbox {
+  @apply m-auto space-x-1 flex flex-col items-center lg:flex-row text-sm lg:text-base;
+}
+
+.checkbox * {
+  @apply cursor-pointer;
+}

@@ -1,0 +1,12 @@
+.collagegrid {
+  display: grid;
+  grid-template-rows: 42px calc(100% - 42px);
+}
+
+.selected {
+  @apply flex-grow text-center rounded-md bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900;
+}
+
+.button {
+  @apply flex-grow text-center rounded-md border border-gray-400;
+}

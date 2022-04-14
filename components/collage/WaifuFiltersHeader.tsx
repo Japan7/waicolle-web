@@ -2,6 +2,7 @@ import { useLazyQuery } from '@apollo/client';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { MEDIA_DATA_QUERY } from '../../lib/queries';
 import { CollageFilters, MediaData, WCWaifu } from '../../lib/types';
+import styles from '../../styles/WaifuFiltersHeader.module.css';
 
 export default function WaifuFiltersHeader({ waifus, filters, setFilters, mediaCharas, setMediaCharas }:
   {
@@ -49,7 +50,7 @@ export function FiltersSelector({ filters, setFilters }:
 
   return (
     <div className="col-span-2 grid grid-cols-3 grid-rows-2 grid-flow-col">
-      <div className="checkbox">
+      <div className={styles.checkbox}>
         <input
           type="checkbox"
           id="unlocked"
@@ -58,7 +59,7 @@ export function FiltersSelector({ filters, setFilters }:
         />
         <label htmlFor="unlocked">🔓 Unlocked</label>
       </div>
-      <div className="checkbox">
+      <div className={styles.checkbox}>
         <input
           type="checkbox"
           id="locked"
@@ -67,7 +68,7 @@ export function FiltersSelector({ filters, setFilters }:
         />
         <label htmlFor="locked">🔒 Locked</label>
       </div>
-      <div className="checkbox">
+      <div className={styles.checkbox}>
         <input
           type="checkbox"
           id="ascended"
@@ -76,7 +77,7 @@ export function FiltersSelector({ filters, setFilters }:
         />
         <label htmlFor="ascended">🌟 Ascended</label>
       </div>
-      <div className="checkbox">
+      <div className={styles.checkbox}>
         <input
           type="checkbox"
           id="nanaed"
@@ -85,7 +86,7 @@ export function FiltersSelector({ filters, setFilters }:
         />
         <label htmlFor="nanaed">🌈 Nanaed</label>
       </div>
-      <div className="checkbox">
+      <div className={styles.checkbox}>
         <input
           type="checkbox"
           id="blooded"
@@ -94,7 +95,7 @@ export function FiltersSelector({ filters, setFilters }:
         />
         <label htmlFor="blooded">🩸 Blooded</label>
       </div>
-      <div className="checkbox">
+      <div className={styles.checkbox}>
         <input
           type="checkbox"
           id="lasts"
@@ -103,15 +104,6 @@ export function FiltersSelector({ filters, setFilters }:
         />
         <label htmlFor="lasts">📆 ↓ Timestamp</label>
       </div>
-
-      <style jsx>{`
-        .checkbox {
-          @apply m-auto space-x-1 flex flex-col items-center lg:flex-row text-sm lg:text-base;
-          * {
-            @apply cursor-pointer;
-          }
-        }
-      `}</style>
     </div>
   );
 }

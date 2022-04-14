@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import { ErrorBoundary } from 'react-error-boundary';
+import styles from '../styles/Live2D.module.css';
 
 const ReactLive2d = dynamic<any>(() => import('react-live2d'), { ssr: false });
 
@@ -33,15 +34,6 @@ export default function Live2D() {
         PathFull="/live2d/"
         menuList={[]}
       />
-
-      <style jsx global>{`
-        #live2d-container {
-          @apply hidden lg:block;
-        }
-        #live2d-print {
-          @apply bg-opacity-50 bg-gray-900 text-gray-100 top-16 right-0 left-auto !important;
-        }
-      `}</style>
     </ErrorBoundary>
   );
 }

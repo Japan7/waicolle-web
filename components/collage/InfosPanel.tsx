@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import { CHARA_DATA_QUERY } from '../../lib/queries';
 import { CharaData, CollageFilters, WCTracklists, WCWaifu } from '../../lib/types';
 import { getCharaMedias, getOwners, getRank, getTracklisters } from '../../lib/utils';
+import styles from '../../styles/InfosPanel.module.css';
 
 export default function InfosPanel({ charaId, waifu, waifus, tracklists, filters, setFilters }:
   {
@@ -43,38 +44,13 @@ function CharaInfos({ chara, waifu, waifus, tracklists, filters, setFilters }:
   }) {
 
   return (
-    <div className="infos grid p-2">
+    <div className={styles.infos + " grid p-2"}>
       <CharaName chara={chara} />
       <CharaImage chara={chara} />
       <WaifuCharaProps chara={chara} waifu={waifu} />
       <WaifuOwners chara={chara} waifus={waifus} />
       {tracklists && <WaifuTracklisters chara={chara} tracklists={tracklists} />}
       <CharaMedias chara={chara} filters={filters} setFilters={setFilters} />
-
-      <style jsx>{`
-        .infos {
-          grid-template:
-            "name name"
-            "image props"
-            "image modifiers"
-            "owners owners"
-            "tracklists tracklists"
-            "medias medias"
-            / 1fr 3fr;
-        }
-        @screen lg {
-          .infos {
-            grid-template:
-              "name"
-              "image"
-              "props"
-              "modifiers"
-              "owners"
-              "tracklists"
-              "medias";
-          }
-        }
-      `}</style>
     </div>
   );
 }

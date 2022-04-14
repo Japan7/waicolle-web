@@ -1,6 +1,7 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
+import styles from '../../styles/CollageLayout.module.css';
 
 const client = new ApolloClient({
   uri: 'https://graphql.anilist.co',
@@ -13,16 +14,16 @@ export default function CollageLayout({ page, children }: { page?: string, child
 
   return (
     <ApolloProvider client={client}>
-      <div className="h-screen collage-grid">
+      <div className={"h-screen " + styles.collagegrid}>
         <nav className="w-full p-2 flex space-x-2">
           <Link href={`/${id}/collage`}>
-            <a className={page === 'collage' ? 'selected' : 'button'}>Collage</a>
+            <a className={page === 'collage' ? styles.selected : styles.button}>Collage</a>
           </Link>
           <Link href={`/${id}/daily`}>
-            <a className={page === 'daily' ? 'selected' : 'button'}>Daily tag</a>
+            <a className={page === 'daily' ? styles.selected : styles.button}>Daily tag</a>
           </Link>
           <Link href={`/${id}/pool`}>
-            <a className={page === 'pool' ? 'selected' : 'button'}>Character pool</a>
+            <a className={page === 'pool' ? styles.selected : styles.button}>Character pool</a>
           </Link>
         </nav>
 
@@ -30,19 +31,6 @@ export default function CollageLayout({ page, children }: { page?: string, child
           {children}
         </main>
       </div>
-
-      <style jsx>{`
-        .collage-grid {
-          display: grid;
-          grid-template-rows: 42px calc(100% - 42px);
-        }
-        .selected {
-          @apply flex-grow text-center rounded-md bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900;
-        }
-        .button {
-          @apply flex-grow text-center rounded-md border border-gray-400;
-        }
-      `}</style>
     </ApolloProvider>
   );
 }
