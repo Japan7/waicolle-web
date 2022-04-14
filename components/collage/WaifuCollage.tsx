@@ -60,7 +60,7 @@ export default function WaifuCollage({ waifus, charas, filters, mediaCharas, sel
   }, [pics, shown.length]);
 
   return (
-    <div className="h-full overflow-scroll" id="collage">
+    <div className="h-full overflow-y-scroll" id="collage">
       <InfiniteScroll
         className="flex flex-wrap justify-center"
         dataLength={shown.length}

@@ -32,7 +32,7 @@ export default function CharaCollage({ charas, selected, setSelected }:
   }, [pics, shown.length]);
 
   return (
-    <div className="h-full overflow-scroll" id="collage">
+    <div className="h-full overflow-y-scroll" id="collage">
       <InfiniteScroll
         className="flex flex-wrap justify-center"
         dataLength={shown.length}

@@ -38,7 +38,7 @@ export default function Collage({ waifus, charas, tracklists }:
           <title>Collage | Waifu Collection</title>
         </Head>
 
-        <div className="overflow-y-hidden row-span-2 lg:row-span-full lg:col-span-3 flex flex-col">
+        <div className="overflow-hidden row-span-2 lg:row-span-full lg:col-span-3 flex flex-col">
           <WaifuFiltersHeader
             waifus={waifus}
             filters={filters}
