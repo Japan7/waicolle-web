@@ -22,7 +22,7 @@ export default function WaifuCollage({ waifus, charas, filters, mediaCharas, sel
 
   const [pics, setPics] = useState<JSX.Element[]>([]);
   const [shown, setShown] = useState<JSX.Element[]>([]);
-  const [setFiltered] = useCollageHotkeys(selected, setSelected);
+  const [setFiltered] = useCollageHotkeys(selected, setSelected, "collage");
 
   const isIncluded = useCallback((waifu: WCWaifu) => {
     if (mediaCharas && !mediaCharas.includes(waifu.chara_id)) return false;

@@ -12,7 +12,7 @@ export default function CharaCollage({ charas, selected, setSelected }:
 
   const [pics, setPics] = useState<JSX.Element[]>([]);
   const [shown, setShown] = useState<JSX.Element[]>([]);
-  const [setFiltered] = useCollageHotkeys(selected, setSelected);
+  const [setFiltered] = useCollageHotkeys(selected, setSelected, "collage");
 
   useEffect(() => {
     const newFiltered = charas.filter(c => c.image).sort(compareCharaFavourites);

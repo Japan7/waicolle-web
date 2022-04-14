@@ -26,21 +26,27 @@ export function useLocalStorageFilters(name: string):
 
 export function useCollageHotkeys<T>(
   selected: T | undefined,
-  setSelected: React.Dispatch<React.SetStateAction<T | undefined>>
+  setSelected: React.Dispatch<React.SetStateAction<T | undefined>>,
+  elementId: string
 ) {
 
   const [filtered, setFiltered] = useState<T[]>([]);
 
+  
   useHotkeys('up,down,left,right', (handler) => {
+    handler.preventDefault();
     const index = filtered.indexOf(selected!);
     const div = document.getElementById('collage');
     const nb_width = Math.floor(div!.offsetWidth / 64);
+    const elem = document.getElementById(elementId)!;
     switch (handler.key) {
     case 'ArrowUp':
       if (index > nb_width) setSelected(filtered[index - nb_width]);
+      elem.scrollBy(0, -96);
       break;
     case 'ArrowDown':
       if (index < filtered.length - nb_width) setSelected(filtered[index + nb_width]);
+      elem.scrollBy(0, 96);
       break;
     case 'ArrowLeft':
       if (index > 0) setSelected(filtered[index - 1]);
@@ -127,7 +133,6 @@ export function getOwners(charaId: number, waifus: WCWaifu[]) {
     }
     owners.set(waifu.owner, owner_dict);
   });
-  console.log(owners);
 
   const text: string[] = [];
   owners.forEach((entry, owner) => {
