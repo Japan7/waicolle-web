@@ -27,35 +27,38 @@ export function useLocalStorageFilters(name: string):
 export function useCollageHotkeys<T>(
   selected: T | undefined,
   setSelected: React.Dispatch<React.SetStateAction<T | undefined>>,
-  elementId: string
+  elementId: string = "collage"
 ) {
-
   const [filtered, setFiltered] = useState<T[]>([]);
 
-  
-  useHotkeys('up,down,left,right', (handler) => {
-    handler.preventDefault();
-    const index = filtered.indexOf(selected!);
-    const div = document.getElementById('collage');
-    const nb_width = Math.floor(div!.offsetWidth / 64);
-    const elem = document.getElementById(elementId)!;
-    switch (handler.key) {
-    case 'ArrowUp':
-      if (index > nb_width) setSelected(filtered[index - nb_width]);
-      elem.scrollBy(0, -96);
-      break;
-    case 'ArrowDown':
-      if (index < filtered.length - nb_width) setSelected(filtered[index + nb_width]);
-      elem.scrollBy(0, 96);
-      break;
-    case 'ArrowLeft':
-      if (index > 0) setSelected(filtered[index - 1]);
-      break;
-    case 'ArrowRight':
-      if (index < filtered.length - 1) setSelected(filtered[index + 1]);
-      break;
-    }
-  }, { enabled: selected !== undefined }, [selected, setSelected]);
+  useHotkeys(
+    "up,down,left,right",
+    (handler) => {
+      handler.preventDefault();
+      const index = filtered.indexOf(selected!);
+      const div = document.getElementById(elementId)!;
+      const nb_width = Math.floor(div!.offsetWidth / 64);
+      switch (handler.key) {
+      case "ArrowUp":
+        if (index > nb_width) setSelected(filtered[index - nb_width]);
+        div.scrollBy(0, -96);
+        break;
+      case "ArrowDown":
+        if (index < filtered.length - nb_width)
+          setSelected(filtered[index + nb_width]);
+        div.scrollBy(0, 96);
+        break;
+      case "ArrowLeft":
+        if (index > 0) setSelected(filtered[index - 1]);
+        break;
+      case "ArrowRight":
+        if (index < filtered.length - 1) setSelected(filtered[index + 1]);
+        break;
+      }
+    },
+    { enabled: selected !== undefined },
+    [selected, setSelected]
+  );
 
   return [setFiltered];
 }

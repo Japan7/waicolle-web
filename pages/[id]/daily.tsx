@@ -33,7 +33,7 @@ export default function Daily({ charas, waifus, tracklists }:
           <title>Daily tag | Waifu Collection</title>
         </Head>
 
-        <div className="overflow-y-scroll row-span-2 lg:row-span-full lg:col-span-3 flex flex-col">
+        <div className="overflow-y-hidden row-span-2 lg:row-span-full lg:col-span-3 flex flex-col">
           <CharaCollage charas={charas} selected={selected} setSelected={setSelected} />
         </div>
 
