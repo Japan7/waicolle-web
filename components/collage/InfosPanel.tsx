@@ -68,6 +68,8 @@ function CharaImage({ chara }: { chara: CharaData }) {
   return (
     <a
       href={chara.siteUrl}
+      target="_blank"
+      rel="noreferrer"
       className="block mx-auto my-4 w-2/3 object-contain cursor-pointer"
     >
       <img
