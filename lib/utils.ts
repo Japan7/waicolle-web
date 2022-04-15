@@ -174,43 +174,43 @@ export function getOwners(charaId: number, waifus: WCWaifu[]) {
         counttext += `${locked.count}`;
       }
       counttext += ")";
-
-      const unlocked = entry.unlocked;
-      if (
-        unlocked.count === 1 &&
-        unlocked.ascended === 0 &&
-        unlocked.double_ascended === 0
-      ) {
-        counttext += " 🔓";
-      } else if (unlocked.count > 0) {
-        counttext += " 🔓(";
-        if (unlocked.double_ascended > 1) {
-          counttext += `${unlocked.double_ascended}`;
-        }
-        if (unlocked.double_ascended > 0) {
-          counttext += "🌟";
-          unlocked.count -= unlocked.double_ascended;
-          if (unlocked.count > 0) {
-            counttext += "+";
-          }
-        }
-        if (unlocked.ascended > 1) {
-          counttext += `${unlocked.ascended}`;
-        }
-        if (unlocked.ascended > 0) {
-          counttext += "⭐";
-          unlocked.count -= unlocked.ascended;
-          if (unlocked.count > 0) {
-            counttext += "+";
-          }
-        }
-        if (unlocked.count > 0) {
-          counttext += `${unlocked.count}`;
-        }
-        counttext += ")";
-      }
-
     }
+
+    const unlocked = entry.unlocked;
+    if (
+      unlocked.count === 1 &&
+      unlocked.ascended === 0 &&
+      unlocked.double_ascended === 0
+    ) {
+      counttext += " 🔓";
+    } else if (unlocked.count > 0) {
+      counttext += " 🔓(";
+      if (unlocked.double_ascended > 1) {
+        counttext += `${unlocked.double_ascended}`;
+      }
+      if (unlocked.double_ascended > 0) {
+        counttext += "🌟";
+        unlocked.count -= unlocked.double_ascended;
+        if (unlocked.count > 0) {
+          counttext += "+";
+        }
+      }
+      if (unlocked.ascended > 1) {
+        counttext += `${unlocked.ascended}`;
+      }
+      if (unlocked.ascended > 0) {
+        counttext += "⭐";
+        unlocked.count -= unlocked.ascended;
+        if (unlocked.count > 0) {
+          counttext += "+";
+        }
+      }
+      if (unlocked.count > 0) {
+        counttext += `${unlocked.count}`;
+      }
+      counttext += ")";
+    }
+
     subtext += counttext;
     if (subtext) text.push(subtext);
   });
