@@ -146,11 +146,15 @@ export function MediaSelector({
   const [mediaId, setMediaId] = useState<number | null>(null);
 
   const [getMediaCharas, { data, error }] = useLazyQuery<{ Media: MediaData }>(MEDIA_DATA_QUERY, {
-    variables: { id: mediaId },
     onCompleted: data => {
       setMediaCharas([...mediaCharas!, ...data.Media.characters.nodes.map(n => n.id)]);
       if (data.Media.characters.pageInfo.hasNextPage) {
-        getMediaCharas({ variables: { chara_page: data.Media.characters.pageInfo.currentPage + 1 } });
+        getMediaCharas({
+          variables: {
+            id: mediaId,
+            chara_page: data.Media.characters.pageInfo.currentPage + 1,
+          },
+        });
       }
     }
   });
@@ -159,7 +163,7 @@ export function MediaSelector({
     setMediaId(filters.mediaId);
     if (filters.mediaId) {
       setMediaCharas([]);
-      getMediaCharas({ variables: { chara_page: 1 } });
+      getMediaCharas({ variables: { id: filters.mediaId } });
     } else {
       setMediaCharas(null);
     }
@@ -167,7 +171,7 @@ export function MediaSelector({
 
   useEffect(() => {
     if (mediaId) {
-      if (data) {
+      if (data && data.Media) {
         setMediaInfos(
           <a href={data.Media.siteUrl} className="font-bold">
             [{data.Media.type}] {data.Media.title.romaji}
