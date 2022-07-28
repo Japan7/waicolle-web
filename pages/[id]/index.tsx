@@ -1,5 +1,5 @@
-import Head from 'next/head';
-import CollageLayout from '../../components/layouts/CollageLayout';
+import Head from "next/head";
+import CollageLayout from "../../components/layouts/CollageLayout";
 
 export default function Index() {
   return (

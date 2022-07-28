@@ -1,33 +1,41 @@
-import { useRouter } from 'next/dist/client/router';
-import Head from 'next/head';
-import React, { useState } from 'react';
-import InfosPanel from '../../components/collage/InfosPanel';
-import WaifuCollage from '../../components/collage/WaifuCollage';
-import WaifuFiltersHeader from '../../components/collage/WaifuFiltersHeader';
-import CollageLayout from '../../components/layouts/CollageLayout';
-import { WCCharaData, WCTracklists, WCWaifu } from '../../lib/types';
-import { useLocalStorageFilters } from '../../lib/utils';
-import { IMPORTED_WAIFUS } from '../api/import/waifus';
+import { useRouter } from "next/dist/client/router";
+import Head from "next/head";
+import { useState } from "react";
+import InfosPanel from "../../components/collage/InfosPanel";
+import WaifuCollage from "../../components/collage/WaifuCollage";
+import WaifuFiltersHeader from "../../components/collage/WaifuFiltersHeader";
+import CollageLayout from "../../components/layouts/CollageLayout";
+import { useLocalStorageFilters } from "../../lib/hooks";
+import { redis } from "../../lib/redis";
+import { WCCharaData, WCTracklists, WCWaifu, WCWaifus } from "../../types";
 
 export async function getServerSideProps(context: any) {
+  const id = context.query.id;
+  const resp = await redis.hget("waifus", id);
+  if (!resp) throw new Error("id not found");
+  const waifus = JSON.parse(resp) as WCWaifus;
   return {
     props: {
-      waifus: IMPORTED_WAIFUS[context.params.id].waifus,
-      charas: IMPORTED_WAIFUS[context.params.id].charas,
-      tracklists: IMPORTED_WAIFUS[context.params.id].tracklists,
-    }
+      waifus: waifus.waifus,
+      charas: waifus.charas,
+      tracklists: waifus.tracklists,
+    },
   };
 }
 
-export default function Collage({ waifus, charas, tracklists }:
-  {
-    waifus: WCWaifu[],
-    charas: { [key: number]: WCCharaData },
-    tracklists: WCTracklists
-  }) {
-
+export default function Collage({
+  waifus,
+  charas,
+  tracklists,
+}: {
+  waifus: WCWaifu[];
+  charas: { [key: number]: WCCharaData };
+  tracklists: WCTracklists;
+}) {
   const router = useRouter();
-  const [filters, setFilters] = useLocalStorageFilters(`collageFilters_${router.query.id}`);
+  const [filters, setFilters] = useLocalStorageFilters(
+    `collageFilters_${router.query.id}`
+  );
   const [mediaCharas, setMediaCharas] = useState<number[] | null>(null);
   const [selected, setSelected] = useState<WCWaifu>();
 
@@ -47,7 +55,7 @@ export default function Collage({ waifus, charas, tracklists }:
             setMediaCharas={setMediaCharas}
           />
 
-          {filters.players.length > 0 ?
+          {filters.players.length > 0 ? (
             <WaifuCollage
               waifus={waifus}
               charas={charas}
@@ -55,8 +63,10 @@ export default function Collage({ waifus, charas, tracklists }:
               mediaCharas={mediaCharas}
               selected={selected}
               setSelected={setSelected}
-            /> :
-            <p className="p-2">Select a player</p>}
+            />
+          ) : (
+            <p className="p-2">Select a player</p>
+          )}
         </div>
 
         <div className="overflow-y-scroll">
@@ -72,4 +82,4 @@ export default function Collage({ waifus, charas, tracklists }:
       </div>
     </CollageLayout>
   );
-};
+}

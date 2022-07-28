@@ -1,76 +1,20 @@
-import { useEffect, useState } from 'react';
-import { useHotkeys } from 'react-hotkeys-hook';
-import { BaseCharaData, BaseMediaData, CharaData, CollageFilters, DEFAULT_FILTERS, FILTERS_VERSION, MediaEdge, WCTracklists, WCWaifu } from './types';
-
-export function useLocalStorageFilters(name: string):
-  [CollageFilters, React.Dispatch<React.SetStateAction<CollageFilters>>] {
-
-  const [state, setState] = useState<CollageFilters>(DEFAULT_FILTERS);
-
-  useEffect(() => {
-    const item = localStorage.getItem(name);
-    if (item) {
-      const parsed = JSON.parse(item);
-      (parsed.version === FILTERS_VERSION) ?
-        setState(parsed) : localStorage.removeItem(name);
-    }
-  }, [name]);
-
-  useEffect(() => {
-    localStorage.setItem(name,
-      JSON.stringify({ ...state, version: FILTERS_VERSION }));
-  }, [name, state]);
-
-  return [state, setState];
-}
-
-export function useCollageHotkeys<T>(
-  selected: T | undefined,
-  setSelected: React.Dispatch<React.SetStateAction<T | undefined>>,
-  elementId: string = "collage"
-) {
-  const [filtered, setFiltered] = useState<T[]>([]);
-
-  useHotkeys(
-    "up,down,left,right",
-    (handler) => {
-      handler.preventDefault();
-      const index = filtered.indexOf(selected!);
-      const div = document.getElementById(elementId)!;
-      const nb_width = Math.floor(div!.offsetWidth / 64);
-      switch (handler.key) {
-      case "ArrowUp":
-        if (index > nb_width) setSelected(filtered[index - nb_width]);
-        div.scrollBy(0, -96);
-        break;
-      case "ArrowDown":
-        if (index < filtered.length - nb_width)
-          setSelected(filtered[index + nb_width]);
-        div.scrollBy(0, 96);
-        break;
-      case "ArrowLeft":
-        if (index > 0) setSelected(filtered[index - 1]);
-        break;
-      case "ArrowRight":
-        if (index < filtered.length - 1) setSelected(filtered[index + 1]);
-        break;
-      }
-    },
-    { enabled: selected !== undefined },
-    [selected, setSelected]
-  );
-
-  return [setFiltered];
-}
+import {
+  BaseCharaData,
+  BaseMediaData,
+  CharaData,
+  MediaEdge,
+  WCTracklists,
+  WCWaifu,
+} from "../types";
 
 export function getRank(chara: CharaData) {
-  if (chara.favourites >= 10000) return 'SS';
-  if (chara.favourites >= 3000) return 'S';
-  if (chara.favourites >= 1000) return 'A';
-  if (chara.favourites >= 200) return 'B';
-  if (chara.favourites >= 20) return 'C';
-  if (chara.favourites >= 1) return 'D';
-  return 'E';
+  if (chara.favourites >= 10000) return "SS";
+  if (chara.favourites >= 3000) return "S";
+  if (chara.favourites >= 1000) return "A";
+  if (chara.favourites >= 200) return "B";
+  if (chara.favourites >= 20) return "C";
+  if (chara.favourites >= 1) return "D";
+  return "E";
 }
 
 export function compareCharaFavourites(a: BaseCharaData, b: BaseCharaData) {
@@ -82,8 +26,10 @@ export function compareCharaFavourites(a: BaseCharaData, b: BaseCharaData) {
 }
 
 function compareEdges(a: MediaEdge, b: MediaEdge) {
-  if (a.characterRole !== 'BACKGROUND' && b.characterRole === 'BACKGROUND') return -1;
-  if (a.characterRole === 'BACKGROUND' && b.characterRole !== 'BACKGROUND') return 1;
+  if (a.characterRole !== "BACKGROUND" && b.characterRole === "BACKGROUND")
+    return -1;
+  if (a.characterRole === "BACKGROUND" && b.characterRole !== "BACKGROUND")
+    return 1;
   return 0;
 }
 
@@ -93,9 +39,9 @@ export function getCharaMedias(chara: CharaData) {
   const mangas: BaseMediaData[] = [];
   let seiyuu: string | null = null;
 
-  edges.forEach(e => {
+  edges.forEach((e) => {
     const node = e.node;
-    if (node.type === 'ANIME') {
+    if (node.type === "ANIME") {
       animes.push(node);
       if (!seiyuu && e.voiceActors.length > 0) {
         const name = e.voiceActors[0].name;
@@ -275,21 +221,22 @@ export function getOwners(charaId: number, waifus: WCWaifu[]) {
 }
 
 export function getTracklisters(chara: CharaData, tracklists: WCTracklists) {
-  const medias = chara.media?.edges.map(e => e.node.id);
+  const medias = chara.media?.edges.map((e) => e.node.id);
 
   let names: string[] = [];
 
-  tracklists.media.forEach(m => {
+  tracklists.media.forEach((m) => {
     if (medias?.includes(m.media_id)) names.push(m.player);
   });
 
-  Object.values(tracklists.collection).forEach(c =>
-    c.medias.forEach(m => {
+  Object.values(tracklists.collection).forEach((c) =>
+    c.medias.forEach((m) => {
       if (medias?.includes(m)) names.push(c.player);
-    }));
+    })
+  );
 
   names = Array.from(new Set(names));
-  names.sort((a, b) => a.localeCompare(b, 'fr', { ignorePunctuation: true }));
+  names.sort((a, b) => a.localeCompare(b, "fr", { ignorePunctuation: true }));
 
   return names;
 }

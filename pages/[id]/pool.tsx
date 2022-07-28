@@ -1,49 +1,65 @@
-import { useRouter } from 'next/dist/client/router';
-import Head from 'next/head';
-import React, { useEffect, useState } from 'react';
-import CharaCollage from '../../components/collage/CharaCollage';
-import InfosPanel from '../../components/collage/InfosPanel';
-import PoolFiltersHeader from '../../components/collage/PoolFiltersHeader';
-import CollageLayout from '../../components/layouts/CollageLayout';
-import { WCCharaData, WCTracklists, WCWaifu } from '../../lib/types';
-import { useLocalStorageFilters } from '../../lib/utils';
-import { IMPORTED_POOLS } from '../api/import/pools';
-import { IMPORTED_WAIFUS } from '../api/import/waifus';
+import { useRouter } from "next/dist/client/router";
+import Head from "next/head";
+import { useEffect, useState } from "react";
+import CharaCollage from "../../components/collage/CharaCollage";
+import InfosPanel from "../../components/collage/InfosPanel";
+import PoolFiltersHeader from "../../components/collage/PoolFiltersHeader";
+import CollageLayout from "../../components/layouts/CollageLayout";
+import { useLocalStorageFilters } from "../../lib/hooks";
+import { redis } from "../../lib/redis";
+import {
+  WCCharaData,
+  WCPools,
+  WCTracklists,
+  WCWaifu,
+  WCWaifus,
+} from "../../types";
 
 export async function getServerSideProps(context: any) {
+  const id = context.query.id;
+  const resp1 = await redis.hget("waifus", id);
+  const resp2 = await redis.hget("pools", id);
+  if (!resp1 || !resp2) throw new Error("id not found");
+  const waifus = JSON.parse(resp1) as WCWaifus;
+  const pools = JSON.parse(resp2) as WCPools;
   return {
     props: {
-      pools: IMPORTED_POOLS[context.params.id].pools,
-      charas: IMPORTED_POOLS[context.params.id].charas,
-      waifus: IMPORTED_WAIFUS[context.params.id].waifus,
-      tracklists: IMPORTED_WAIFUS[context.params.id].tracklists,
-    }
+      pools: pools.pools,
+      charas: pools.charas,
+      waifus: waifus.waifus,
+      tracklists: waifus.tracklists,
+    },
   };
 }
 
-export default function Pool({ pools, charas, waifus, tracklists }:
-  {
-    pools: { [key: string]: number[] },
-    charas: { [key: number]: WCCharaData },
-    waifus: WCWaifu[],
-    tracklists: WCTracklists
-  }) {
-
+export default function Pool({
+  pools,
+  charas,
+  waifus,
+  tracklists,
+}: {
+  pools: { [key: string]: number[] };
+  charas: { [key: number]: WCCharaData };
+  waifus: WCWaifu[];
+  tracklists: WCTracklists;
+}) {
   const router = useRouter();
-  const [filters, setFilters] = useLocalStorageFilters(`poolFilters_${router.query.id}`);
+  const [filters, setFilters] = useLocalStorageFilters(
+    `poolFilters_${router.query.id}`
+  );
   const [mediaCharas, setMediaCharas] = useState<number[] | null>(null);
   const [selectedCharas, setSelectedCharas] = useState<WCCharaData[]>([]);
   const [selected, setSelected] = useState<number>();
 
   useEffect(() => {
     const filteredIds = new Set<number>();
-    filters.players.forEach(p => {
-      pools[p].forEach(id => {
+    filters.players.forEach((p) => {
+      pools[p].forEach((id) => {
         if (!mediaCharas || mediaCharas.includes(id)) filteredIds.add(id);
       });
     });
     const newCharas: WCCharaData[] = [];
-    filteredIds.forEach(id => newCharas.push(charas[id]));
+    filteredIds.forEach((id) => newCharas.push(charas[id]));
     setSelectedCharas(newCharas);
   }, [charas, filters, mediaCharas, pools]);
 
@@ -62,9 +78,15 @@ export default function Pool({ pools, charas, waifus, tracklists }:
             mediaCharas={mediaCharas}
             setMediaCharas={setMediaCharas}
           />
-          {filters.players.length > 0 ?
-            <CharaCollage charas={selectedCharas} selected={selected} setSelected={setSelected} /> :
-            <p className="p-2">Select a player</p>}
+          {filters.players.length > 0 ? (
+            <CharaCollage
+              charas={selectedCharas}
+              selected={selected}
+              setSelected={setSelected}
+            />
+          ) : (
+            <p className="p-2">Select a player</p>
+          )}
         </div>
 
         <div className="overflow-y-scroll">
@@ -79,4 +101,4 @@ export default function Pool({ pools, charas, waifus, tracklists }:
       </div>
     </CollageLayout>
   );
-};
+}

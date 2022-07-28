@@ -1,16 +1,23 @@
-import Link from 'next/link';
+import Link from "next/link";
 
-export default function PostLayout({ children, home }: { children: React.ReactNode, home?: boolean }) {
+export default function PostLayout({
+  children,
+  home,
+}: {
+  children: React.ReactNode;
+  home?: boolean;
+}) {
   return (
     <div className="prose dark:prose-invert text-justify mx-auto p-4">
-      {!home &&
+      {!home && (
         <header className="my-4">
-          <Link href="/"><a>← Back to home</a></Link>
-        </header>}
+          <Link href="/">
+            <a>← Back to home</a>
+          </Link>
+        </header>
+      )}
 
-      <article>
-        {children}
-      </article>
+      <article>{children}</article>
     </div>
   );
 }

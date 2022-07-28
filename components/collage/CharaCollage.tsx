@@ -1,29 +1,35 @@
-import { useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { WCCharaData, WCWaifu } from '../../lib/types';
-import { compareCharaFavourites, useCollageHotkeys } from '../../lib/utils';
+import { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useCollageHotkeys } from "../../lib/hooks";
+import { compareCharaFavourites } from "../../lib/utils";
+import { WCCharaData, WCWaifu } from "../../types";
 
-export default function CharaCollage({ charas, selected, setSelected }:
-  {
-    charas: WCCharaData[],
-    selected: number | undefined,
-    setSelected: React.Dispatch<React.SetStateAction<number | undefined>>,
-  }) {
-
+export default function CharaCollage({
+  charas,
+  selected,
+  setSelected,
+}: {
+  charas: WCCharaData[];
+  selected: number | undefined;
+  setSelected: React.Dispatch<React.SetStateAction<number | undefined>>;
+}) {
   const [pics, setPics] = useState<JSX.Element[]>([]);
   const [shown, setShown] = useState<JSX.Element[]>([]);
   const [setFiltered] = useCollageHotkeys(selected, setSelected, "collage");
 
   useEffect(() => {
-    const newFiltered = charas.filter(c => c.image).sort(compareCharaFavourites);
-    const newPics = newFiltered.map(chara =>
+    const newFiltered = charas
+      .filter((c) => c.image)
+      .sort(compareCharaFavourites);
+    const newPics = newFiltered.map((chara) => (
       <Pic
         chara={chara}
         selected={selected}
         setSelected={setSelected}
         key={chara.id}
-      />);
-    setFiltered(newFiltered.map(c => c.id));
+      />
+    ));
+    setFiltered(newFiltered.map((c) => c.id));
     setPics(newPics);
   }, [charas, selected, setFiltered, setPics, setSelected]);
 
@@ -48,20 +54,26 @@ export default function CharaCollage({ charas, selected, setSelected }:
   );
 }
 
-export function Pic({ waifu, chara, selected, setSelected }:
-  {
-    waifu?: WCWaifu,
-    chara: WCCharaData,
-    selected: WCWaifu | number | undefined,
-    setSelected: React.Dispatch<React.SetStateAction<any | undefined>>
-  }) {
-
+export function Pic({
+  waifu,
+  chara,
+  selected,
+  setSelected,
+}: {
+  waifu?: WCWaifu;
+  chara: WCCharaData;
+  selected: WCWaifu | number | undefined;
+  setSelected: React.Dispatch<React.SetStateAction<any | undefined>>;
+}) {
   const src = `https://s4.anilist.co/file/anilistcdn/character/medium/${chara.image}`;
   const item = waifu ?? chara.id;
 
   return (
     <img
-      className={'w-16 h-24 cursor-pointer object-cover' + (item === selected ? ' border-2 border-purple-400' : '')}
+      className={
+        "w-16 h-24 cursor-pointer object-cover" +
+        (item === selected ? " border-2 border-purple-400" : "")
+      }
       src={src}
       alt={chara.name}
       loading="lazy"
