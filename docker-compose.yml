@@ -1,0 +1,10 @@
+services:
+  waicolle-web:
+    build: .
+    environment:
+      - REDIS_HOST=redis
+    ports:
+      - "3000:3000"
+
+  redis:
+    image: redis:alpine
