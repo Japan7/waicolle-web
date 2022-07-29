@@ -2,7 +2,7 @@ services:
   waicolle-web:
     build: .
     environment:
-      - REDIS_HOST=redis
+      - REDIS_URL=redis://redis:6379
     ports:
       - "3000:3000"
 

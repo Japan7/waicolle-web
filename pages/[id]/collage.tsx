@@ -6,12 +6,12 @@ import WaifuCollage from "../../components/collage/WaifuCollage";
 import WaifuFiltersHeader from "../../components/collage/WaifuFiltersHeader";
 import CollageLayout from "../../components/layouts/CollageLayout";
 import { useLocalStorageFilters } from "../../lib/hooks";
-import { redis } from "../../lib/redis";
+import redis from "../../lib/redis";
 import { WCCharaData, WCTracklists, WCWaifu, WCWaifus } from "../../types";
 
 export async function getServerSideProps(context: any) {
   const id = context.query.id;
-  const resp = await redis.hget("waifus", id);
+  const resp = await redis.HGET("waifus", id);
   if (!resp) throw new Error("id not found");
   const waifus = JSON.parse(resp) as WCWaifus;
   return {

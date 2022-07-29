@@ -3,7 +3,7 @@ import { useState } from "react";
 import CharaCollage from "../../components/collage/CharaCollage";
 import InfosPanel from "../../components/collage/InfosPanel";
 import CollageLayout from "../../components/layouts/CollageLayout";
-import { redis } from "../../lib/redis";
+import redis from "../../lib/redis";
 import {
   WCCharaData,
   WCDaily,
@@ -14,8 +14,8 @@ import {
 
 export async function getServerSideProps(context: any) {
   const id = context.query.id;
-  const resp1 = await redis.hget("waifus", id);
-  const resp2 = await redis.hget("daily", id);
+  const resp1 = await redis.HGET("waifus", id);
+  const resp2 = await redis.HGET("daily", id);
   if (!resp1 || !resp2) throw new Error("id not found");
   const waifus = JSON.parse(resp1) as WCWaifus;
   const _daily = JSON.parse(resp2) as WCDaily;

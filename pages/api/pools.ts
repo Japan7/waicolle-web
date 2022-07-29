@@ -1,5 +1,5 @@
 import type { NextApiHandler } from "next";
-import { redis } from "../../lib/redis";
+import redis from "../../lib/redis";
 
 export const config = {
   api: {
@@ -16,7 +16,7 @@ interface Data {
 const handler: NextApiHandler<Data> = async (req, res) => {
   switch (req.method) {
     case "POST":
-      await redis.hset("pools", req.body.bot, JSON.stringify(req.body));
+      await redis.HSET("pools", req.body.bot, JSON.stringify(req.body));
       res.status(200).json({ id: req.body.bot });
       break;
 
