@@ -1,3 +1,4 @@
+import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
 import { useEffect, useState } from "react";
@@ -7,15 +8,18 @@ import PoolFiltersHeader from "../../components/collage/PoolFiltersHeader";
 import CollageLayout from "../../components/layouts/CollageLayout";
 import { useLocalStorageFilters } from "../../lib/hooks";
 import redis from "../../lib/redis";
-import {
-  WCCharaData,
-  WCPoolsData,
-  WCTracklists,
-  WCWaifu,
-  WCWaifusData,
-} from "../../types/waicolle";
+import { WCCharaData, WCTracklists, WCWaifu } from "../../types/waicolle";
 
-export async function getServerSideProps(context: any) {
+interface PoolProps {
+  pools: { [key: string]: number[] };
+  charas: { [key: number]: WCCharaData };
+  waifus: WCWaifu[];
+  tracklists: WCTracklists;
+}
+
+export const getServerSideProps: GetServerSideProps<PoolProps> = async (
+  context
+) => {
   const key = `wc:${context.query.id}`;
   const resp: any = await redis.json.GET(key, {
     path: [
@@ -28,25 +32,15 @@ export async function getServerSideProps(context: any) {
   if (!resp) throw new Error("id not found");
   return {
     props: {
-      pools: resp[".poolsData.pools"] as WCPoolsData["pools"],
-      charas: resp[".poolsData.charas"] as WCPoolsData["charas"],
-      waifus: resp[".waifusData.waifus"] as WCWaifusData["waifus"],
-      tracklists: resp[".waifusData.tracklists"] as WCWaifusData["tracklists"],
+      pools: resp[".poolsData.pools"],
+      charas: resp[".poolsData.charas"],
+      waifus: resp[".waifusData.waifus"],
+      tracklists: resp[".waifusData.tracklists"],
     },
   };
-}
+};
 
-export default function Pool({
-  pools,
-  charas,
-  waifus,
-  tracklists,
-}: {
-  pools: { [key: string]: number[] };
-  charas: { [key: number]: WCCharaData };
-  waifus: WCWaifu[];
-  tracklists: WCTracklists;
-}) {
+const Pool: NextPage<PoolProps> = ({ pools, charas, waifus, tracklists }) => {
   const router = useRouter();
   const [filters, setFilters] = useLocalStorageFilters(
     `poolFilters_${router.query.id}`
@@ -105,4 +99,6 @@ export default function Pool({
       </div>
     </CollageLayout>
   );
-}
+};
+
+export default Pool;

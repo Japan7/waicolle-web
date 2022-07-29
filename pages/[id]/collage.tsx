@@ -1,3 +1,4 @@
+import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
 import { useState } from "react";
@@ -7,14 +8,17 @@ import WaifuFiltersHeader from "../../components/collage/WaifuFiltersHeader";
 import CollageLayout from "../../components/layouts/CollageLayout";
 import { useLocalStorageFilters } from "../../lib/hooks";
 import redis from "../../lib/redis";
-import {
-  WCCharaData,
-  WCTracklists,
-  WCWaifu,
-  WCWaifusData,
-} from "../../types/waicolle";
+import { WCCharaData, WCTracklists, WCWaifu } from "../../types/waicolle";
 
-export async function getServerSideProps(context: any) {
+interface CollageProps {
+  waifus: WCWaifu[];
+  charas: { [key: number]: WCCharaData };
+  tracklists: WCTracklists;
+}
+
+export const getServerSideProps: GetServerSideProps<CollageProps> = async (
+  context
+) => {
   const key = `wc:${context.query.id}`;
   const resp: any = await redis.json.GET(key, {
     path: [
@@ -26,22 +30,14 @@ export async function getServerSideProps(context: any) {
   if (!resp) throw new Error("id not found");
   return {
     props: {
-      waifus: resp[".waifusData.waifus"] as WCWaifusData["waifus"],
-      charas: resp[".waifusData.charas"] as WCWaifusData["charas"],
-      tracklists: resp[".waifusData.tracklists"] as WCWaifusData["tracklists"],
+      waifus: resp[".waifusData.waifus"],
+      charas: resp[".waifusData.charas"],
+      tracklists: resp[".waifusData.tracklists"],
     },
   };
-}
+};
 
-export default function Collage({
-  waifus,
-  charas,
-  tracklists,
-}: {
-  waifus: WCWaifu[];
-  charas: { [key: number]: WCCharaData };
-  tracklists: WCTracklists;
-}) {
+const Collage: NextPage<CollageProps> = ({ waifus, charas, tracklists }) => {
   const router = useRouter();
   const [filters, setFilters] = useLocalStorageFilters(
     `collageFilters_${router.query.id}`
@@ -92,4 +88,6 @@ export default function Collage({
       </div>
     </CollageLayout>
   );
-}
+};
+
+export default Collage;

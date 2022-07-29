@@ -1,3 +1,4 @@
+import { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import CharaCollage from "../../components/collage/CharaCollage";
@@ -9,10 +10,17 @@ import {
   WCDailyData,
   WCTracklists,
   WCWaifu,
-  WCWaifusData,
 } from "../../types/waicolle";
 
-export async function getServerSideProps(context: any) {
+interface DailyProps {
+  charas: WCCharaData[];
+  waifus: WCWaifu[];
+  tracklists: WCTracklists;
+}
+
+export const getServerSideProps: GetServerSideProps<DailyProps> = async (
+  context
+) => {
   const key = `wc:${context.query.id}`;
   const resp: any = await redis.json.GET(key, {
     path: [
@@ -29,21 +37,13 @@ export async function getServerSideProps(context: any) {
   return {
     props: {
       charas: reducedCharas,
-      waifus: resp[".waifusData.waifus"] as WCWaifusData["waifus"],
-      tracklists: resp[".waifusData.tracklists"] as WCWaifusData["tracklists"],
+      waifus: resp[".waifusData.waifus"],
+      tracklists: resp[".waifusData.tracklists"],
     },
   };
-}
+};
 
-export default function Daily({
-  charas,
-  waifus,
-  tracklists,
-}: {
-  charas: WCCharaData[];
-  waifus: WCWaifu[];
-  tracklists: WCTracklists;
-}) {
+const Daily: NextPage<DailyProps> = ({ charas, waifus, tracklists }) => {
   const [selected, setSelected] = useState<number>();
 
   return (
@@ -71,4 +71,6 @@ export default function Daily({
       </div>
     </CollageLayout>
   );
-}
+};
+
+export default Daily;

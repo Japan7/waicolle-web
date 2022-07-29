@@ -1,7 +1,8 @@
+import { NextPage } from "next";
 import Head from "next/head";
 import CollageLayout from "../../components/layouts/CollageLayout";
 
-export default function Index() {
+const Index: NextPage = () => {
   return (
     <CollageLayout>
       <Head>
@@ -11,4 +12,6 @@ export default function Index() {
       <p className="p-2">Select a collage</p>
     </CollageLayout>
   );
-}
+};
+
+export default Index;
