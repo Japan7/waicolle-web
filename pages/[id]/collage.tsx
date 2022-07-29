@@ -10,15 +10,16 @@ import redis from "../../lib/redis";
 import { WCCharaData, WCTracklists, WCWaifu, WCWaifus } from "../../types";
 
 export async function getServerSideProps(context: any) {
-  const id = context.query.id;
-  const resp = await redis.HGET("waifus", id);
+  const key = `wc:${context.query.id}`;
+  const resp: any = await redis.json.GET(key, {
+    path: [".waifus.waifus", ".waifus.charas", ".waifus.tracklists"],
+  });
   if (!resp) throw new Error("id not found");
-  const waifus = JSON.parse(resp) as WCWaifus;
   return {
     props: {
-      waifus: waifus.waifus,
-      charas: waifus.charas,
-      tracklists: waifus.tracklists,
+      waifus: resp[".waifus.waifus"] as WCWaifus["waifus"],
+      charas: resp[".waifus.charas"] as WCWaifus["charas"],
+      tracklists: resp[".waifus.tracklists"] as WCWaifus["tracklists"],
     },
   };
 }

@@ -9,23 +9,28 @@ import {
   WCDaily,
   WCTracklists,
   WCWaifu,
-  WCWaifus,
+  WCWaifus
 } from "../../types";
 
 export async function getServerSideProps(context: any) {
-  const id = context.query.id;
-  const resp1 = await redis.HGET("waifus", id);
-  const resp2 = await redis.HGET("daily", id);
-  if (!resp1 || !resp2) throw new Error("id not found");
-  const waifus = JSON.parse(resp1) as WCWaifus;
-  const _daily = JSON.parse(resp2) as WCDaily;
-  const { daily, charas } = _daily;
+  const key = `wc:${context.query.id}`;
+  const resp: any = await redis.json.GET(key, {
+    path: [
+      ".waifus.waifus",
+      ".waifus.tracklists",
+      ".daily.daily",
+      ".daily.charas",
+    ],
+  });
+  if (!resp) throw new Error("id not found");
+  const daily = resp[".daily.daily"] as WCDaily["daily"];
+  const charas = resp[".daily.charas"] as WCDaily["charas"];
   const reducedCharas = daily.map((id) => charas[id]);
   return {
     props: {
       charas: reducedCharas,
-      waifus: waifus.waifus,
-      tracklists: waifus.tracklists,
+      waifus: resp[".waifus.waifus"] as WCWaifus["waifus"],
+      tracklists: resp[".waifus.tracklists"] as WCWaifus["tracklists"],
     },
   };
 }

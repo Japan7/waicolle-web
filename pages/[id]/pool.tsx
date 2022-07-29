@@ -16,18 +16,22 @@ import {
 } from "../../types";
 
 export async function getServerSideProps(context: any) {
-  const id = context.query.id;
-  const resp1 = await redis.HGET("waifus", id);
-  const resp2 = await redis.HGET("pools", id);
-  if (!resp1 || !resp2) throw new Error("id not found");
-  const waifus = JSON.parse(resp1) as WCWaifus;
-  const pools = JSON.parse(resp2) as WCPools;
+  const key = `wc:${context.query.id}`;
+  const resp: any = await redis.json.GET(key, {
+    path: [
+      ".pools.pools",
+      ".pools.charas",
+      ".waifus.waifus",
+      ".waifus.tracklists",
+    ],
+  });
+  if (!resp) throw new Error("id not found");
   return {
     props: {
-      pools: pools.pools,
-      charas: pools.charas,
-      waifus: waifus.waifus,
-      tracklists: waifus.tracklists,
+      pools: resp[".pools.pools"] as WCPools["pools"],
+      charas: resp[".pools.charas"] as WCPools["charas"],
+      waifus: resp[".waifus.waifus"] as WCWaifus["waifus"],
+      tracklists: resp[".waifus.tracklists"] as WCWaifus["tracklists"],
     },
   };
 }

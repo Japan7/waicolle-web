@@ -7,4 +7,4 @@ services:
       - "3000:3000"
 
   redis:
-    image: redis:alpine
+    image: redislabs/rejson:latest
