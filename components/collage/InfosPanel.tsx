@@ -7,7 +7,9 @@ import {
   getTracklisters,
 } from "../../lib/utils";
 import styles from "../../styles/InfosPanel.module.css";
-import { CharaData, CollageFilters, WCTracklists, WCWaifu } from "../../types";
+import { CharaData } from "../../types/anilist";
+import { CollageFilters } from "../../types/filters";
+import { WCTracklists, WCWaifu } from "../../types/waicolle";
 
 export default function InfosPanel({
   charaId,

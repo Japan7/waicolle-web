@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
-import { CollageFilters, DEFAULT_FILTERS, FILTERS_VERSION } from "../types";
+import {
+  CollageFilters,
+  DEFAULT_FILTERS,
+  FILTERS_VERSION,
+} from "../types/filters";
 
 export function useLocalStorageFilters(
   name: string

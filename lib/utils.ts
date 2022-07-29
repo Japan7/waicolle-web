@@ -3,9 +3,8 @@ import {
   BaseMediaData,
   CharaData,
   MediaEdge,
-  WCTracklists,
-  WCWaifu,
-} from "../types";
+} from "../types/anilist";
+import { WCTracklists, WCWaifu } from "../types/waicolle";
 
 export function getRank(chara: CharaData) {
   if (chara.favourites >= 10000) return "SS";

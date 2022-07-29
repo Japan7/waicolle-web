@@ -1,8 +1,9 @@
-import { useLazyQuery } from "@apollo/client";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { MEDIA_DATA_QUERY } from "../../lib/gql";
+import React, { useMemo, useState } from "react";
 import styles from "../../styles/WaifuFiltersHeader.module.css";
-import { CollageFilters, MediaData, WCWaifu } from "../../types";
+import { CollageFilters } from "../../types/filters";
+import { WCWaifu } from "../../types/waicolle";
+import MediaSelector from "./MediaSelector";
+import UserSelector from "./UserSelector";
 
 export default function WaifuFiltersHeader({
   waifus,
@@ -58,7 +59,7 @@ export default function WaifuFiltersHeader({
   );
 }
 
-export function FiltersSelector({
+function FiltersSelector({
   filters,
   setFilters,
 }: {
@@ -129,122 +130,6 @@ export function FiltersSelector({
         />
         <label htmlFor="lasts">📆 ↓ Timestamp</label>
       </div>
-    </div>
-  );
-}
-
-export function UserSelector({
-  users,
-  filters,
-  setFilters,
-}: {
-  users: string[];
-  filters: CollageFilters;
-  setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>;
-}) {
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
-      const players = Array.from(
-        e.target.selectedOptions,
-        (option) => option.value
-      );
-      setFilters({ ...filters, players });
-    },
-    [filters, setFilters]
-  );
-
-  return (
-    <div className="flex flex-col items-center">
-      <select multiple value={filters.players ?? users} onChange={handleChange}>
-        {users.map((user) => (
-          <option key={user}>{user}</option>
-        ))}
-      </select>
-    </div>
-  );
-}
-
-export function MediaSelector({
-  filters,
-  setFilters,
-  mediaCharas,
-  setMediaCharas,
-  setMediaInfos,
-}: {
-  filters: CollageFilters;
-  setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>;
-  mediaCharas: number[] | null;
-  setMediaCharas: React.Dispatch<React.SetStateAction<number[] | null>>;
-  setMediaInfos: React.Dispatch<React.SetStateAction<React.ReactNode>>;
-}) {
-  const [mediaId, setMediaId] = useState<number | null>(null);
-
-  const [getMediaCharas, { data, error }] = useLazyQuery<{ Media: MediaData }>(
-    MEDIA_DATA_QUERY,
-    {
-      onCompleted: (data) => {
-        setMediaCharas([
-          ...mediaCharas!,
-          ...data.Media.characters.nodes.map((n) => n.id),
-        ]);
-        if (data.Media.characters.pageInfo.hasNextPage) {
-          getMediaCharas({
-            variables: {
-              id: mediaId,
-              chara_page: data.Media.characters.pageInfo.currentPage + 1,
-            },
-          });
-        }
-      },
-    }
-  );
-
-  useEffect(() => {
-    setMediaId(filters.mediaId);
-    if (filters.mediaId) {
-      setMediaCharas([]);
-      getMediaCharas({ variables: { id: filters.mediaId } });
-    } else {
-      setMediaCharas(null);
-    }
-  }, [filters.mediaId, getMediaCharas, setMediaCharas]);
-
-  useEffect(() => {
-    if (mediaId) {
-      if (data && data.Media) {
-        setMediaInfos(
-          <a href={data.Media.siteUrl} className="font-bold">
-            [{data.Media.type}] {data.Media.title.romaji}
-          </a>
-        );
-      } else if (error) {
-        setMediaInfos(
-          <label className="font-bold">No media found with this ID</label>
-        );
-      }
-    } else {
-      setMediaInfos(null);
-    }
-  }, [data, error, mediaId, setMediaInfos]);
-
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const mediaId = Number.isNaN(e.target.valueAsNumber)
-        ? null
-        : e.target.valueAsNumber;
-      setFilters({ ...filters, mediaId });
-    },
-    [filters, setFilters]
-  );
-
-  return (
-    <div className="flex flex-col items-center m-auto">
-      <input
-        type="number"
-        placeholder="AniList media ID"
-        value={filters.mediaId ?? ""}
-        onChange={handleChange}
-      />
     </div>
   );
 }

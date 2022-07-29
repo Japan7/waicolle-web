@@ -2,8 +2,9 @@ import { useCallback, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useCollageHotkeys } from "../../lib/hooks";
 import { compareCharaFavourites } from "../../lib/utils";
-import { CollageFilters, WCCharaData, WCWaifu } from "../../types";
-import { Pic } from "./CharaCollage";
+import { CollageFilters } from "../../types/filters";
+import { WCCharaData, WCWaifu } from "../../types/waicolle";
+import Pic from "./Pic";
 
 function compareTimestamp(a: WCWaifu, b: WCWaifu) {
   if (a.timestamp > b.timestamp) return -1;

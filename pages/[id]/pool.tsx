@@ -9,29 +9,29 @@ import { useLocalStorageFilters } from "../../lib/hooks";
 import redis from "../../lib/redis";
 import {
   WCCharaData,
-  WCPools,
+  WCPoolsData,
   WCTracklists,
   WCWaifu,
-  WCWaifus,
-} from "../../types";
+  WCWaifusData,
+} from "../../types/waicolle";
 
 export async function getServerSideProps(context: any) {
   const key = `wc:${context.query.id}`;
   const resp: any = await redis.json.GET(key, {
     path: [
-      ".pools.pools",
-      ".pools.charas",
-      ".waifus.waifus",
-      ".waifus.tracklists",
+      ".poolsData.pools",
+      ".poolsData.charas",
+      ".waifusData.waifus",
+      ".waifusData.tracklists",
     ],
   });
   if (!resp) throw new Error("id not found");
   return {
     props: {
-      pools: resp[".pools.pools"] as WCPools["pools"],
-      charas: resp[".pools.charas"] as WCPools["charas"],
-      waifus: resp[".waifus.waifus"] as WCWaifus["waifus"],
-      tracklists: resp[".waifus.tracklists"] as WCWaifus["tracklists"],
+      pools: resp[".poolsData.pools"] as WCPoolsData["pools"],
+      charas: resp[".poolsData.charas"] as WCPoolsData["charas"],
+      waifus: resp[".waifusData.waifus"] as WCWaifusData["waifus"],
+      tracklists: resp[".waifusData.tracklists"] as WCWaifusData["tracklists"],
     },
   };
 }

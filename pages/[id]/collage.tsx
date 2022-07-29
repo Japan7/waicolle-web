@@ -7,19 +7,28 @@ import WaifuFiltersHeader from "../../components/collage/WaifuFiltersHeader";
 import CollageLayout from "../../components/layouts/CollageLayout";
 import { useLocalStorageFilters } from "../../lib/hooks";
 import redis from "../../lib/redis";
-import { WCCharaData, WCTracklists, WCWaifu, WCWaifus } from "../../types";
+import {
+  WCCharaData,
+  WCTracklists,
+  WCWaifu,
+  WCWaifusData,
+} from "../../types/waicolle";
 
 export async function getServerSideProps(context: any) {
   const key = `wc:${context.query.id}`;
   const resp: any = await redis.json.GET(key, {
-    path: [".waifus.waifus", ".waifus.charas", ".waifus.tracklists"],
+    path: [
+      ".waifusData.waifus",
+      ".waifusData.charas",
+      ".waifusData.tracklists",
+    ],
   });
   if (!resp) throw new Error("id not found");
   return {
     props: {
-      waifus: resp[".waifus.waifus"] as WCWaifus["waifus"],
-      charas: resp[".waifus.charas"] as WCWaifus["charas"],
-      tracklists: resp[".waifus.tracklists"] as WCWaifus["tracklists"],
+      waifus: resp[".waifusData.waifus"] as WCWaifusData["waifus"],
+      charas: resp[".waifusData.charas"] as WCWaifusData["charas"],
+      tracklists: resp[".waifusData.tracklists"] as WCWaifusData["tracklists"],
     },
   };
 }

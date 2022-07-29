@@ -3,7 +3,7 @@ import glob from "glob";
 import matter from "gray-matter";
 import { marked } from "marked";
 import path from "path";
-import { PostData } from "../types";
+import { PostData } from "../types/post";
 
 const postsDirectory = path.join(process.cwd(), "posts");
 

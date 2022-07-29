@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import PostLayout from "../components/layouts/PostLayout";
 import { getAllPostsSlugs, getPostData } from "../lib/posts";
-import { PostData } from "../types";
+import { PostData } from "../types/post";
 
 interface HomeProps {
   postData: PostData;

@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
-import { CollageFilters } from "../../types";
-import { MediaSelector, UserSelector } from "./WaifuFiltersHeader";
+import { CollageFilters } from "../../types/filters";
+import MediaSelector from "./MediaSelector";
+import UserSelector from "./UserSelector";
 
 export default function PoolFiltersHeader({
   pools,
