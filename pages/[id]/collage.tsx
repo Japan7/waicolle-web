@@ -22,17 +22,17 @@ export const getServerSideProps: GetServerSideProps<CollageProps> = async (
   const key = `wc:${context.query.id}`;
   const resp: any = await redis.json.GET(key, {
     path: [
-      ".waifusData.waifus",
-      ".waifusData.charas",
-      ".waifusData.tracklists",
+      "$.waifusData.waifus.*",
+      "$.waifusData.charas",
+      "$.waifusData.tracklists",
     ],
   });
   if (!resp) throw new Error("id not found");
   return {
     props: {
-      waifus: resp[".waifusData.waifus"],
-      charas: resp[".waifusData.charas"],
-      tracklists: resp[".waifusData.tracklists"],
+      waifus: resp["$.waifusData.waifus.*"],
+      charas: resp["$.waifusData.charas"][0],
+      tracklists: resp["$.waifusData.tracklists"][0],
     },
   };
 };

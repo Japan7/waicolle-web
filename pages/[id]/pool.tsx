@@ -23,19 +23,19 @@ export const getServerSideProps: GetServerSideProps<PoolProps> = async (
   const key = `wc:${context.query.id}`;
   const resp: any = await redis.json.GET(key, {
     path: [
-      ".poolsData.pools",
-      ".poolsData.charas",
-      ".waifusData.waifus",
-      ".waifusData.tracklists",
+      "$.poolsData.pools",
+      "$.poolsData.charas",
+      "$.waifusData.waifus.*",
+      "$.waifusData.tracklists",
     ],
   });
   if (!resp) throw new Error("id not found");
   return {
     props: {
-      pools: resp[".poolsData.pools"],
-      charas: resp[".poolsData.charas"],
-      waifus: resp[".waifusData.waifus"],
-      tracklists: resp[".waifusData.tracklists"],
+      pools: resp["$.poolsData.pools"][0],
+      charas: resp["$.poolsData.charas"][0],
+      waifus: resp["$.waifusData.waifus.*"],
+      tracklists: resp["$.waifusData.tracklists"][0],
     },
   };
 };
