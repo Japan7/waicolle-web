@@ -14,14 +14,13 @@ interface Data {
 }
 
 const handler: NextApiHandler<Data> = async (req, res) => {
+  const key = `wc:${req.body.bot}`;
+  const path = "$.dailyData";
+  await redis.json.SET(key, "$", {}, { NX: true });
+
   switch (req.method) {
     case "POST":
-      const key = `wc:${req.body.bot}`;
-      if (!(await redis.EXISTS(key))) {
-        await redis.json.SET(key, "$", { dailyData: req.body });
-      } else {
-        await redis.json.SET(key, "$.dailyData", req.body);
-      }
+      await redis.json.SET(key, path, req.body);
       res.status(200).json({ id: req.body.bot });
       break;
 
