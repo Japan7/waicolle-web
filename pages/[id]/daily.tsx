@@ -48,13 +48,17 @@ const Daily: NextPage<DailyProps> = ({ charas, waifus, tracklists }) => {
   return (
     <CollageLayout
       name="Daily"
-      main={
+      main={(drawerContentDivId, setRightPanelActive) => (
         <CharaCollage
           charas={charas}
           selected={selected}
-          setSelected={setSelected}
-        />
-      }
+          setSelected={(w) => {
+            setSelected(w);
+            setRightPanelActive(true);
+          }}
+          scrollable={drawerContentDivId}
+          />
+      )}
       rightPanel={
         <InfosPanel
           charaId={selected}

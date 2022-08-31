@@ -19,6 +19,7 @@ export default function WaifuCollage({
   mediaCharas,
   selected,
   setSelected,
+  scrollable,
 }: {
   waifus: WCWaifu[];
   charas: { [key: number]: WCCharaData };
@@ -26,10 +27,11 @@ export default function WaifuCollage({
   mediaCharas: number[] | null;
   selected: WCWaifu | undefined;
   setSelected: React.Dispatch<React.SetStateAction<WCWaifu | undefined>>;
+  scrollable: string;
 }) {
   const [pics, setPics] = useState<JSX.Element[]>([]);
   const [shown, setShown] = useState<JSX.Element[]>([]);
-  const [setFiltered] = useCollageHotkeys(selected, setSelected, "scrollable");
+  const [setFiltered] = useCollageHotkeys(selected, setSelected, scrollable);
 
   const isIncluded = useCallback(
     (waifu: WCWaifu) => {
@@ -94,7 +96,7 @@ export default function WaifuCollage({
       hasMore={shown.length < pics.length}
       loader={null}
       scrollThreshold={0.25}
-      scrollableTarget="scrollable"
+      scrollableTarget={scrollable}
     >
       {shown}
     </InfiniteScroll>

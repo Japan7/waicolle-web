@@ -5,11 +5,12 @@ import {
   InformationCircleIcon,
   Squares2X2Icon,
   UserIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/solid";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useId } from "react";
+import { useId, useState } from "react";
 
 const client = new ApolloClient({
   uri: "https://graphql.anilist.co",
@@ -19,18 +20,22 @@ const client = new ApolloClient({
 export default function CollageLayout({
   name,
   main,
-  leftPanel,
   rightPanel,
+  leftMenu,
 }: {
   name: string;
-  main: React.ReactNode;
-  leftPanel?: React.ReactNode;
+  main: (
+    drawerContentDivId: string,
+    setRightPanelActive: (active: boolean) => void
+  ) => React.ReactNode;
   rightPanel?: React.ReactNode;
+  leftMenu?: React.ReactNode;
 }) {
   const router = useRouter();
   const { id } = router.query;
 
-  const drawerId = useId();
+  const [rightPanelActive, setRightPanelActive] = useState(false);
+  const drawerContentDivId = useId();
 
   return (
     <ApolloProvider client={client}>
@@ -40,12 +45,16 @@ export default function CollageLayout({
         </Head>
 
         <div className="h-full drawer drawer-end drawer-mobile">
-          <input id={drawerId} type="checkbox" className="drawer-toggle" />
+          <input
+            checked={rightPanelActive}
+            type="checkbox"
+            className="drawer-toggle"
+          />
 
-          <div id="scrollable" className="drawer-content flex flex-col">
+          <div id={drawerContentDivId} className="drawer-content flex flex-col">
             <nav className="navbar sticky top-0 shadow bg-base-100 bg-opacity-75 backdrop-blur">
               <div className="navbar-start">
-                {leftPanel && (
+                {leftMenu && (
                   <div className="dropdown dropdown-hover">
                     <label tabIndex={0} className="btn btn-ghost btn-square">
                       <AdjustmentsHorizontalIcon className="w-5 h-5" />
@@ -54,7 +63,7 @@ export default function CollageLayout({
                       tabIndex={0}
                       className="dropdown-content w-80 p-2 rounded-box shadow bg-base-100 bg-opacity-75"
                     >
-                      {leftPanel}
+                      {leftMenu}
                     </div>
                   </div>
                 )}
@@ -67,24 +76,29 @@ export default function CollageLayout({
               </div>
               <div className="navbar-end">
                 {rightPanel && (
-                  <label
-                    htmlFor={drawerId}
+                  <button
+                    onClick={() => setRightPanelActive(true)}
                     className="btn btn-ghost btn-square drawer-button lg:hidden"
                   >
                     <InformationCircleIcon className="w-5 h-5" />
-                  </label>
+                  </button>
                 )}
               </div>
             </nav>
 
-            <main className="p-2">{main}</main>
+            <main className="p-2">
+              {main(drawerContentDivId, setRightPanelActive)}
+            </main>
           </div>
 
           <div className="drawer-side">
-            <label htmlFor={drawerId} className="drawer-overlay" />
+            <button
+              onClick={() => setRightPanelActive(false)}
+              className="drawer-overlay"
+            />
 
             {rightPanel && (
-              <div className="w-80 p-4 bg-base-100 border-l border-base-200">
+              <div className="w-80 p-4 bg-base-100 border-l border-base-200 max-w-[75vw]">
                 {rightPanel}
               </div>
             )}

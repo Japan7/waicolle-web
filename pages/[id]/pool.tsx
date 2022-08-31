@@ -69,18 +69,22 @@ const Pool: NextPage<PoolProps> = ({ pools, charas, waifus, tracklists }) => {
   return (
     <CollageLayout
       name="Pool"
-      main={
+      main={(drawerContentDivId, setRightPanelActive) =>
         filters.players.length > 0 ? (
           <CharaCollage
             charas={selectedCharas}
             selected={selected}
-            setSelected={setSelected}
+            setSelected={(w) => {
+              setSelected(w);
+              setRightPanelActive(true);
+            }}
+            scrollable={drawerContentDivId}
           />
         ) : (
           <p className="p-2">Select a player</p>
         )
       }
-      leftPanel={
+      leftMenu={
         <FiltersMenu
           users={users}
           filters={filters}

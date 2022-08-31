@@ -55,7 +55,7 @@ const Collage: NextPage<CollageProps> = ({ waifus, charas, tracklists }) => {
   return (
     <CollageLayout
       name="Collage"
-      main={
+      main={(drawerContentDivId, setRightPanelActive) =>
         filters.players.length > 0 ? (
           <WaifuCollage
             waifus={waifus}
@@ -63,13 +63,17 @@ const Collage: NextPage<CollageProps> = ({ waifus, charas, tracklists }) => {
             filters={filters}
             mediaCharas={mediaCharas}
             selected={selected}
-            setSelected={setSelected}
+            setSelected={(w) => {
+              setSelected(w);
+              setRightPanelActive(true);
+            }}
+            scrollable={drawerContentDivId}
           />
         ) : (
           <p className="p-2">Select a player</p>
         )
       }
-      leftPanel={
+      leftMenu={
         <FiltersMenu
           users={users}
           filters={filters}

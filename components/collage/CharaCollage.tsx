@@ -9,14 +9,16 @@ export default function CharaCollage({
   charas,
   selected,
   setSelected,
+  scrollable,
 }: {
   charas: WCCharaData[];
   selected: number | undefined;
   setSelected: React.Dispatch<React.SetStateAction<number | undefined>>;
+  scrollable: string;
 }) {
   const [pics, setPics] = useState<JSX.Element[]>([]);
   const [shown, setShown] = useState<JSX.Element[]>([]);
-  const [setFiltered] = useCollageHotkeys(selected, setSelected, "scrollable");
+  const [setFiltered] = useCollageHotkeys(selected, setSelected, scrollable);
 
   useEffect(() => {
     const newFiltered = charas
@@ -46,7 +48,7 @@ export default function CharaCollage({
       hasMore={shown.length < pics.length}
       loader={null}
       scrollThreshold={0.25}
-      scrollableTarget="scrollable"
+      scrollableTarget={scrollable}
     >
       {shown}
     </InfiniteScroll>

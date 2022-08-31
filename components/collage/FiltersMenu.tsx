@@ -51,7 +51,6 @@ function FiltersSelector({
       <label className="space-x-1">
         <input
           type="checkbox"
-          id="unlocked"
           checked={filters.unlockedOnly}
           onChange={() =>
             setFilters({ ...filters, unlockedOnly: !filters.unlockedOnly })
@@ -62,7 +61,6 @@ function FiltersSelector({
       <label className="space-x-1">
         <input
           type="checkbox"
-          id="locked"
           checked={filters.lockedOnly}
           onChange={() =>
             setFilters({ ...filters, lockedOnly: !filters.lockedOnly })
@@ -73,7 +71,6 @@ function FiltersSelector({
       <label className="space-x-1">
         <input
           type="checkbox"
-          id="ascended"
           checked={filters.ascendedOnly}
           onChange={() =>
             setFilters({ ...filters, ascendedOnly: !filters.ascendedOnly })
@@ -84,7 +81,6 @@ function FiltersSelector({
       <label className="space-x-1">
         <input
           type="checkbox"
-          id="nanaed"
           checked={filters.nanaedOnly}
           onChange={() =>
             setFilters({ ...filters, nanaedOnly: !filters.nanaedOnly })
@@ -95,7 +91,6 @@ function FiltersSelector({
       <label className="space-x-1">
         <input
           type="checkbox"
-          id="blooded"
           checked={filters.blooded}
           onChange={() => setFilters({ ...filters, blooded: !filters.blooded })}
         />
@@ -104,7 +99,6 @@ function FiltersSelector({
       <label className="space-x-1">
         <input
           type="checkbox"
-          id="lasts"
           checked={filters.lasts}
           onChange={() => setFilters({ ...filters, lasts: !filters.lasts })}
         />
