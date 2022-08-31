@@ -16,7 +16,6 @@ export default function PoolFiltersHeader({
   mediaCharas: number[] | null;
   setMediaCharas: React.Dispatch<React.SetStateAction<number[] | null>>;
 }) {
-  const [showMenu, setShowMenu] = useState<boolean>(false);
   const [mediaInfos, setMediaInfos] = useState<React.ReactNode>(null);
 
   const users: string[] = useMemo(() => {
@@ -26,30 +25,16 @@ export default function PoolFiltersHeader({
   }, [pools]);
 
   return (
-    <div className="mb-2">
-      <button
-        className="w-full opacity-75 text-sm lg:hidden"
-        onClick={() => setShowMenu(!showMenu)}
-      >
-        Toggle menu
-      </button>
-
-      <div
-        className={`${
-          showMenu ? "grid" : "hidden"
-        } lg:grid grid-cols-2 grid-flow-row`}
-      >
-        <UserSelector users={users} filters={filters} setFilters={setFilters} />
-        <MediaSelector
-          filters={filters}
-          setFilters={setFilters}
-          mediaCharas={mediaCharas}
-          setMediaCharas={setMediaCharas}
-          setMediaInfos={setMediaInfos}
-        />
-      </div>
-
-      <div className="w-full flex justify-center">{mediaInfos}</div>
+    <div className="flex flex-col justify-center gap-y-4">
+      <UserSelector users={users} filters={filters} setFilters={setFilters} />
+      <MediaSelector
+        filters={filters}
+        setFilters={setFilters}
+        mediaCharas={mediaCharas}
+        setMediaCharas={setMediaCharas}
+        setMediaInfos={setMediaInfos}
+      />
+      {mediaInfos && <div className="text-center">{mediaInfos}</div>}
     </div>
   );
 }

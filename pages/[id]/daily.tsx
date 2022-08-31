@@ -1,5 +1,4 @@
 import { GetServerSideProps, NextPage } from "next";
-import Head from "next/head";
 import { useState } from "react";
 import CharaCollage from "../../components/collage/CharaCollage";
 import InfosPanel from "../../components/collage/InfosPanel";
@@ -47,29 +46,23 @@ const Daily: NextPage<DailyProps> = ({ charas, waifus, tracklists }) => {
   const [selected, setSelected] = useState<number>();
 
   return (
-    <CollageLayout page="daily">
-      <div className="h-full grid grid-rows-3 grid-flow-col lg:grid-rows-none lg:grid-cols-4 lg:grid-flow-row">
-        <Head>
-          <title>Daily tag | Waifu Collection</title>
-        </Head>
-
-        <div className="overflow-hidden row-span-2 lg:row-span-full lg:col-span-3 flex flex-col">
-          <CharaCollage
-            charas={charas}
-            selected={selected}
-            setSelected={setSelected}
-          />
-        </div>
-
-        <div className="overflow-y-scroll">
-          <InfosPanel
-            charaId={selected}
-            waifus={waifus}
-            tracklists={tracklists}
-          />
-        </div>
-      </div>
-    </CollageLayout>
+    <CollageLayout
+      name="Daily"
+      main={
+        <CharaCollage
+          charas={charas}
+          selected={selected}
+          setSelected={setSelected}
+        />
+      }
+      rightPanel={
+        <InfosPanel
+          charaId={selected}
+          waifus={waifus}
+          tracklists={tracklists}
+        />
+      }
+    />
   );
 };
 

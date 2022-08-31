@@ -1,6 +1,5 @@
 import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
-import Head from "next/head";
 import { useState } from "react";
 import InfosPanel from "../../components/collage/InfosPanel";
 import WaifuCollage from "../../components/collage/WaifuCollage";
@@ -46,47 +45,42 @@ const Collage: NextPage<CollageProps> = ({ waifus, charas, tracklists }) => {
   const [selected, setSelected] = useState<WCWaifu>();
 
   return (
-    <CollageLayout page="collage">
-      <div className="h-full grid grid-rows-3 grid-flow-col lg:grid-rows-none lg:grid-cols-4 lg:grid-flow-row">
-        <Head>
-          <title>Collage | Waifu Collection</title>
-        </Head>
-
-        <div className="overflow-hidden row-span-2 lg:row-span-full lg:col-span-3 flex flex-col">
-          <WaifuFiltersHeader
+    <CollageLayout
+      name="Collage"
+      main={
+        filters.players.length > 0 ? (
+          <WaifuCollage
             waifus={waifus}
+            charas={charas}
             filters={filters}
-            setFilters={setFilters}
             mediaCharas={mediaCharas}
-            setMediaCharas={setMediaCharas}
+            selected={selected}
+            setSelected={setSelected}
           />
-
-          {filters.players.length > 0 ? (
-            <WaifuCollage
-              waifus={waifus}
-              charas={charas}
-              filters={filters}
-              mediaCharas={mediaCharas}
-              selected={selected}
-              setSelected={setSelected}
-            />
-          ) : (
-            <p className="p-2">Select a player</p>
-          )}
-        </div>
-
-        <div className="overflow-y-scroll">
-          <InfosPanel
-            charaId={selected?.chara_id}
-            waifu={selected}
-            waifus={waifus}
-            tracklists={tracklists}
-            filters={filters}
-            setFilters={setFilters}
-          />
-        </div>
-      </div>
-    </CollageLayout>
+        ) : (
+          <p className="p-2">Select a player</p>
+        )
+      }
+      leftPanel={
+        <WaifuFiltersHeader
+          waifus={waifus}
+          filters={filters}
+          setFilters={setFilters}
+          mediaCharas={mediaCharas}
+          setMediaCharas={setMediaCharas}
+        />
+      }
+      rightPanel={
+        <InfosPanel
+          charaId={selected?.chara_id}
+          waifu={selected}
+          waifus={waifus}
+          tracklists={tracklists}
+          filters={filters}
+          setFilters={setFilters}
+        />
+      }
+    />
   );
 };
 

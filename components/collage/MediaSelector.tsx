@@ -53,14 +53,12 @@ export default function MediaSelector({
     if (mediaId) {
       if (data && data.Media) {
         setMediaInfos(
-          <a href={data.Media.siteUrl} className="font-bold">
+          <a href={data.Media.siteUrl}>
             [{data.Media.type}] {data.Media.title.romaji}
           </a>
         );
       } else if (error) {
-        setMediaInfos(
-          <label className="font-bold">No media found with this ID</label>
-        );
+        setMediaInfos(<label>No media found with this ID</label>);
       }
     } else {
       setMediaInfos(null);
@@ -78,13 +76,12 @@ export default function MediaSelector({
   );
 
   return (
-    <div className="flex flex-col items-center m-auto">
-      <input
-        type="number"
-        placeholder="AniList media ID"
-        value={filters.mediaId ?? ""}
-        onChange={handleChange}
-      />
-    </div>
+    <input
+      type="number"
+      placeholder="AniList media ID"
+      value={filters.mediaId ?? ""}
+      onChange={handleChange}
+      className="input"
+    />
   );
 }

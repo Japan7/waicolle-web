@@ -23,7 +23,12 @@ export default function UserSelector({
 
   return (
     <div className="flex flex-col items-center">
-      <select multiple value={filters.players ?? users} onChange={handleChange}>
+      <select
+        multiple
+        value={filters.players ?? users}
+        onChange={handleChange}
+        className="select"
+      >
         {users.map((user) => (
           <option key={user}>{user}</option>
         ))}

@@ -6,7 +6,6 @@ import {
   getRank,
   getTracklisters,
 } from "../../lib/utils";
-import styles from "../../styles/InfosPanel.module.css";
 import { CharaData } from "../../types/anilist";
 import { CollageFilters } from "../../types/filters";
 import { WCTracklists, WCWaifu } from "../../types/waicolle";
@@ -34,8 +33,8 @@ export default function InfosPanel({
     }
   );
 
-  if (!charaId) return <p className="p-2">Select a character to inspect</p>;
-  if (loading || !data) return <p className="p-2">Loading...</p>;
+  if (!charaId) return <p>Select a character to inspect</p>;
+  if (loading || !data) return <p>Loading...</p>;
   return (
     <CharaInfos
       chara={data.Character}
@@ -64,7 +63,7 @@ function CharaInfos({
   setFilters?: React.Dispatch<React.SetStateAction<CollageFilters>>;
 }) {
   return (
-    <div className={styles.infos + " grid p-2"}>
+    <div className="flex flex-col">
       <CharaName chara={chara} />
       <CharaImage chara={chara} />
       <WaifuCharaProps chara={chara} waifu={waifu} />
@@ -79,7 +78,7 @@ function CharaInfos({
 
 function CharaName({ chara }: { chara: CharaData }) {
   return (
-    <div className="flex flex-col m-auto" style={{ gridArea: "name" }}>
+    <div className="flex flex-col m-auto">
       <h1 className="m-auto font-bold">{chara.name.userPreferred}</h1>
       <h2 className="m-auto font-bold">{chara.name.native}</h2>
     </div>
@@ -95,7 +94,6 @@ function CharaImage({ chara }: { chara: CharaData }) {
       className="block mx-auto my-4 w-2/3 object-contain cursor-pointer"
     >
       <img
-        style={{ gridArea: "image" }}
         src={chara.image.large ?? ""}
         alt={chara.name.userPreferred}
         loading="lazy"
@@ -113,7 +111,7 @@ function WaifuCharaProps({
 }) {
   return (
     <>
-      <div className="grid grid-cols-2" style={{ gridArea: "props" }}>
+      <div className="grid grid-cols-2">
         <h2>ID</h2>
         <p>{chara.id}</p>
         <h2>Favourites</h2>
@@ -133,7 +131,7 @@ function WaifuCharaProps({
       </div>
 
       {waifu && (
-        <div className="flex text-3xl my-2" style={{ gridArea: "modifiers" }}>
+        <div className="flex text-3xl my-2">
           {waifu.locked && <p className="mx-auto">🔒</p>}
           {waifu.level === 1 && <p className="mx-auto">⭐</p>}
           {waifu.level > 1 && <p className="mx-auto">🌟</p>}
@@ -157,7 +155,7 @@ function CharaMedias({
   const { seiyuu, animes, mangas } = getCharaMedias(chara);
 
   return (
-    <div style={{ gridArea: "medias" }}>
+    <div>
       {seiyuu && (
         <>
           <h2 className="my-2 font-bold">Character Voice</h2>
@@ -207,7 +205,7 @@ function WaifuOwners({
 }) {
   const names = getOwners(chara.id, waifus);
   return (
-    <div style={{ gridArea: "owners" }}>
+    <div>
       {names.length > 0 && (
         <>
           <h2 className="my-2 font-bold">Owned by</h2>
@@ -227,7 +225,7 @@ function WaifuTracklisters({
 }) {
   const names = getTracklisters(chara, tracklists);
   return (
-    <div style={{ gridArea: "tracklists" }}>
+    <div>
       {names.length > 0 && (
         <>
           <h2 className="my-2 font-bold">In tracking list of</h2>
