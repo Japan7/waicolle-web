@@ -29,7 +29,7 @@ export default function WaifuCollage({
 }) {
   const [pics, setPics] = useState<JSX.Element[]>([]);
   const [shown, setShown] = useState<JSX.Element[]>([]);
-  const [setFiltered] = useCollageHotkeys(selected, setSelected, "collage");
+  const [setFiltered] = useCollageHotkeys(selected, setSelected, "scrollable");
 
   const isIncluded = useCallback(
     (waifu: WCWaifu) => {
@@ -87,18 +87,16 @@ export default function WaifuCollage({
   }, [pics, shown.length]);
 
   return (
-    <div className="h-full overflow-y-scroll" id="collage">
-      <InfiniteScroll
-        className="flex flex-wrap justify-center"
-        dataLength={shown.length}
-        next={() => setShown(pics.slice(0, shown.length + 200))}
-        hasMore={shown.length < pics.length}
-        loader={null}
-        scrollThreshold={0.25}
-        scrollableTarget="collage"
-      >
-        {shown}
-      </InfiniteScroll>
-    </div>
+    <InfiniteScroll
+      className="flex flex-wrap justify-center"
+      dataLength={shown.length}
+      next={() => setShown(pics.slice(0, shown.length + 200))}
+      hasMore={shown.length < pics.length}
+      loader={null}
+      scrollThreshold={0.25}
+      scrollableTarget="scrollable"
+    >
+      {shown}
+    </InfiniteScroll>
   );
 }

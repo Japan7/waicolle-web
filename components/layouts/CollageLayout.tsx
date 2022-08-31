@@ -34,7 +34,7 @@ export default function CollageLayout({
 
   return (
     <ApolloProvider client={client}>
-      <div className="h-screen pb-16 overflow-y-auto">
+      <div className="h-screen pb-16">
         <Head>
           <title>{name} | Waifu Collection</title>
         </Head>
@@ -42,7 +42,7 @@ export default function CollageLayout({
         <div className="h-full drawer drawer-end drawer-mobile">
           <input id={drawerId} type="checkbox" className="drawer-toggle" />
 
-          <div className="drawer-content flex flex-col">
+          <div id="scrollable" className="drawer-content flex flex-col">
             <nav className="navbar sticky top-0 shadow bg-base-100 bg-opacity-75 backdrop-blur">
               <div className="navbar-start">
                 {leftPanel && (
@@ -52,7 +52,7 @@ export default function CollageLayout({
                     </label>
                     <div
                       tabIndex={0}
-                      className="dropdown-content w-80 p-2 backdrop-brightness-50 backdrop-blur-sm rounded-box shadow"
+                      className="dropdown-content w-80 p-2 rounded-box shadow bg-base-100 bg-opacity-75"
                     >
                       {leftPanel}
                     </div>
@@ -77,7 +77,7 @@ export default function CollageLayout({
               </div>
             </nav>
 
-            <main className="m-2">{main}</main>
+            <main className="p-2">{main}</main>
           </div>
 
           <div className="drawer-side">

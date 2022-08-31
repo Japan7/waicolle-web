@@ -8,7 +8,7 @@ export default function PostLayout({
   home?: boolean;
 }) {
   return (
-    <div className="prose dark:prose-invert text-justify mx-auto p-4">
+    <div className="prose text-justify mx-auto p-4">
       {!home && (
         <header className="my-4">
           <Link href="/">

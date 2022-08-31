@@ -38,7 +38,7 @@ export function useLocalStorageFilters(
 export function useCollageHotkeys<T>(
   selected: T | undefined,
   setSelected: React.Dispatch<React.SetStateAction<T | undefined>>,
-  elementId: string = "collage"
+  elementId: string
 ) {
   const [filtered, setFiltered] = useState<T[]>([]);
 
