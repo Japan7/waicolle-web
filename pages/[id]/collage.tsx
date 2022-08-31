@@ -1,9 +1,9 @@
 import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import FiltersMenu from "../../components/collage/FiltersMenu";
 import InfosPanel from "../../components/collage/InfosPanel";
 import WaifuCollage from "../../components/collage/WaifuCollage";
-import WaifuFiltersHeader from "../../components/collage/WaifuFiltersHeader";
 import CollageLayout from "../../components/layouts/CollageLayout";
 import { useLocalStorageFilters } from "../../lib/hooks";
 import redis from "../../lib/redis";
@@ -44,6 +44,14 @@ const Collage: NextPage<CollageProps> = ({ waifus, charas, tracklists }) => {
   const [mediaCharas, setMediaCharas] = useState<number[] | null>(null);
   const [selected, setSelected] = useState<WCWaifu>();
 
+  const users: string[] = useMemo(() => {
+    const userSet = new Set<string>();
+    waifus.forEach((waifu) => userSet.add(waifu.owner));
+    return Array.from(userSet).sort((a, b) =>
+      a.localeCompare(b, "fr", { ignorePunctuation: true })
+    );
+  }, [waifus]);
+
   return (
     <CollageLayout
       name="Collage"
@@ -62,8 +70,8 @@ const Collage: NextPage<CollageProps> = ({ waifus, charas, tracklists }) => {
         )
       }
       leftPanel={
-        <WaifuFiltersHeader
-          waifus={waifus}
+        <FiltersMenu
+          users={users}
           filters={filters}
           setFilters={setFilters}
           mediaCharas={mediaCharas}

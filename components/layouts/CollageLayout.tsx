@@ -43,7 +43,7 @@ export default function CollageLayout({
           <input id={drawerId} type="checkbox" className="drawer-toggle" />
 
           <div className="drawer-content flex flex-col">
-            <nav className="navbar sticky top-0 shadow bg-base-100">
+            <nav className="navbar sticky top-0 shadow bg-base-100 bg-opacity-75 backdrop-blur">
               <div className="navbar-start">
                 {leftPanel && (
                   <div className="dropdown dropdown-hover">

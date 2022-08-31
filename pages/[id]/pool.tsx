@@ -1,9 +1,9 @@
 import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import CharaCollage from "../../components/collage/CharaCollage";
+import FiltersMenu from "../../components/collage/FiltersMenu";
 import InfosPanel from "../../components/collage/InfosPanel";
-import PoolFiltersHeader from "../../components/collage/PoolFiltersHeader";
 import CollageLayout from "../../components/layouts/CollageLayout";
 import { useLocalStorageFilters } from "../../lib/hooks";
 import redis from "../../lib/redis";
@@ -60,6 +60,12 @@ const Pool: NextPage<PoolProps> = ({ pools, charas, waifus, tracklists }) => {
     setSelectedCharas(newCharas);
   }, [charas, filters, mediaCharas, pools]);
 
+  const users: string[] = useMemo(() => {
+    return Array.from(Object.keys(pools)).sort((a, b) =>
+      a.localeCompare(b, "fr", { ignorePunctuation: true })
+    );
+  }, [pools]);
+
   return (
     <CollageLayout
       name="Pool"
@@ -75,12 +81,13 @@ const Pool: NextPage<PoolProps> = ({ pools, charas, waifus, tracklists }) => {
         )
       }
       leftPanel={
-        <PoolFiltersHeader
-          pools={pools}
+        <FiltersMenu
+          users={users}
           filters={filters}
           setFilters={setFilters}
           mediaCharas={mediaCharas}
           setMediaCharas={setMediaCharas}
+          withoutFiltersSelector
         />
       }
       rightPanel={
