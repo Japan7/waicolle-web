@@ -52,7 +52,7 @@ export default function CollageLayout({
           />
 
           <div id={drawerContentDivId} className="drawer-content flex flex-col">
-            <nav className="navbar sticky top-0 shadow bg-base-100 bg-opacity-75 backdrop-blur">
+            <nav className="navbar sticky top-0 shadow bg-base-100 bg-opacity-75 backdrop-blur z-10">
               <div className="navbar-start">
                 {leftMenu && (
                   <div className="dropdown dropdown-hover">
