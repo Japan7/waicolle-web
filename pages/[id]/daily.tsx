@@ -57,7 +57,7 @@ const Daily: NextPage<DailyProps> = ({ charas, waifus, tracklists }) => {
             setRightPanelActive(true);
           }}
           scrollable={drawerContentDivId}
-          />
+        />
       )}
       rightPanel={
         <InfosPanel

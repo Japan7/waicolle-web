@@ -5,7 +5,6 @@ import {
   InformationCircleIcon,
   Squares2X2Icon,
   UserIcon,
-  XMarkIcon,
 } from "@heroicons/react/24/solid";
 import Head from "next/head";
 import Link from "next/link";

@@ -1,5 +1,5 @@
 import { GetServerSideProps, NextPage } from "next";
-import { useRouter } from "next/dist/client/router";
+import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
 import FiltersMenu from "../../components/collage/FiltersMenu";
 import InfosPanel from "../../components/collage/InfosPanel";

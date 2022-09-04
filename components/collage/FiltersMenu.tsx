@@ -1,5 +1,5 @@
 import { useLazyQuery } from "@apollo/client";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { MEDIA_DATA_QUERY } from "../../lib/gql";
 import { MediaData } from "../../types/anilist";
 import { CollageFilters } from "../../types/filters";
