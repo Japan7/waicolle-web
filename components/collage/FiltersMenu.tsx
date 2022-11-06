@@ -1,18 +1,19 @@
 import { useLazyQuery } from "@apollo/client";
 import { useCallback, useEffect, useState } from "react";
 import { MEDIA_DATA_QUERY } from "../../lib/gql";
+import { Player } from "../../lib/nanapi-client";
 import { MediaData } from "../../types/anilist";
 import { CollageFilters } from "../../types/filters";
 
 export default function FiltersMenu({
-  users,
+  players,
   filters,
   setFilters,
   mediaCharas,
   setMediaCharas,
   withoutFiltersSelector,
 }: {
-  users: string[];
+  players: Player[];
   filters: CollageFilters;
   setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>;
   mediaCharas: number[] | null;
@@ -26,7 +27,11 @@ export default function FiltersMenu({
       {!withoutFiltersSelector && (
         <FiltersSelector filters={filters} setFilters={setFilters} />
       )}
-      <UserSelector users={users} filters={filters} setFilters={setFilters} />
+      <UserSelector
+        players={players}
+        filters={filters}
+        setFilters={setFilters}
+      />
       <MediaSelector
         filters={filters}
         setFilters={setFilters}
@@ -51,7 +56,7 @@ function FiltersSelector({
       <label className="space-x-1">
         <input
           type="checkbox"
-          checked={filters.unlockedOnly}
+          defaultChecked={filters.unlockedOnly}
           onChange={() =>
             setFilters({ ...filters, unlockedOnly: !filters.unlockedOnly })
           }
@@ -61,7 +66,7 @@ function FiltersSelector({
       <label className="space-x-1">
         <input
           type="checkbox"
-          checked={filters.lockedOnly}
+          defaultChecked={filters.lockedOnly}
           onChange={() =>
             setFilters({ ...filters, lockedOnly: !filters.lockedOnly })
           }
@@ -71,7 +76,7 @@ function FiltersSelector({
       <label className="space-x-1">
         <input
           type="checkbox"
-          checked={filters.ascendedOnly}
+          defaultChecked={filters.ascendedOnly}
           onChange={() =>
             setFilters({ ...filters, ascendedOnly: !filters.ascendedOnly })
           }
@@ -81,7 +86,7 @@ function FiltersSelector({
       <label className="space-x-1">
         <input
           type="checkbox"
-          checked={filters.nanaedOnly}
+          defaultChecked={filters.nanaedOnly}
           onChange={() =>
             setFilters({ ...filters, nanaedOnly: !filters.nanaedOnly })
           }
@@ -91,7 +96,7 @@ function FiltersSelector({
       <label className="space-x-1">
         <input
           type="checkbox"
-          checked={filters.blooded}
+          defaultChecked={filters.blooded}
           onChange={() => setFilters({ ...filters, blooded: !filters.blooded })}
         />
         <span>🩸 Blooded</span>
@@ -99,7 +104,7 @@ function FiltersSelector({
       <label className="space-x-1">
         <input
           type="checkbox"
-          checked={filters.lasts}
+          defaultChecked={filters.lasts}
           onChange={() => setFilters({ ...filters, lasts: !filters.lasts })}
         />
         <span>📆 ↓ Timestamp</span>
@@ -109,11 +114,11 @@ function FiltersSelector({
 }
 
 function UserSelector({
-  users,
+  players,
   filters,
   setFilters,
 }: {
-  users: string[];
+  players: Player[];
   filters: CollageFilters;
   setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>;
 }) {
@@ -128,16 +133,22 @@ function UserSelector({
     [filters, setFilters]
   );
 
+  const sortedPlayers = players.sort((a, b) =>
+    a.discord_username.localeCompare(b.discord_username)
+  );
+
   return (
     <div className="flex flex-col items-center">
       <select
         multiple
-        value={filters.players ?? users}
+        value={filters.players ?? sortedPlayers.map((p) => p.discord_id)}
         onChange={handleChange}
         className="select"
       >
-        {users.map((user) => (
-          <option key={user}>{user}</option>
+        {sortedPlayers.map((p) => (
+          <option key={p.discord_id} value={p.discord_id}>
+            {p.discord_username}
+          </option>
         ))}
       </select>
     </div>

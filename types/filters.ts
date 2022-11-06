@@ -1,4 +1,4 @@
-export const FILTERS_VERSION = 4;
+export const FILTERS_VERSION = 5;
 
 export const DEFAULT_FILTERS: CollageFilters = {
   players: [],

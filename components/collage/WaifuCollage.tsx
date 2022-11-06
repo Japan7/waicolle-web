@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useCollageHotkeys } from "../../lib/hooks";
+import { Chara, Waifu } from "../../lib/nanapi-client";
 import { compareCharaFavourites } from "../../lib/utils";
 import { CollageFilters } from "../../types/filters";
-import { WCCharaData, WCWaifu } from "../../types/waicolle";
 import Pic from "./Pic";
 
-function compareTimestamp(a: WCWaifu, b: WCWaifu) {
+function compareTimestamp(a: Waifu, b: Waifu) {
   if (a.timestamp > b.timestamp) return -1;
   if (a.timestamp < b.timestamp) return 1;
   return 0;
@@ -21,29 +21,36 @@ export default function WaifuCollage({
   setSelected,
   scrollable,
 }: {
-  waifus: WCWaifu[];
-  charas: { [key: number]: WCCharaData };
+  waifus: Waifu[];
+  charas: Chara[];
   filters: CollageFilters;
   mediaCharas: number[] | null;
-  selected: WCWaifu | undefined;
-  setSelected: React.Dispatch<React.SetStateAction<WCWaifu | undefined>>;
+  selected: Waifu | undefined;
+  setSelected: React.Dispatch<React.SetStateAction<Waifu | undefined>>;
   scrollable: string;
 }) {
   const [pics, setPics] = useState<JSX.Element[]>([]);
   const [shown, setShown] = useState<JSX.Element[]>([]);
   const [setFiltered] = useCollageHotkeys(selected, setSelected, scrollable);
 
+  const charasMap = useMemo(() => {
+    const map = new Map<number, Chara>();
+    charas.forEach((c) => map.set(c.id_al, c));
+    return map;
+  }, [charas]);
+
   const isIncluded = useCallback(
-    (waifu: WCWaifu) => {
-      if (mediaCharas && !mediaCharas.includes(waifu.chara_id)) return false;
+    (waifu: Waifu) => {
+      if (mediaCharas && !mediaCharas.includes(waifu.character_id))
+        return false;
       if (
-        !charas[waifu.chara_id].image ||
-        charas[waifu.chara_id].image!.endsWith("default.jpg")
+        !charasMap.get(waifu.character_id)?.image ||
+        charasMap.get(waifu.character_id)?.image!.endsWith("default.jpg")
       )
         return false;
 
       if (filters.blooded !== waifu.blooded) return false;
-      if (!filters.players.includes(waifu.owner)) return false;
+      if (!filters.players.includes(waifu.owner_discord_id)) return false;
 
       if (filters.ascendedOnly && waifu.level === 0) return false;
       if (filters.unlockedOnly && waifu.locked) return false;
@@ -52,7 +59,16 @@ export default function WaifuCollage({
 
       return true;
     },
-    [mediaCharas, charas, filters]
+    [
+      charasMap,
+      filters.ascendedOnly,
+      filters.blooded,
+      filters.lockedOnly,
+      filters.nanaedOnly,
+      filters.players,
+      filters.unlockedOnly,
+      mediaCharas,
+    ]
   );
 
   useEffect(() => {
@@ -60,13 +76,16 @@ export default function WaifuCollage({
       filters.lasts
         ? compareTimestamp
         : (a, b) =>
-            compareCharaFavourites(charas[a.chara_id], charas[b.chara_id])
+            compareCharaFavourites(
+              charasMap.get(a.character_id)!,
+              charasMap.get(b.character_id)!
+            )
     );
     const newFiltered = waifus.filter(isIncluded);
     const newPics = newFiltered.map((waifu) => (
       <Pic
         waifu={waifu}
-        chara={charas[waifu.chara_id]}
+        chara={charasMap.get(waifu.character_id)!}
         selected={selected}
         setSelected={setSelected}
         key={waifu.id}
@@ -75,7 +94,7 @@ export default function WaifuCollage({
     setFiltered(newFiltered);
     setPics(newPics);
   }, [
-    charas,
+    charasMap,
     filters.lasts,
     isIncluded,
     selected,

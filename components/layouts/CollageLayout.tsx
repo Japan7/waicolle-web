@@ -31,7 +31,7 @@ export default function CollageLayout({
   leftMenu?: React.ReactNode;
 }) {
   const router = useRouter();
-  const { id } = router.query;
+  const { client_id } = router.query;
 
   const [rightPanelActive, setRightPanelActive] = useState(false);
   const drawerContentDivId = useId();
@@ -45,7 +45,7 @@ export default function CollageLayout({
 
         <div className="h-full drawer drawer-end drawer-mobile">
           <input
-            checked={rightPanelActive}
+            defaultChecked={rightPanelActive}
             type="checkbox"
             className="drawer-toggle"
           />
@@ -106,24 +106,26 @@ export default function CollageLayout({
       </div>
 
       <div className="btm-nav">
-        <Link href={`/${id}/collage`}>
-          <a className={router.route === "/[id]/collage" ? "active" : ""}>
+        <Link href={`/${client_id}/collage`}>
+          <a
+            className={router.route === "/[client_id]/collage" ? "active" : ""}
+          >
             <Squares2X2Icon className="w-5 h-5" />
             <span className="btm-nav-label">Collage</span>
           </a>
         </Link>
-        <Link href={`/${id}/daily`}>
-          <a className={router.route === "/[id]/daily" ? "active" : ""}>
+        <Link href={`/${client_id}/daily`}>
+          <a className={router.route === "/[client_id]/daily" ? "active" : ""}>
             <CalendarDaysIcon className="w-5 h-5" />
             <span className="btm-nav-label">Daily</span>
           </a>
         </Link>
-        <Link href={`/${id}/pool`}>
-          <a className={router.route === "/[id]/pool" ? "active" : ""}>
+        {/* <Link href={`/${client_id}/pool`}>
+          <a className={router.route === "/[client_id]/pool" ? "active" : ""}>
             <UserIcon className="w-5 h-5" />
             <span className="btm-nav-label">Pool</span>
           </a>
-        </Link>
+        </Link> */}
       </div>
     </ApolloProvider>
   );

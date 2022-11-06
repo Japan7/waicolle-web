@@ -7,7 +7,7 @@ const nextConfig = {
     return [
       {
         source: "/:path(collage|daily|pool)",
-        destination: "/324820379527020540/:path",
+        destination: "/46173f70-583d-11ed-9899-cf2d8ed1d7c3/:path",
         permanent: true,
       },
       {

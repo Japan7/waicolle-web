@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useCollageHotkeys } from "../../lib/hooks";
+import { Chara } from "../../lib/nanapi-client";
 import { compareCharaFavourites } from "../../lib/utils";
-import { WCCharaData } from "../../types/waicolle";
 import Pic from "./Pic";
 
 export default function CharaCollage({
@@ -11,7 +11,7 @@ export default function CharaCollage({
   setSelected,
   scrollable,
 }: {
-  charas: WCCharaData[];
+  charas: Chara[];
   selected: number | undefined;
   setSelected: React.Dispatch<React.SetStateAction<number | undefined>>;
   scrollable: string;
@@ -29,10 +29,10 @@ export default function CharaCollage({
         chara={chara}
         selected={selected}
         setSelected={setSelected}
-        key={chara.id}
+        key={chara.id_al}
       />
     ));
-    setFiltered(newFiltered.map((c) => c.id));
+    setFiltered(newFiltered.map((c) => c.id_al));
     setPics(newPics);
   }, [charas, selected, setFiltered, setPics, setSelected]);
 

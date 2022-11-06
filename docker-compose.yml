@@ -2,9 +2,8 @@ services:
   waicolle-web:
     build: .
     environment:
-      - REDIS_URL=redis://redis:6379
+      - NANAPI_URL=
+      - NANAPI_CLIENT_USERNAME=
+      - NANAPI_CLIENT_PASSWORD=
     ports:
       - "3000:3000"
-
-  redis:
-    image: redislabs/rejson:latest

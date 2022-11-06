@@ -1,4 +1,4 @@
-import { WCCharaData, WCWaifu } from "../../types/waicolle";
+import { Chara, Waifu } from "../../lib/nanapi-client";
 
 export default function Pic({
   waifu,
@@ -6,13 +6,13 @@ export default function Pic({
   selected,
   setSelected,
 }: {
-  waifu?: WCWaifu;
-  chara: WCCharaData;
-  selected: WCWaifu | number | undefined;
+  waifu?: Waifu;
+  chara: Chara;
+  selected: Waifu | number | undefined;
   setSelected: React.Dispatch<React.SetStateAction<any | undefined>>;
 }) {
   const src = `https://s4.anilist.co/file/anilistcdn/character/medium/${chara.image}`;
-  const item = waifu ?? chara.id;
+  const item = waifu ?? chara.id_al;
 
   return (
     <img
@@ -21,7 +21,7 @@ export default function Pic({
         (item === selected ? " border-2 border-purple-400" : "")
       }
       src={src}
-      alt={chara.name}
+      alt={chara.id_al.toString()}
       loading="lazy"
       onClick={() => setSelected(item !== selected ? item : undefined)}
     />

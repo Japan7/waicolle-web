@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { CHARA_DATA_QUERY } from "../../lib/gql";
+import { Player, Waifu } from "../../lib/nanapi-client";
 import {
   getCharaMedias,
   getOwners,
@@ -8,20 +9,19 @@ import {
 } from "../../lib/utils";
 import { CharaData } from "../../types/anilist";
 import { CollageFilters } from "../../types/filters";
-import { WCTracklists, WCWaifu } from "../../types/waicolle";
 
 export default function InfosPanel({
+  players,
   charaId,
   waifu,
   waifus,
-  tracklists,
   filters,
   setFilters,
 }: {
+  players: Player[];
   charaId?: number;
-  waifu?: WCWaifu;
-  waifus: WCWaifu[];
-  tracklists?: WCTracklists;
+  waifu?: Waifu;
+  waifus: Waifu[];
   filters?: CollageFilters;
   setFilters?: React.Dispatch<React.SetStateAction<CollageFilters>>;
 }) {
@@ -37,10 +37,10 @@ export default function InfosPanel({
   if (loading || !data) return <p>Loading...</p>;
   return (
     <CharaInfos
+      players={players}
       chara={data.Character}
       waifu={waifu}
       waifus={waifus}
-      tracklists={tracklists}
       filters={filters}
       setFilters={setFilters}
     />
@@ -48,17 +48,17 @@ export default function InfosPanel({
 }
 
 function CharaInfos({
+  players,
   chara,
   waifu,
   waifus,
-  tracklists,
   filters,
   setFilters,
 }: {
+  players: Player[];
   chara: CharaData;
-  waifu?: WCWaifu;
-  waifus: WCWaifu[];
-  tracklists?: WCTracklists;
+  waifu?: Waifu;
+  waifus: Waifu[];
   filters?: CollageFilters;
   setFilters?: React.Dispatch<React.SetStateAction<CollageFilters>>;
 }) {
@@ -66,11 +66,9 @@ function CharaInfos({
     <div className="flex flex-col">
       <CharaName chara={chara} />
       <CharaImage chara={chara} />
-      <WaifuCharaProps chara={chara} waifu={waifu} />
-      <WaifuOwners chara={chara} waifus={waifus} />
-      {tracklists && (
-        <WaifuTracklisters chara={chara} tracklists={tracklists} />
-      )}
+      <WaifuCharaProps chara={chara} players={players} waifu={waifu} />
+      <WaifuOwners chara={chara} players={players} waifus={waifus} />
+      <WaifuTracklisters chara={chara} players={players} />
       <CharaMedias chara={chara} filters={filters} setFilters={setFilters} />
     </div>
   );
@@ -104,10 +102,12 @@ function CharaImage({ chara }: { chara: CharaData }) {
 
 function WaifuCharaProps({
   chara,
+  players,
   waifu,
 }: {
   chara: CharaData;
-  waifu?: WCWaifu;
+  players: Player[];
+  waifu?: Waifu;
 }) {
   return (
     <>
@@ -121,9 +121,20 @@ function WaifuCharaProps({
         {waifu && (
           <>
             <h2>Owner</h2>
-            <p>{waifu.owner}</p>
+            <p>
+              {
+                players.find((p) => p.discord_id === waifu.owner_discord_id)!
+                  .discord_username
+              }
+            </p>
             <h2>Original owner</h2>
-            <p>{waifu.original_owner}</p>
+            <p>
+              {
+                players.find(
+                  (p) => p.discord_id === waifu.original_owner_discord_id
+                )?.discord_username
+              }
+            </p>
             <h2>Timestamp</h2>
             <p>{waifu.timestamp.slice(0, 16)}</p>
           </>
@@ -198,12 +209,14 @@ function CharaMedias({
 
 function WaifuOwners({
   chara,
+  players,
   waifus,
 }: {
   chara: CharaData;
-  waifus: WCWaifu[];
+  players: Player[];
+  waifus: Waifu[];
 }) {
-  const names = getOwners(chara.id, waifus);
+  const names = getOwners(chara.id, players, waifus);
   return (
     <div>
       {names.length > 0 && (
@@ -218,12 +231,12 @@ function WaifuOwners({
 
 function WaifuTracklisters({
   chara,
-  tracklists,
+  players,
 }: {
   chara: CharaData;
-  tracklists: WCTracklists;
+  players: Player[];
 }) {
-  const names = getTracklisters(chara, tracklists);
+  const names = getTracklisters(chara, players);
   return (
     <div>
       {names.length > 0 && (

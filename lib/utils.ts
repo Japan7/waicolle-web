@@ -1,10 +1,5 @@
-import {
-  BaseCharaData,
-  BaseMediaData,
-  CharaData,
-  MediaEdge,
-} from "../types/anilist";
-import { WCTracklists, WCWaifu } from "../types/waicolle";
+import { BaseMediaData, CharaData, MediaEdge } from "../types/anilist";
+import { Chara, Player, Waifu } from "./nanapi-client";
 
 export function getRank(chara: CharaData) {
   if (chara.favourites >= 10000) return "SS";
@@ -16,11 +11,11 @@ export function getRank(chara: CharaData) {
   return "E";
 }
 
-export function compareCharaFavourites(a: BaseCharaData, b: BaseCharaData) {
+export function compareCharaFavourites(a: Chara, b: Chara) {
   if (a.favourites > b.favourites) return -1;
   if (a.favourites < b.favourites) return 1;
-  if (a.id > b.id) return -1;
-  if (a.id < b.id) return 1;
+  if (a.id_al > b.id_al) return -1;
+  if (a.id_al < b.id_al) return 1;
   return 0;
 }
 
@@ -54,13 +49,16 @@ export function getCharaMedias(chara: CharaData) {
   return { seiyuu, animes, mangas };
 }
 
-export function getOwners(charaId: number, waifus: WCWaifu[]) {
-  const filtered = waifus.filter((waifu) => waifu.chara_id === charaId);
+export function getOwners(charaId: number, players: Player[], waifus: Waifu[]) {
+  const playerMap = new Map<string, Player>();
+  players.forEach((p) => playerMap.set(p.discord_id, p));
+
+  const filtered = waifus.filter((waifu) => waifu.character_id === charaId);
   const alive = filtered.filter((waifu) => !waifu.blooded);
 
   const owners = new Map<string, any>();
   alive.forEach((waifu) => {
-    const owner_dict = owners.get(waifu.owner) ?? {
+    const owner_dict = owners.get(waifu.owner_discord_id) ?? {
       unlocked: {
         count: 0,
         ascended: 0,
@@ -79,12 +77,12 @@ export function getOwners(charaId: number, waifus: WCWaifu[]) {
     } else if (waifu.level > 1) {
       owner_dict[locked_str].double_ascended++;
     }
-    owners.set(waifu.owner, owner_dict);
+    owners.set(waifu.owner_discord_id, owner_dict);
   });
 
   const text: string[] = [];
   owners.forEach((entry, owner) => {
-    let subtext = owner;
+    let subtext = playerMap.get(owner)!.discord_username;
     let counttext = "";
     const locked = entry.locked;
     if (
@@ -219,20 +217,16 @@ export function getOwners(charaId: number, waifus: WCWaifu[]) {
   return text;
 }
 
-export function getTracklisters(chara: CharaData, tracklists: WCTracklists) {
+export function getTracklisters(chara: CharaData, players: Player[]) {
   const medias = chara.media?.edges.map((e) => e.node.id);
 
   let names: string[] = [];
 
-  tracklists.media.forEach((m) => {
-    if (medias?.includes(m.media_id)) names.push(m.player);
+  players.forEach((p) => {
+    p.tracked.forEach((id) => {
+      if (medias?.includes(id)) names.push(p.discord_username);
+    });
   });
-
-  Object.values(tracklists.collection).forEach((c) =>
-    c.medias.forEach((m) => {
-      if (medias?.includes(m)) names.push(c.player);
-    })
-  );
 
   names = Array.from(new Set(names));
   names.sort((a, b) => a.localeCompare(b, "fr", { ignorePunctuation: true }));
