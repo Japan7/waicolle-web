@@ -4,7 +4,6 @@ import {
   CalendarDaysIcon,
   InformationCircleIcon,
   Squares2X2Icon,
-  UserIcon,
 } from "@heroicons/react/24/solid";
 import Head from "next/head";
 import Link from "next/link";
@@ -120,12 +119,6 @@ export default function CollageLayout({
             <span className="btm-nav-label">Daily</span>
           </a>
         </Link>
-        {/* <Link href={`/${client_id}/pool`}>
-          <a className={router.route === "/[client_id]/pool" ? "active" : ""}>
-            <UserIcon className="w-5 h-5" />
-            <span className="btm-nav-label">Pool</span>
-          </a>
-        </Link> */}
       </div>
     </ApolloProvider>
   );

@@ -70,16 +70,6 @@ export const getDailyExport = nanapi
   .create();
 export type DailyExport = FetchReturnType<typeof getDailyExport>;
 
-export const getPoolsExport = nanapi
-  .path("/waicolle/exports/pools")
-  .method("get")
-  .create();
-export type PoolsExport = FetchReturnType<typeof getPoolsExport>;
-export type Pool = PoolsExport["pools"][number];
-
 export type Player = WaifusExport["players"][number];
 export type Waifu = WaifusExport["waifus"][number];
-export type Chara =
-  | WaifusExport["charas"][number]
-  | DailyExport[number]
-  | PoolsExport["charas"][number];
+export type Chara = WaifusExport["charas"][number] | DailyExport[number];
