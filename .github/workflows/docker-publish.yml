@@ -33,7 +33,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - run: |
+      - env:
+          NANAPI_OPENAPI: ${{ secrets.NANAPI_OPENAPI }}
+        run: |
           wget $NANAPI_OPENAPI
           npx openapi-typescript openapi.json > nanapi.ts
 
