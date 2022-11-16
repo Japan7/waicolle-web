@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps<WaifusExport> = async (
 const Collage: NextPage<WaifusExport> = ({ players, waifus, charas }) => {
   const router = useRouter();
   const [filters, setFilters] = useLocalStorageFilters(
-    `collageFilters_${router.query.id}`
+    `collageFilters_${router.query.client_id}`
   );
   const [mediaCharas, setMediaCharas] = useState<number[] | null>(null);
   const [selected, setSelected] = useState<Waifu>();
