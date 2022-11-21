@@ -105,19 +105,19 @@ export default function CollageLayout({
       </div>
 
       <div className="btm-nav">
-        <Link href={`/${client_id}/collage`}>
-          <a
-            className={router.route === "/[client_id]/collage" ? "active" : ""}
-          >
-            <Squares2X2Icon className="w-5 h-5" />
-            <span className="btm-nav-label">Collage</span>
-          </a>
+        <Link
+          href={`/${client_id}/collage`}
+          className={router.route === "/[client_id]/collage" ? "active" : ""}
+        >
+          <Squares2X2Icon className="w-5 h-5" />
+          <span className="btm-nav-label">Collage</span>
         </Link>
-        <Link href={`/${client_id}/daily`}>
-          <a className={router.route === "/[client_id]/daily" ? "active" : ""}>
-            <CalendarDaysIcon className="w-5 h-5" />
-            <span className="btm-nav-label">Daily</span>
-          </a>
+        <Link
+          href={`/${client_id}/daily`}
+          className={router.route === "/[client_id]/daily" ? "active" : ""}
+        >
+          <CalendarDaysIcon className="w-5 h-5" />
+          <span className="btm-nav-label">Daily</span>
         </Link>
       </div>
     </ApolloProvider>

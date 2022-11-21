@@ -11,9 +11,7 @@ export default function PostLayout({
     <div className="prose text-justify mx-auto p-4">
       {!home && (
         <header className="my-4">
-          <Link href="/">
-            <a>← Back to home</a>
-          </Link>
+          <Link href="/">← Back to home</Link>
         </header>
       )}
 
