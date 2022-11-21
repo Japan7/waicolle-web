@@ -1,8 +1,6 @@
-export const FILTERS_VERSION = 5;
+export const FILTERS_VERSION = 6;
 
 export const DEFAULT_FILTERS: CollageFilters = {
-  players: [],
-  mediaId: null,
   ascendedOnly: false,
   unlockedOnly: false,
   lockedOnly: false,
@@ -12,8 +10,8 @@ export const DEFAULT_FILTERS: CollageFilters = {
 };
 
 export interface CollageFilters {
-  players: string[];
-  mediaId: number | null;
+  player?: string;
+  mediaId?: number;
   ascendedOnly: boolean;
   unlockedOnly: boolean;
   lockedOnly: boolean;

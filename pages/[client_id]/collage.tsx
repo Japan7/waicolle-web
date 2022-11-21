@@ -25,14 +25,14 @@ const Collage: NextPage<WaifusExport> = ({ players, waifus, charas }) => {
   const [filters, setFilters] = useLocalStorageFilters(
     `collageFilters_${router.query.client_id}`
   );
-  const [mediaCharas, setMediaCharas] = useState<number[] | null>(null);
+  const [mediaCharas, setMediaCharas] = useState<number[]>();
   const [selected, setSelected] = useState<Waifu>();
 
   return (
     <CollageLayout
       name="Collage"
       main={(drawerContentDivId, setRightPanelActive) =>
-        filters.players.length > 0 ? (
+        filters.player ? (
           <WaifuCollage
             waifus={waifus}
             charas={charas}

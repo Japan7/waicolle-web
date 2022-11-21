@@ -25,27 +25,27 @@ export interface BaseCharaData {
 export interface CharaData extends BaseCharaData {
   name: Name;
   image: CharacterImage;
-  description: string | null;
-  gender: string | null;
+  description?: string;
+  gender?: string;
   dateOfBirth: FuzzyDate;
-  age: string | null;
+  age?: string;
   siteUrl: string;
-  media: MediaConnection | null;
+  media: MediaConnection;
 }
 
 export interface Name {
   userPreferred: string;
-  native: string | null;
+  native?: string;
 }
 
 export interface CharacterImage {
-  large: string | null;
+  large?: string;
 }
 
 export interface FuzzyDate {
-  year: number | null;
-  month: number | null;
-  day: number | null;
+  year?: number;
+  month?: number;
+  day?: number;
 }
 
 export interface MediaConnection {

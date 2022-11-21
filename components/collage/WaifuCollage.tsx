@@ -24,7 +24,7 @@ export default function WaifuCollage({
   waifus: Waifu[];
   charas: Chara[];
   filters: CollageFilters;
-  mediaCharas: number[] | null;
+  mediaCharas: number[] | undefined;
   selected: Waifu | undefined;
   setSelected: React.Dispatch<React.SetStateAction<Waifu | undefined>>;
   scrollable: string;
@@ -50,7 +50,7 @@ export default function WaifuCollage({
         return false;
 
       if (filters.blooded !== waifu.blooded) return false;
-      if (!filters.players.includes(waifu.owner_discord_id)) return false;
+      if (filters.player !== waifu.owner_discord_id) return false;
 
       if (filters.ascendedOnly && waifu.level === 0) return false;
       if (filters.unlockedOnly && waifu.locked) return false;
@@ -65,7 +65,7 @@ export default function WaifuCollage({
       filters.blooded,
       filters.lockedOnly,
       filters.nanaedOnly,
-      filters.players,
+      filters.player,
       filters.unlockedOnly,
       mediaCharas,
     ]
@@ -113,7 +113,7 @@ export default function WaifuCollage({
       dataLength={shown.length}
       next={() => setShown(pics.slice(0, shown.length + 200))}
       hasMore={shown.length < pics.length}
-      loader={null}
+      loader={undefined}
       scrollThreshold={0.25}
       scrollableTarget={scrollable}
     >

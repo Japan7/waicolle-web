@@ -16,11 +16,11 @@ export default function FiltersMenu({
   players: Player[];
   filters: CollageFilters;
   setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>;
-  mediaCharas: number[] | null;
-  setMediaCharas: React.Dispatch<React.SetStateAction<number[] | null>>;
+  mediaCharas: number[] | undefined;
+  setMediaCharas: React.Dispatch<React.SetStateAction<number[] | undefined>>;
   withoutFiltersSelector?: boolean;
 }) {
-  const [mediaInfos, setMediaInfos] = useState<React.ReactNode>(null);
+  const [mediaInfos, setMediaInfos] = useState<React.ReactNode>();
 
   return (
     <div className="flex flex-col items-center gap-y-2">
@@ -122,29 +122,23 @@ function UserSelector({
   filters: CollageFilters;
   setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>;
 }) {
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
-      const players = Array.from(
-        e.target.selectedOptions,
-        (option) => option.value
-      );
-      setFilters({ ...filters, players });
-    },
-    [filters, setFilters]
-  );
-
   const sortedPlayers = players.sort((a, b) =>
     a.discord_username.localeCompare(b.discord_username)
   );
 
+  const handleChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
+    const selected = e.target.selectedOptions[0];
+    setFilters({ ...filters, player: selected.value });
+  };
+
   return (
     <div className="flex flex-col items-center">
       <select
-        multiple
-        value={filters.players ?? sortedPlayers.map((p) => p.discord_id)}
+        value={filters.player ?? ""}
         onChange={handleChange}
         className="select"
       >
+        <option value="">Select a player</option>
         {sortedPlayers.map((p) => (
           <option key={p.discord_id} value={p.discord_id}>
             {p.discord_username}
@@ -164,11 +158,11 @@ function MediaSelector({
 }: {
   filters: CollageFilters;
   setFilters: React.Dispatch<React.SetStateAction<CollageFilters>>;
-  mediaCharas: number[] | null;
-  setMediaCharas: React.Dispatch<React.SetStateAction<number[] | null>>;
+  mediaCharas: number[] | undefined;
+  setMediaCharas: React.Dispatch<React.SetStateAction<number[] | undefined>>;
   setMediaInfos: React.Dispatch<React.SetStateAction<React.ReactNode>>;
 }) {
-  const [mediaId, setMediaId] = useState<number | null>(null);
+  const [mediaId, setMediaId] = useState<number>();
 
   const [getMediaCharas, { data, error }] = useLazyQuery<{ Media: MediaData }>(
     MEDIA_DATA_QUERY,
@@ -196,7 +190,7 @@ function MediaSelector({
       setMediaCharas([]);
       getMediaCharas({ variables: { id: filters.mediaId } });
     } else {
-      setMediaCharas(null);
+      setMediaCharas(undefined);
     }
   }, [filters.mediaId, getMediaCharas, setMediaCharas]);
 
@@ -212,14 +206,14 @@ function MediaSelector({
         setMediaInfos(<label>No media found with this ID</label>);
       }
     } else {
-      setMediaInfos(null);
+      setMediaInfos(undefined);
     }
   }, [data, error, mediaId, setMediaInfos]);
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const mediaId = Number.isNaN(e.target.valueAsNumber)
-        ? null
+        ? undefined
         : e.target.valueAsNumber;
       setFilters({ ...filters, mediaId });
     },

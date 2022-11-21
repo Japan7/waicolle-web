@@ -31,7 +31,7 @@ export function getCharaMedias(chara: CharaData) {
   const edges = (chara.media?.edges.slice() ?? []).sort(compareEdges);
   const animes: BaseMediaData[] = [];
   const mangas: BaseMediaData[] = [];
-  let seiyuu: string | null = null;
+  let seiyuu: string | undefined;
 
   edges.forEach((e) => {
     const node = e.node;
