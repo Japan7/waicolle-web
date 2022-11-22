@@ -1,4 +1,3 @@
-import { ExponentialBackoff, handleType, retry } from "cockatiel";
 import {
   ApiError,
   ApiResponse,
@@ -23,29 +22,27 @@ async function login() {
   token = json.access_token;
 }
 
-function getAuthRetry(reject: (reason?: any) => void) {
-  const authRetry = retry(
-    handleType(ApiError, (e) => e.status == 401),
-    { maxAttempts: 3, backoff: new ExponentialBackoff() }
-  );
-  authRetry.onFailure(login);
-  authRetry.onGiveUp(reject);
-  return authRetry;
-}
-
 const oauth2: Middleware = (url, init, next) => {
   return new Promise<ApiResponse>(async (resolve, reject) => {
-    const authRetry = getAuthRetry(reject);
-    await authRetry.execute(async () => {
-      if (!token) await login();
-      const resp = await next(url, {
-        headers: new Headers({
-          ...init.headers,
-          Authorization: `Bearer ${token}`,
-        }),
-      });
-      resolve(resp);
-    });
+    for (let i = 0; i < 3; i++) {
+      try {
+        const resp = await next(url, {
+          headers: new Headers({
+            ...init.headers,
+            Authorization: `Bearer ${token}`,
+          }),
+        });
+        resolve(resp);
+        return;
+      } catch (error) {
+        if ((error as ApiError).status === 401) {
+          await login();
+        } else {
+          throw error;
+        }
+      }
+    }
+    reject(new Error("Failed to authenticate"));
   });
 };
 
