@@ -16,7 +16,7 @@ class MyDocument extends Document {
           <meta property="og:site_name" content="Japan7/waicolle-web" />
           <meta
             property="og:image"
-            content="https://waicolle.yuru.moe/logo512.png"
+            content="https://waicolle.japan7.bde.enseeiht.fr/logo512.png"
           />
         </Head>
         <body>
