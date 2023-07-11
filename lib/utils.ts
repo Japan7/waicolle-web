@@ -218,14 +218,10 @@ export function getOwners(charaId: number, players: Player[], waifus: Waifu[]) {
 }
 
 export function getTracklisters(chara: CharaData, players: Player[]) {
-  const medias = chara.media?.edges.map((e) => e.node.id);
-
   let names: string[] = [];
 
   players.forEach((p) => {
-    p.tracked.forEach((id) => {
-      if (medias?.includes(id)) names.push(p.discord_username);
-    });
+    if (p.tracked.includes(chara.id)) names.push(p.discord_username);
   });
 
   names = Array.from(new Set(names));
