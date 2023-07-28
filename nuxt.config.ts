@@ -2,4 +2,9 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxtjs/tailwindcss"],
+  runtimeConfig: {
+    nanapiUrl: "",
+    nanapiClientUsername: "",
+    nanapiClientPassword: "",
+  },
 });
