@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { useStorage } from "@vueuse/core";
 import { Waifu } from "server/utils/nanapi-client";
-import { CollageFilters } from "utils/waicolle";
 
 const route = useRoute();
 const { data, pending } = useWaifus(route.params.clientId as string);
 
-const filters = ref<CollageFilters>(DEFAULT_FILTERS);
+const filters = useStorage("collage-filters", DEFAULT_FILTERS, localStorage, {
+  mergeDefaults: true,
+});
 const mediaCharas = ref<number[]>();
 const selected = ref<Waifu>();
 </script>
