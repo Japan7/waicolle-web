@@ -5,11 +5,11 @@ import { CollageFilters } from "utils/waicolle";
 const props = defineProps<{
   filters: CollageFilters;
   mediaCharas?: number[];
-  div?: Element;
+  infosDiv?: HTMLDivElement;
 }>();
 const emit = defineEmits<{
   setFilters: [filters: CollageFilters];
-  setMediaCharas: [charas?: number[]];
+  setMediaCharas: [charas: number[] | undefined];
 }>();
 
 const mediaId = computed({
@@ -29,18 +29,16 @@ const mediaId = computed({
 });
 
 const chara_page = ref(1);
+const variables = computed(() => ({
+  id: props.filters.mediaId,
+  chara_page: chara_page.value,
+}));
+const enabled = computed(() => mediaId.value !== undefined);
 const { load, result, loading, error, onResult } = useLazyQuery<{
   Media: MediaData;
-}>(
-  MEDIA_DATA_QUERY,
-  computed(() => ({
-    id: props.filters.mediaId,
-    chara_page: chara_page.value,
-  })),
-  {
-    enabled: computed(() => mediaId.value !== undefined),
-  }
-);
+}>(MEDIA_DATA_QUERY, variables, {
+  enabled: enabled.value,
+});
 
 watch(mediaId, () => {
   chara_page.value = 1;
@@ -74,7 +72,7 @@ onResult((queryResult: any) => {
     class="input"
   />
 
-  <Teleport v-if="div" :to="div">
+  <Teleport v-if="infosDiv" :to="infosDiv">
     <span v-if="mediaId && result">
       <NuxtLink :to="result.Media.siteUrl">
         [{{ result.Media.type }}] {{ result.Media.title.romaji }}

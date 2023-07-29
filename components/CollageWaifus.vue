@@ -8,9 +8,10 @@ const props = defineProps<{
   filters: CollageFilters;
   mediaCharas?: number[];
   selected?: Waifu;
+  scrollDiv?: HTMLDivElement;
 }>();
 const emit = defineEmits<{
-  select: [waifu: Waifu];
+  setSelected: [waifu: Waifu];
 }>();
 
 const charasMap = computed(() => {
@@ -20,13 +21,15 @@ const charasMap = computed(() => {
 });
 
 function isIncluded(waifu: Waifu) {
-  if (props.mediaCharas && !props.mediaCharas.includes(waifu.character_id))
+  if (props.mediaCharas && !props.mediaCharas.includes(waifu.character_id)) {
     return false;
+  }
   if (
     !charasMap.value.get(waifu.character_id)?.image ||
     charasMap.value.get(waifu.character_id)?.image!.endsWith("default.jpg")
-  )
+  ) {
     return false;
+  }
 
   if (props.filters.blooded !== waifu.blooded) {
     return false;
@@ -63,16 +66,26 @@ const filtered = computed(() => {
   );
   return sorted.filter(isIncluded);
 });
+
+const limit = useCollageInfiniteScroll(filtered, toRef(props, "scrollDiv"));
+useCollageHotkeys(
+  filtered,
+  toRef(props, "selected"),
+  (w) => {
+    emit("setSelected", w);
+  },
+  toRef(props, "scrollDiv")
+);
 </script>
 
 <template>
   <div class="flex flex-wrap justify-center">
     <CollageImage
-      v-for="waifu in filtered"
+      v-for="waifu in filtered.slice(0, limit)"
       :key="waifu.id"
       :chara="charasMap.get(waifu.character_id)!"
       :selected="waifu.id === selected?.id"
-      @click="$emit('select', waifu)"
+      @click="$emit('setSelected', waifu)"
     />
   </div>
 </template>

@@ -7,11 +7,12 @@ const props = defineProps<{
   charaId?: number;
 }>();
 
+const variables = computed(() => ({
+  id: props.waifu?.character_id ?? props.charaId,
+}));
 const { result, loading } = useQuery<{ Character: CharaData }>(
   CHARA_DATA_QUERY,
-  computed(() => ({
-    id: props.waifu?.character_id ?? props.charaId,
-  }))
+  variables
 );
 const chara = computed<CharaData | undefined>(() => result.value?.Character);
 </script>

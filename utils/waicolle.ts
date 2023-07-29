@@ -69,10 +69,12 @@ export function compareTimestamp(a: Waifu, b: Waifu) {
 }
 
 function compareEdges(a: MediaEdge, b: MediaEdge) {
-  if (a.characterRole !== "BACKGROUND" && b.characterRole === "BACKGROUND")
+  if (a.characterRole !== "BACKGROUND" && b.characterRole === "BACKGROUND") {
     return -1;
-  if (a.characterRole === "BACKGROUND" && b.characterRole !== "BACKGROUND")
+  }
+  if (a.characterRole === "BACKGROUND" && b.characterRole !== "BACKGROUND") {
     return 1;
+  }
   return 0;
 }
 
@@ -204,7 +206,9 @@ export function getOwners(charaId: number, players: Player[], waifus: Waifu[]) {
     }
 
     subtext += counttext;
-    if (subtext) text.push(subtext);
+    if (subtext) {
+      text.push(subtext);
+    }
   });
 
   text.sort((a, b) => a.localeCompare(b, "fr", { ignorePunctuation: true }));
@@ -261,7 +265,9 @@ export function getOwners(charaId: number, players: Player[], waifus: Waifu[]) {
     subtext += ")";
   }
 
-  if (subtext) text.push(subtext);
+  if (subtext) {
+    text.push(subtext);
+  }
 
   return text;
 }
@@ -270,7 +276,9 @@ export function getTracklisters(chara: CharaData, players: Player[]) {
   let names: string[] = [];
 
   players.forEach((p) => {
-    if (p.tracked.includes(chara.id)) names.push(p.discord_username);
+    if (p.tracked.includes(chara.id)) {
+      names.push(p.discord_username);
+    }
   });
 
   names = Array.from(new Set(names));

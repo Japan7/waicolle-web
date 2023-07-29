@@ -44,7 +44,7 @@ function linkGetClass(target?: string) {
       <input id="app-drawer" type="checkbox" class="drawer-toggle" />
 
       <!-- Page content here -->
-      <div class="drawer-content flex flex-col">
+      <div ref="contentDiv" class="drawer-content flex flex-col">
         <!-- Sticky nav -->
         <nav
           class="navbar sticky top-0 shadow bg-base-100 bg-opacity-75 backdrop-blur"
@@ -87,7 +87,7 @@ function linkGetClass(target?: string) {
 
         <!-- Main content -->
         <main class="p-2">
-          <slot />
+          <slot :contentDiv="$refs.contentDiv" />
         </main>
       </div>
 

@@ -6,14 +6,19 @@ const selected = ref<number>();
 
 <template>
   <NuxtLayout>
-    <CollageCharas
-      v-if="data"
-      :charas="data"
-      :selected="selected"
-      @select="(id_al) => (selected = id_al === selected ? undefined : id_al)"
-    />
-    <p v-else-if="pending">Loading daily...</p>
-    <p v-else>Error loading daily.</p>
+    <template v-slot="slotProps">
+      <CollageCharas
+        v-if="data"
+        :charas="data"
+        :selected="selected"
+        :scrollDiv="slotProps.contentDiv"
+        @setSelected="
+          (id_al) => (selected = id_al === selected ? undefined : id_al)
+        "
+      />
+      <p v-else-if="pending">Loading daily...</p>
+      <p v-else>Error loading daily.</p>
+    </template>
 
     <template #side>
       <Infos v-if="selected" :charaId="selected" />

@@ -7,14 +7,12 @@ const props = defineProps<{
 }>();
 const emit = defineEmits<{
   setFilters: [filters: CollageFilters];
-  setMediaCharas: [charas?: number[]];
+  setMediaCharas: [charas: number[] | undefined];
 }>();
-
-const div = ref<Element>();
 </script>
 
 <template>
-  <div className="flex flex-col items-center gap-y-2">
+  <div class="flex flex-col items-center gap-y-2">
     <FiltersBaseSelect
       :filters="filters"
       @setFilters="(f) => $emit('setFilters', f)"
@@ -26,10 +24,10 @@ const div = ref<Element>();
     <FiltersMediaSelect
       :filters="filters"
       :mediaCharas="mediaCharas"
-      :div="div"
+      :infosDiv="($refs.infosDiv as HTMLDivElement | undefined)"
       @setFilters="(f) => $emit('setFilters', f)"
       @setMediaCharas="(mc) => $emit('setMediaCharas', mc)"
     />
-    <div :ref="(e) => (div = e as Element)" className="text-center"></div>
+    <div ref="infosDiv" class="text-center"></div>
   </div>
 </template>
