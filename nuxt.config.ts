@@ -1,10 +1,18 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss"],
+  ssr: false,
+  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/apollo"],
   runtimeConfig: {
     nanapiUrl: "",
     nanapiClientUsername: "",
     nanapiClientPassword: "",
+  },
+  apollo: {
+    clients: {
+      default: {
+        httpEndpoint: "https://graphql.anilist.co",
+      },
+    },
   },
 });
