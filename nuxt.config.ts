@@ -7,6 +7,9 @@ export default defineNuxtConfig({
     nanapiUrl: "",
     nanapiClientUsername: "",
     nanapiClientPassword: "",
+    public: {
+      defaultClientId: "",
+    },
   },
   apollo: {
     clients: {
