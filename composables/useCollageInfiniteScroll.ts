@@ -2,7 +2,7 @@ export const useCollageInfiniteScroll = <T>(
   array: Ref<T[]>,
   scrollDiv: Ref<HTMLDivElement | undefined>
 ) => {
-  const limit = ref(100);
+  const limit = ref(200);
   useInfiniteScroll(
     scrollDiv,
     () => {
@@ -10,7 +10,7 @@ export const useCollageInfiniteScroll = <T>(
         limit.value += 100;
       }
     },
-    { distance: 200 }
+    { distance: 1000 }
   );
   return limit;
 };

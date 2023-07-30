@@ -23,11 +23,11 @@ useCollageHotkeys(
 <template>
   <div class="flex flex-wrap justify-center">
     <CollageImage
-      v-for="chara in sortedCharas.slice(0, limit)"
-      :key="chara.id_al"
-      :chara="chara"
-      :selected="chara.id_al === selected"
-      @click="$emit('setSelected', chara.id_al)"
+      v-for="i in limit + 1"
+      :key="sortedCharas[i - 1].id_al"
+      :chara="sortedCharas[i - 1]"
+      :selected="sortedCharas[i - 1].id_al === selected"
+      @click="$emit('setSelected', sortedCharas[i - 1].id_al)"
     />
   </div>
 </template>

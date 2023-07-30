@@ -79,11 +79,11 @@ useCollageHotkeys(
 <template>
   <div class="flex flex-wrap justify-center">
     <CollageImage
-      v-for="waifu in filtered.slice(0, limit)"
-      :key="waifu.id"
-      :chara="charasMap.get(waifu.character_id)!"
-      :selected="waifu.id === selected?.id"
-      @click="$emit('setSelected', waifu)"
+      v-for="i in limit + 1"
+      :key="filtered[i - 1].id"
+      :chara="charasMap.get(filtered[i-1].character_id)!"
+      :selected="filtered[i - 1].id === selected?.id"
+      @click="$emit('setSelected', filtered[i - 1])"
     />
   </div>
 </template>
