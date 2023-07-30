@@ -6,7 +6,9 @@ const props = defineProps<{
 }>();
 
 const route = useRoute();
-const { data, pending } = useWaifus(route.params.clientId as string);
+const { data, pending } = useLazyFetch("/api/waifus", {
+  params: { clientId: route.params.clientId },
+});
 const owners = computed(() =>
   data.value
     ? getOwners(props.chara.id, data.value.players, data.value.waifus)

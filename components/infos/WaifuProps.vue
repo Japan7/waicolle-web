@@ -11,7 +11,9 @@ let players = ref<Player[]>();
 watchEffect(() => {
   if (props.waifu) {
     const route = useRoute();
-    const { data, pending } = useWaifus(route.params.clientId as string);
+    const { data, pending } = useLazyFetch("/api/waifus", {
+      params: { clientId: route.params.clientId },
+    });
     watchEffect(() => {
       players.value = data.value?.players;
     });

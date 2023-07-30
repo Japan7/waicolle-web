@@ -6,7 +6,9 @@ const props = defineProps<{
 }>();
 
 const route = useRoute();
-const { data, pending } = useWaifus(route.params.clientId as string);
+const { data, pending } = useLazyFetch("/api/waifus", {
+  params: { clientId: route.params.clientId },
+});
 const tracklisters = computed(() =>
   data.value ? getTracklisters(props.chara, data.value.players) : []
 );

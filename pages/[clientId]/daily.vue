@@ -3,7 +3,7 @@ useHead({
   titleTemplate: "Daily | %s",
 });
 
-const { data, pending } = useDaily();
+const { data, pending } = useLazyFetch("/api/daily");
 
 const selected = ref<number>();
 </script>
