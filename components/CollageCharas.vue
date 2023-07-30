@@ -23,7 +23,7 @@ useCollageHotkeys(
 <template>
   <div class="flex flex-wrap justify-center">
     <CollageImage
-      v-for="i in limit + 1"
+      v-for="i in Math.min(limit, sortedCharas.length)"
       :key="sortedCharas[i - 1].id_al"
       :chara="sortedCharas[i - 1]"
       :selected="sortedCharas[i - 1].id_al === selected"

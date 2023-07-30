@@ -79,9 +79,9 @@ useCollageHotkeys(
 <template>
   <div class="flex flex-wrap justify-center">
     <CollageImage
-      v-for="i in limit + 1"
+      v-for="i in Math.min(limit, filtered.length)"
       :key="filtered[i - 1].id"
-      :chara="charasMap.get(filtered[i-1].character_id)!"
+      :chara="charasMap.get(filtered[i - 1].character_id)!"
       :selected="filtered[i - 1].id === selected?.id"
       @click="emit('select', filtered[i - 1])"
     />

@@ -5,6 +5,10 @@ import { CharaData } from "utils/anilist";
 const props = defineProps<{
   waifu?: Waifu;
   charaId?: number;
+  mediaCursorPointer?: boolean;
+}>();
+const emit = defineEmits<{
+  mediaIdSelect: [id: number];
 }>();
 
 const variables = computed(() => ({
@@ -25,7 +29,11 @@ const chara = computed<CharaData | undefined>(() => result.value?.Character);
     <InfosWaifuProps :chara="chara" :waifu="waifu" />
     <InfosWaifuOwners :chara="chara" />
     <InfosWaifuTracklisters :chara="chara" />
-    <InfosCharaMedias :chara="chara" />
+    <InfosCharaMedias
+      :chara="chara"
+      :cursor-pointer="mediaCursorPointer"
+      @media-id-select="(id) => emit('mediaIdSelect', id)"
+    />
   </div>
   <p v-else>Error.</p>
 </template>

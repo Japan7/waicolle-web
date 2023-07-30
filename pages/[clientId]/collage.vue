@@ -55,7 +55,12 @@ const selected = ref<Waifu>();
     </template>
 
     <template #side>
-      <Infos v-if="selected" :waifu="selected" />
+      <Infos
+        v-if="selected"
+        :waifu="selected"
+        :media-cursor-pointer="true"
+        @media-id-select="(id) => (filters = { ...filters, mediaId: id })"
+      />
     </template>
   </NuxtLayout>
 </template>

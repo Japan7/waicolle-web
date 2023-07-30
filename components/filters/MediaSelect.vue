@@ -33,12 +33,10 @@ const variables = computed(() => ({
   id: props.filters.mediaId,
   chara_page: chara_page.value,
 }));
-const enabled = computed(() => mediaId.value !== undefined);
+const options = computed(() => ({ enabled: mediaId.value !== undefined }));
 const { load, result, loading, error, onResult } = useLazyQuery<{
   Media: MediaData;
-}>(MEDIA_DATA_QUERY, variables, {
-  enabled: enabled.value,
-});
+}>(MEDIA_DATA_QUERY, variables, options);
 
 watch(mediaId, () => {
   chara_page.value = 1;
