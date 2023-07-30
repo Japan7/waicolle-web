@@ -86,7 +86,7 @@ function linkGetClass(target?: string) {
         </nav>
 
         <!-- Main content -->
-        <main class="p-2">
+        <main class="h-full p-2">
           <slot :contentDiv="$refs.contentDiv" />
         </main>
       </div>
