@@ -9,20 +9,20 @@ const emit = defineEmits<{
   mediaIdSelect: [id: number];
 }>();
 
-const { seiyuu, animes, mangas } = getCharaMedias(props.chara);
+const data = computed(() => getCharaMedias(props.chara));
 </script>
 
 <template>
   <div>
-    <template v-if="seiyuu">
+    <template v-if="data.seiyuu">
       <h2 class="my-2 font-bold">Character Voice</h2>
-      <p>{{ seiyuu }}</p>
+      <p>{{ data.seiyuu }}</p>
     </template>
 
-    <template v-if="animes.length > 0">
+    <template v-if="data.animes.length > 0">
       <h2 class="my-2 font-bold">Animeography Top 5</h2>
       <p
-        v-for="a in animes.slice(0, 5)"
+        v-for="a in data.animes.slice(0, 5)"
         :key="a.id"
         :class="{ 'cursor-pointer': cursorPointer }"
         @click="emit('mediaIdSelect', a.id)"
@@ -31,10 +31,10 @@ const { seiyuu, animes, mangas } = getCharaMedias(props.chara);
       </p>
     </template>
 
-    <template v-if="mangas.length > 0">
+    <template v-if="data.mangas.length > 0">
       <h2 class="my-2 font-bold">Mangaography Top 5</h2>
       <p
-        v-for="m in mangas.slice(0, 5)"
+        v-for="m in data.mangas.slice(0, 5)"
         :key="m.id"
         :class="{ 'cursor-pointer': cursorPointer }"
         @click="emit('mediaIdSelect', m.id)"
