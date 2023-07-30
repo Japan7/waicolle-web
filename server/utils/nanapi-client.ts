@@ -30,7 +30,7 @@ async function refreshToken() {
 function createAuthRetry(reject: (reason?: any) => void) {
   const authRetry = retry(
     handleType(ApiError, (e) => e.status == 401),
-    { maxAttempts: 3, backoff: new ExponentialBackoff() }
+    { maxAttempts: 5, backoff: new ExponentialBackoff() }
   );
   authRetry.onFailure(refreshToken);
   authRetry.onGiveUp(reject);
