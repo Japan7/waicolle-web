@@ -17,7 +17,7 @@ const mediaId = computed({
     return props.filters.mediaId;
   },
   set(id) {
-    id = id ? id : undefined;
+    id ??= undefined;
     emit("filtersUpdate", {
       ...props.filters,
       mediaId: id,
