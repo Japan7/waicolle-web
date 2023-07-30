@@ -8,8 +8,8 @@ const props = defineProps<{
   infosDiv?: HTMLDivElement;
 }>();
 const emit = defineEmits<{
-  setFilters: [filters: CollageFilters];
-  setMediaCharas: [charas: number[] | undefined];
+  filtersUpdate: [filters: CollageFilters];
+  mediaCharasUpdate: [charas: number[] | undefined];
 }>();
 
 const mediaId = computed({
@@ -18,12 +18,12 @@ const mediaId = computed({
   },
   set(id) {
     id = id ? id : undefined;
-    emit("setFilters", {
+    emit("filtersUpdate", {
       ...props.filters,
       mediaId: id,
     });
     if (id === undefined) {
-      emit("setMediaCharas", undefined);
+      emit("mediaCharasUpdate", undefined);
     }
   },
 });
@@ -53,7 +53,7 @@ onResult((queryResult: any) => {
   ) {
     return;
   }
-  emit("setMediaCharas", [
+  emit("mediaCharasUpdate", [
     ...(props.mediaCharas ?? []),
     ...queryResult.data.Media.characters.nodes.map((chara: any) => chara.id),
   ]);

@@ -11,7 +11,7 @@ const props = defineProps<{
   scrollDiv?: HTMLDivElement;
 }>();
 const emit = defineEmits<{
-  setSelected: [waifu: Waifu];
+  select: [waifu: Waifu];
 }>();
 
 const charasMap = computed(() => {
@@ -71,7 +71,7 @@ const limit = useCollageInfiniteScroll(filtered, toRef(props, "scrollDiv"));
 useCollageHotkeys(
   filtered,
   toRef(props, "selected"),
-  (w) => emit("setSelected", w),
+  (w) => emit("select", w),
   toRef(props, "scrollDiv")
 );
 </script>
@@ -83,7 +83,7 @@ useCollageHotkeys(
       :key="filtered[i - 1].id"
       :chara="charasMap.get(filtered[i-1].character_id)!"
       :selected="filtered[i - 1].id === selected?.id"
-      @click="$emit('setSelected', filtered[i - 1])"
+      @click="emit('select', filtered[i - 1])"
     />
   </div>
 </template>

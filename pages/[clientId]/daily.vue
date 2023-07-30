@@ -15,10 +15,10 @@ const selected = ref<number>();
         v-if="data"
         :charas="data"
         :selected="selected"
-        :scrollDiv="slotProps.contentDiv"
-        @setSelected="
-          (id_al) => {
-            selected = id_al === selected ? undefined : id_al;
+        :scroll-div="slotProps.contentDiv"
+        @select="
+          (id) => {
+            selected = id === selected ? undefined : id;
             if (selected) {
               slotProps.openDrawer();
             }
@@ -30,7 +30,7 @@ const selected = ref<number>();
     </template>
 
     <template #side>
-      <Infos v-if="selected" :charaId="selected" />
+      <Infos v-if="selected" :chara-id="selected" />
     </template>
   </NuxtLayout>
 </template>

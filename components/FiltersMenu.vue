@@ -6,8 +6,8 @@ const props = defineProps<{
   mediaCharas?: number[];
 }>();
 const emit = defineEmits<{
-  setFilters: [filters: CollageFilters];
-  setMediaCharas: [charas: number[] | undefined];
+  filtersUpdate: [filters: CollageFilters];
+  mediaCharasUpdate: [charas: number[] | undefined];
 }>();
 </script>
 
@@ -15,18 +15,18 @@ const emit = defineEmits<{
   <div class="flex flex-col items-center gap-y-2">
     <FiltersBaseSelect
       :filters="filters"
-      @setFilters="(f) => $emit('setFilters', f)"
+      @filters-update="(f) => emit('filtersUpdate', f)"
     />
     <FiltersPlayersSelect
       :filters="filters"
-      @setFilters="(f) => $emit('setFilters', f)"
+      @filters-update="(f) => emit('filtersUpdate', f)"
     />
     <FiltersMediaSelect
       :filters="filters"
-      :mediaCharas="mediaCharas"
-      :infosDiv="($refs.infosDiv as HTMLDivElement | undefined)"
-      @setFilters="(f) => $emit('setFilters', f)"
-      @setMediaCharas="(mc) => $emit('setMediaCharas', mc)"
+      :media-charas="mediaCharas"
+      :infos-div="($refs.infosDiv as HTMLDivElement | undefined)"
+      @filters-update="(f) => emit('filtersUpdate', f)"
+      @media-charas-update="(mc) => emit('mediaCharasUpdate', mc)"
     />
     <div ref="infosDiv" class="text-center"></div>
   </div>

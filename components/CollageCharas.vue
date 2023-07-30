@@ -7,7 +7,7 @@ const props = defineProps<{
   scrollDiv?: HTMLDivElement;
 }>();
 const emit = defineEmits<{
-  setSelected: [id_al: number];
+  select: [id: number];
 }>();
 
 const sortedCharas = computed(() => props.charas.sort(compareCharaFavourites));
@@ -15,7 +15,7 @@ const limit = useCollageInfiniteScroll(sortedCharas, toRef(props, "scrollDiv"));
 useCollageHotkeys(
   computed(() => sortedCharas.value.map((c) => c.id_al)),
   toRef(props, "selected"),
-  (id) => emit("setSelected", id),
+  (id) => emit("select", id),
   toRef(props, "scrollDiv")
 );
 </script>
@@ -27,7 +27,7 @@ useCollageHotkeys(
       :key="sortedCharas[i - 1].id_al"
       :chara="sortedCharas[i - 1]"
       :selected="sortedCharas[i - 1].id_al === selected"
-      @click="$emit('setSelected', sortedCharas[i - 1].id_al)"
+      @click="emit('select', sortedCharas[i - 1].id_al)"
     />
   </div>
 </template>

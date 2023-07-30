@@ -24,10 +24,10 @@ const selected = ref<Waifu>();
         :waifus="data.waifus"
         :charas="data.charas"
         :filters="filters"
-        :mediaCharas="mediaCharas"
+        :media-charas="mediaCharas"
         :selected="selected"
-        :scrollDiv="slotProps.contentDiv"
-        @setSelected="
+        :scroll-div="slotProps.contentDiv"
+        @select="
           (waifu) => {
             selected = waifu.id === selected?.id ? undefined : waifu;
             if (selected) {
@@ -46,9 +46,11 @@ const selected = ref<Waifu>();
     <template #menu>
       <FiltersMenu
         :filters="filters"
-        :mediaCharas="mediaCharas"
-        @setFilters="(newFilters) => (filters = newFilters)"
-        @setMediaCharas="(newMediaCharas) => (mediaCharas = newMediaCharas)"
+        :media-charas="mediaCharas"
+        @filters-update="(newFilters) => (filters = newFilters)"
+        @media-charas-update="
+          (newMediaCharas) => (mediaCharas = newMediaCharas)
+        "
       />
     </template>
 

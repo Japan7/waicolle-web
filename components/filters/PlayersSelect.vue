@@ -5,7 +5,7 @@ const props = defineProps<{
   filters: CollageFilters;
 }>();
 const emit = defineEmits<{
-  setFilters: [filters: CollageFilters];
+  filtersUpdate: [filters: CollageFilters];
 }>();
 
 const route = useRoute();
@@ -23,7 +23,7 @@ const selected = computed({
     return props.filters.players;
   },
   set(nv) {
-    emit("setFilters", {
+    emit("filtersUpdate", {
       ...props.filters,
       players: nv,
     });

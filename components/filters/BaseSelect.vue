@@ -5,7 +5,7 @@ const props = defineProps<{
   filters: CollageFilters;
 }>();
 const emit = defineEmits<{
-  setFilters: [filters: CollageFilters];
+  filtersUpdate: [filters: CollageFilters];
 }>();
 </script>
 
@@ -14,9 +14,9 @@ const emit = defineEmits<{
     <label class="space-x-1">
       <input
         type="checkbox"
-        :defaultChecked="filters.unlockedOnly"
+        :checked="filters.unlockedOnly"
         @change="
-          $emit('setFilters', {
+          $emit('filtersUpdate', {
             ...filters,
             unlockedOnly: !filters.unlockedOnly,
           })
@@ -27,9 +27,9 @@ const emit = defineEmits<{
     <label class="space-x-1">
       <input
         type="checkbox"
-        :defaultChecked="filters.lockedOnly"
+        :checked="filters.lockedOnly"
         @change="
-          $emit('setFilters', {
+          emit('filtersUpdate', {
             ...filters,
             lockedOnly: !filters.lockedOnly,
           })
@@ -40,9 +40,9 @@ const emit = defineEmits<{
     <label class="space-x-1">
       <input
         type="checkbox"
-        :defaultChecked="filters.ascendedOnly"
+        :checked="filters.ascendedOnly"
         @change="
-          $emit('setFilters', {
+          emit('filtersUpdate', {
             ...filters,
             ascendedOnly: !filters.ascendedOnly,
           })
@@ -53,9 +53,9 @@ const emit = defineEmits<{
     <label class="space-x-1">
       <input
         type="checkbox"
-        :defaultChecked="filters.nanaedOnly"
+        :checked="filters.nanaedOnly"
         @change="
-          $emit('setFilters', {
+          emit('filtersUpdate', {
             ...filters,
             nanaedOnly: !filters.nanaedOnly,
           })
@@ -66,9 +66,9 @@ const emit = defineEmits<{
     <label class="space-x-1">
       <input
         type="checkbox"
-        :defaultChecked="filters.blooded"
+        :checked="filters.blooded"
         @change="
-          $emit('setFilters', {
+          emit('filtersUpdate', {
             ...filters,
             blooded: !filters.blooded,
           })
@@ -79,9 +79,9 @@ const emit = defineEmits<{
     <label class="space-x-1">
       <input
         type="checkbox"
-        :defaultChecked="filters.lasts"
+        :checked="filters.lasts"
         @change="
-          $emit('setFilters', {
+          emit('filtersUpdate', {
             ...filters,
             lasts: !filters.lasts,
           })
