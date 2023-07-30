@@ -13,7 +13,12 @@ const selected = ref<number>();
         :selected="selected"
         :scrollDiv="slotProps.contentDiv"
         @setSelected="
-          (id_al) => (selected = id_al === selected ? undefined : id_al)
+          (id_al) => {
+            selected = id_al === selected ? undefined : id_al;
+            if (selected) {
+              slotProps.openDrawer();
+            }
+          }
         "
       />
       <p v-else-if="pending">Loading daily...</p>

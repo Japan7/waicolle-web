@@ -34,6 +34,8 @@ function linkGetClass(target?: string) {
   }
   return route.name === fullTarget ? "active" : "";
 }
+
+const drawerState = ref(false);
 </script>
 
 <template>
@@ -41,7 +43,12 @@ function linkGetClass(target?: string) {
   <div class="h-screen pb-16">
     <!-- Drawer -->
     <div class="h-full drawer drawer-end drawer-mobile">
-      <input id="app-drawer" type="checkbox" class="drawer-toggle" />
+      <input
+        v-model="drawerState"
+        id="app-drawer"
+        type="checkbox"
+        class="drawer-toggle"
+      />
 
       <!-- Page content here -->
       <div ref="contentDiv" class="drawer-content flex flex-col">
@@ -55,11 +62,11 @@ function linkGetClass(target?: string) {
               v-if="$slots.menu"
               class="dropdown dropdown-bottom dropdown-hover"
             >
-              <label tabIndex="{0}" class="btn btn-ghost btn-square">
+              <label tabIndex="0" class="btn btn-ghost btn-square">
                 <AdjustmentsHorizontalIcon class="w-5 h-5" />
               </label>
               <div
-                tabIndex="{0}"
+                tabIndex="0"
                 class="dropdown-content w-80 p-2 rounded-box shadow bg-base-100 bg-opacity-75"
               >
                 <slot name="menu" />
@@ -87,7 +94,10 @@ function linkGetClass(target?: string) {
 
         <!-- Main content -->
         <main class="h-full p-2">
-          <slot :contentDiv="$refs.contentDiv" />
+          <slot
+            :contentDiv="$refs.contentDiv"
+            :openDrawer="() => (drawerState = true)"
+          />
         </main>
       </div>
 

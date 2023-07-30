@@ -24,7 +24,12 @@ const selected = ref<Waifu>();
         :selected="selected"
         :scrollDiv="slotProps.contentDiv"
         @setSelected="
-          (waifu) => (selected = waifu.id === selected?.id ? undefined : waifu)
+          (waifu) => {
+            selected = waifu.id === selected?.id ? undefined : waifu;
+            if (selected) {
+              slotProps.openDrawer();
+            }
+          }
         "
       />
       <p v-else-if="data && filters.players.length === 0">

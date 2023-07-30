@@ -71,9 +71,7 @@ const limit = useCollageInfiniteScroll(filtered, toRef(props, "scrollDiv"));
 useCollageHotkeys(
   filtered,
   toRef(props, "selected"),
-  (w) => {
-    emit("setSelected", w);
-  },
+  (w) => emit("setSelected", w),
   toRef(props, "scrollDiv")
 );
 </script>
