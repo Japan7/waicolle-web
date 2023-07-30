@@ -1,4 +1,8 @@
 <script setup lang="ts">
+useHead({
+  titleTemplate: "Daily | %s",
+});
+
 const { data, pending } = useDaily();
 
 const selected = ref<number>();

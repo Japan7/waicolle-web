@@ -1,3 +1,9 @@
+<script setup lang="ts">
+useHead({
+  titleTemplate: "Home | %s",
+});
+</script>
+
 <template>
   <NuxtLayout>
     <iframe

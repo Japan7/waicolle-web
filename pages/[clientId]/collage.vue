@@ -2,6 +2,10 @@
 import { useStorage } from "@vueuse/core";
 import { Waifu } from "server/utils/nanapi-client";
 
+useHead({
+  titleTemplate: "Collage | %s",
+});
+
 const route = useRoute();
 const { data, pending } = useWaifus(route.params.clientId as string);
 
