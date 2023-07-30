@@ -4,10 +4,10 @@ useHead({
   meta: [
     { name: "description", content: "WaiColle companion web app" },
     { name: "theme-color", content: "#956DA6" },
-    { name: "og:type", content: "website" },
-    { name: "og:site_name", content: "Japan7/waicolle-web" },
+    { property: "og:type", content: "website" },
+    { property: "og:site_name", content: "Japan7/waicolle-web" },
     {
-      name: "og:image",
+      property: "og:image",
       content: "https://waicolle.japan7.bde.enseeiht.fr/logo512.png",
     },
   ],
