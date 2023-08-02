@@ -1,12 +1,11 @@
 import { ExponentialBackoff, handleType, retry } from "cockatiel";
-import {
-  ApiError,
+import type {
   ApiResponse,
   FetchReturnType,
-  Fetcher,
   Middleware,
 } from "openapi-typescript-fetch";
-import { paths } from "./nanapi";
+import { ApiError, Fetcher } from "openapi-typescript-fetch";
+import type { paths } from "./nanapi";
 
 const runtimeConfig = useRuntimeConfig();
 let token: string = "";

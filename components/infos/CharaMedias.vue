@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CharaData } from "utils/anilist";
+import type { CharaData } from "utils/anilist";
 
 const props = defineProps<{
   chara: CharaData;

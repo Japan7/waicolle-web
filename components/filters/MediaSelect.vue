@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { MediaData } from "utils/anilist";
-import { CollageFilters } from "utils/waicolle";
+import type { MediaData } from "utils/anilist";
+import type { CollageFilters } from "utils/waicolle";
 
 const props = defineProps<{
   filters: CollageFilters;

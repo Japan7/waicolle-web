@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CollageFilters } from "utils/waicolle";
+import type { CollageFilters } from "utils/waicolle";
 
 const props = defineProps<{
   filters: CollageFilters;

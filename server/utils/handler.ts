@@ -1,5 +1,5 @@
-import { EventHandler } from "h3";
-import { StorageValue } from "unstorage";
+import type { EventHandler } from "h3";
+import type { StorageValue } from "unstorage";
 
 const TTL = 1000 * 60 * 5;
 
