@@ -9,31 +9,25 @@ export const useCollageHotkeys = <T>(
       return;
     }
     event.preventDefault();
-    const index = items.value.indexOf(selected.value);
-    const nb_width = Math.floor(scrollDiv.value.offsetWidth / 64);
+    const currIndex = items.value.indexOf(selected.value);
+    const widthSize = Math.floor(scrollDiv.value.offsetWidth / 64);
+    let newIndex;
     switch (event.key) {
       case "ArrowUp":
-        if (index > nb_width) {
-          setSelected(items.value[index - nb_width]);
-        }
-        scrollDiv.value.scrollBy(0, -96);
+        newIndex = Math.max(0, currIndex - widthSize);
         break;
       case "ArrowDown":
-        if (index < items.value.length - nb_width) {
-          setSelected(items.value[index + nb_width]);
-        }
-        scrollDiv.value.scrollBy(0, 96);
+        newIndex = Math.min(currIndex + widthSize, items.value.length - 1);
         break;
       case "ArrowLeft":
-        if (index > 0) {
-          setSelected(items.value[index - 1]);
-        }
+        newIndex = Math.max(0, currIndex - 1);
         break;
       case "ArrowRight":
-        if (index < items.value.length - 1) {
-          setSelected(items.value[index + 1]);
-        }
+        newIndex = Math.min(currIndex + 1, items.value.length - 1);
         break;
+    }
+    if (newIndex !== undefined) {
+      setSelected(items.value[newIndex]);
     }
   });
 };
