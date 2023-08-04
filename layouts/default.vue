@@ -2,6 +2,7 @@
 import {
   AdjustmentsHorizontalIcon,
   CalendarDaysIcon,
+  HeartIcon,
   HomeIcon,
   InformationCircleIcon,
   Squares2X2Icon,
@@ -15,6 +16,8 @@ function getTitle() {
       return "Colle";
     case "clientId-collage":
       return "Collage";
+    case "clientId-tracked":
+      return "Tracked";
     case "clientId-daily":
       return "Daily";
     default:
@@ -119,6 +122,10 @@ const drawerState = ref(false);
       <NuxtLink :to="linkGetTo('collage')" :class="linkGetClass('collage')">
         <Squares2X2Icon class="w-5 h-5" />
         <span class="btm-nav-label">Collage</span>
+      </NuxtLink>
+      <NuxtLink :to="linkGetTo('tracked')" :class="linkGetClass('tracked')">
+        <HeartIcon class="w-5 h-5" />
+        <span class="btm-nav-label">Tracked</span>
       </NuxtLink>
       <NuxtLink :to="linkGetTo('daily')" :class="linkGetClass('daily')">
         <CalendarDaysIcon class="w-5 h-5" />

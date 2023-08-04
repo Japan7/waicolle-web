@@ -12,7 +12,7 @@ export interface CollageFilters {
   lasts: boolean;
 }
 
-export const DEFAULT_FILTERS: CollageFilters = {
+export const DEFAULT_COLLAGE_FILTERS: CollageFilters = {
   players: [],
   mediaId: undefined,
   ascendedOnly: false,
@@ -20,6 +20,18 @@ export const DEFAULT_FILTERS: CollageFilters = {
   lockedOnly: false,
   nanaedOnly: false,
   blooded: false,
+  lasts: false,
+};
+
+export interface TrackedFilters {
+  player?: string;
+  lasts: boolean;
+  hideSingles: boolean;
+}
+
+export const DEFAULT_TRACKED_FILTERS: TrackedFilters = {
+  player: undefined,
+  hideSingles: true,
   lasts: false,
 };
 

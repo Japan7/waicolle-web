@@ -11,9 +11,14 @@ const { data, pending } = useLazyFetch("/api/waifus", {
   params: { clientId: route.params.clientId },
 });
 
-const filters = useStorage("collage-filters", DEFAULT_FILTERS, localStorage, {
-  mergeDefaults: true,
-});
+const filters = useStorage(
+  "collage-filters",
+  DEFAULT_COLLAGE_FILTERS,
+  localStorage,
+  {
+    mergeDefaults: true,
+  }
+);
 const mediaCharas = ref<number[]>();
 const selected = ref<Waifu>();
 </script>
