@@ -25,11 +25,24 @@ const trackedIds = computed(
     props.players.find((p) => p.discord_id === props.filters.player)!.tracked
 );
 
+const unlockedWaifus = computed(() =>
+  props.waifus.filter((w) => !w.blooded && !w.locked)
+);
 const playerLockedWaifus = computed(() =>
   props.waifus.filter(
     (w) => w.owner_discord_id === props.filters.player && w.locked
   )
 );
+const playerDuplicatedIds = computed(() => {
+  const map = new Map<number, number>();
+  playerLockedWaifus.value.forEach((w) => {
+    const count = map.get(w.character_id) ?? 0;
+    map.set(w.character_id, count + 1);
+  });
+  return Array.from(map.entries())
+    .filter(([, count]) => count > 1)
+    .map(([id]) => id);
+});
 
 function isIncluded(waifu: Waifu) {
   if (
@@ -39,11 +52,12 @@ function isIncluded(waifu: Waifu) {
     return false;
   }
 
-  if (waifu.locked || waifu.blooded) {
-    return false;
-  }
-
-  if (!trackedIds.value.includes(waifu.character_id)) {
+  if (
+    !(
+      trackedIds.value.includes(waifu.character_id) ||
+      playerDuplicatedIds.value.includes(waifu.character_id)
+    )
+  ) {
     return false;
   }
 
@@ -60,7 +74,7 @@ function isIncluded(waifu: Waifu) {
 }
 
 const filtered = computed(() => {
-  const sorted = props.waifus.sort(
+  const sorted = unlockedWaifus.value.sort(
     props.filters.lasts
       ? compareTimestamp
       : (a, b) =>
