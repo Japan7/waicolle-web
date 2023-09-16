@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { MediaData } from "utils/anilist";
-import type { CollageFilters } from "utils/waicolle";
+import type { MediaData } from "~/utils/anilist";
+import type { CollageFilters } from "~/utils/waicolle";
 
 const props = defineProps<{
   filters: CollageFilters;
@@ -43,8 +43,7 @@ watch(mediaId, () => {
   load();
 });
 
-// FIXME: type me
-onResult((queryResult: any) => {
+onResult((queryResult) => {
   if (
     !queryResult.data ||
     queryResult.data.Media.characters.nodes.length === 0
@@ -53,7 +52,7 @@ onResult((queryResult: any) => {
   }
   emit("mediaCharasUpdate", [
     ...(props.mediaCharas ?? []),
-    ...queryResult.data.Media.characters.nodes.map((chara: any) => chara.id),
+    ...queryResult.data.Media.characters.nodes.map((chara) => chara.id),
   ]);
   if (queryResult.data.Media.characters.pageInfo.hasNextPage) {
     chara_page.value++;

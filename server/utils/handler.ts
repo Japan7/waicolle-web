@@ -1,15 +1,14 @@
-import type { EventHandler } from "h3";
-import type { StorageValue } from "unstorage";
+import type { EventHandlerRequest } from "h3";
 
 const TTL = 1000 * 60 * 5;
 
-export function memoizeHandler<T extends StorageValue>(
-  handler: EventHandler<T>
+export function memoizeHandler<T extends EventHandlerRequest, U>(
+  handler: ReturnType<typeof defineEventHandler<T, U>>
 ) {
   const wrapped = defineEventHandler(async (event) => {
-    const storage = useStorage<{ data: T; refresh: number }>("memoizeHandler");
+    const storage = useStorage<{ data: U; refresh: number }>("memoizeHandler");
     const cached = await storage.getItem(event.path);
-    const fetchPromise = new Promise<T>(async (resolve, reject) => {
+    const fetchPromise = new Promise<U>(async (resolve, reject) => {
       if (cached && cached.refresh + TTL > Date.now()) {
         reject(`[memoizeHandler] ${event.path} is fresh`);
       } else {

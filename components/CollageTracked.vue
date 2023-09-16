@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Chara, Player, Waifu } from "server/utils/nanapi-client";
-import type { TrackedFilters } from "utils/waicolle";
+import type { Chara, Player, Waifu } from "~/server/utils/nanapi-client";
+import type { TrackedFilters } from "~/utils/waicolle";
 
 const props = defineProps<{
   waifus: Waifu[];

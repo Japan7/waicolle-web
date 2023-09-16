@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Chara, Waifu } from "server/utils/nanapi-client";
-import type { CollageFilters } from "utils/waicolle";
+import type { Chara, Waifu } from "~/server/utils/nanapi-client";
+import type { CollageFilters } from "~/utils/waicolle";
 
 const props = defineProps<{
   waifus: Waifu[];

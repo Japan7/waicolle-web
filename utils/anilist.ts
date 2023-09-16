@@ -1,4 +1,4 @@
-import type { Chara } from "server/utils/nanapi-client";
+import type { Chara } from "~/server/utils/nanapi-client";
 
 export interface MediaData extends BaseMediaData {
   siteUrl: string;

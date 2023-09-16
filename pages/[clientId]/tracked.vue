@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useStorage } from "@vueuse/core";
-import type { Waifu } from "server/utils/nanapi-client";
+import type { Waifu } from "~/server/utils/nanapi-client";
 
 useHead({
   titleTemplate: "Tracked | %s",

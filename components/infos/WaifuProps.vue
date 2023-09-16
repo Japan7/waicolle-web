@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Player, Waifu } from "server/utils/nanapi-client";
-import type { CharaData } from "utils/anilist";
+import type { Player, Waifu } from "~/server/utils/nanapi-client";
+import type { CharaData } from "~/utils/anilist";
 
 const props = defineProps<{
   chara: CharaData;

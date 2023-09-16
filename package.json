@@ -6,26 +6,25 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "typecheck": "nuxt typecheck"
   },
   "devDependencies": {
+    "@heroicons/vue": "^2.0.18",
     "@nuxt/devtools": "latest",
     "@nuxtjs/apollo": "^5.0.0-alpha.6",
     "@nuxtjs/tailwindcss": "^6.8.0",
     "@tailwindcss/typography": "^0.5.9",
     "@types/compression": "^1.7.2",
     "@types/node": "^18.17.0",
-    "@vue/apollo-composable": "^4.0.0-beta.8",
+    "@vue/apollo-composable": "^4.0.0-beta.11",
     "@vueuse/core": "^10.2.1",
     "@vueuse/nuxt": "^10.2.1",
-    "daisyui": "^2.52.0",
-    "nuxt": "^3.6.5",
-    "openapi-typescript": "^6.3.9"
-  },
-  "dependencies": {
-    "@heroicons/vue": "^2.0.18",
     "cockatiel": "^3.1.1",
     "compression": "^1.7.4",
+    "daisyui": "^2.52.0",
+    "nuxt": "~3.7.3",
+    "openapi-typescript": "^6.3.9",
     "openapi-typescript-fetch": "^1.1.3"
   }
 }

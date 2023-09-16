@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useStorage } from "@vueuse/core";
-import type { Waifu } from "server/utils/nanapi-client";
+import type { Waifu } from "~/server/utils/nanapi-client";
 
 useHead({
   titleTemplate: "Collage | %s",

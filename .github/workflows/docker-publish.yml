@@ -38,7 +38,7 @@ jobs:
 
       - run: |
           wget $NANAPI_OPENAPI
-          npx openapi-typescript openapi.json > server/utils/nanapi.d.ts
+          npx openapi-typescript openapi.json -o server/utils/nanapi.d.ts
         env:
           NANAPI_OPENAPI: ${{ secrets.NANAPI_OPENAPI }}
 

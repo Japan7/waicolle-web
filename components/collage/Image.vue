@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Chara } from "server/utils/nanapi-client";
+import type { Chara } from "~/server/utils/nanapi-client";
 
 const props = defineProps<{
   chara: Chara;
