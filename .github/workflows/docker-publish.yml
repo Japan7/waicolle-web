@@ -14,7 +14,6 @@ on:
     tags: ["v*.*.*"]
   pull_request:
     branches: ["main"]
-  merge_group:
   workflow_dispatch:
 
 env:
@@ -46,7 +45,7 @@ jobs:
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
-        if: github.event_name != 'pull_request'
+        if: (github.event_name != 'pull_request') && !startsWith(github.ref, 'refs/heads/renovate')
         uses: sigstore/cosign-installer@v3
 
       - name: Set up QEMU
@@ -58,7 +57,7 @@ jobs:
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
       - name: Log into registry ${{ env.REGISTRY }}
-        if: github.event_name != 'pull_request'
+        if: (github.event_name != 'pull_request') && !startsWith(github.ref, 'refs/heads/renovate')
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
@@ -87,7 +86,7 @@ jobs:
         with:
           context: .
           platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
+          push: ${{ (github.event_name != 'pull_request') && !startsWith(github.ref, 'refs/heads/renovate') }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
@@ -99,7 +98,7 @@ jobs:
       # transparency data even for private images, pass --force to cosign below.
       # https://github.com/sigstore/cosign
       - name: Sign the published Docker image
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ (github.event_name != 'pull_request') && !startsWith(github.ref, 'refs/heads/renovate') }}
         env:
           # https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
           TAGS: ${{ steps.meta.outputs.tags }}
