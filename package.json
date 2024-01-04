@@ -1,6 +1,11 @@
 {
   "name": "nuxt-app",
   "private": true,
+  "license": "MIT",
+  "repository": "github:Japan7/waicolle-web",
+  "contributors": [
+    "NextFire <git@yuru.moe>"
+  ],
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
