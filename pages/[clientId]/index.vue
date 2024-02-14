@@ -5,11 +5,13 @@ useHead({
 </script>
 
 <template>
-  <NuxtLayout>
-    <iframe
-      src="https://docs.japan7.bde.enseeiht.fr/s/waicolle"
-      height="100%"
-      width="100%"
-    />
-  </NuxtLayout>
+  <div>
+    <NuxtLayout>
+      <iframe
+        src="https://docs.japan7.bde.enseeiht.fr/s/waicolle"
+        height="100%"
+        width="100%"
+      />
+    </NuxtLayout>
+  </div>
 </template>
