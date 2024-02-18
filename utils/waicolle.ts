@@ -45,6 +45,44 @@ export function compareTimestamp(a: Waifu, b: Waifu) {
   return 0;
 }
 
+function formatOwners(category, category_emoji) {
+  let counttext = "";
+  if (
+    category.count === 1 &&
+    category.ascended === 0 &&
+    category.double_ascended === 0
+  ) {
+    counttext += ` ${category_emoji}`;
+  } else if (category.count > 0) {
+    counttext += ` ${category_emoji}(`;
+    if (category.double_ascended > 1) {
+      counttext += `${category.double_ascended}`;
+    }
+    if (category.double_ascended > 0) {
+      counttext += "🌟";
+      category.count -= category.double_ascended;
+      if (category.count > 0) {
+        counttext += "+";
+      }
+    }
+    if (category.ascended > 1) {
+      counttext += `${category.ascended}`;
+    }
+    if (category.ascended > 0) {
+      counttext += "⭐";
+      category.count -= category.ascended;
+      if (category.count > 0) {
+        counttext += "+";
+      }
+    }
+    if (category.count > 0) {
+      counttext += `${category.count}`;
+    }
+    counttext += ")";
+  }
+  return counttext;
+}
+
 export function getOwners(charaId: number, players: Player[], waifus: Waifu[]) {
   const playerMap = new Map<string, Player>();
   players.forEach((p) => playerMap.set(p.discord_id, p));
@@ -59,14 +97,20 @@ export function getOwners(charaId: number, players: Player[], waifus: Waifu[]) {
         count: 0,
         ascended: 0,
         double_ascended: 0,
+        in_trade: 0,
       },
       locked: {
         count: 0,
         ascended: 0,
         double_ascended: 0,
       },
+      in_trade: {
+        count: 0,
+        ascended: 0,
+        double_ascended: 0,
+      },
     };
-    const locked_str = waifu.locked ? "locked" : "unlocked";
+    const locked_str = waifu.locked ? "locked" : waifu.trade_locked ? "unlocked" : "in_trade";
     owner_dict[locked_str].count++;
     if (waifu.level === 1) {
       owner_dict[locked_str].ascended++;
@@ -81,74 +125,13 @@ export function getOwners(charaId: number, players: Player[], waifus: Waifu[]) {
     let subtext = playerMap.get(owner)!.discord_username;
     let counttext = "";
     const locked = entry.locked;
-    if (
-      locked.count === 1 &&
-      locked.ascended === 0 &&
-      locked.double_ascended === 0
-    ) {
-      counttext += " 🔒";
-    } else if (locked.count > 0) {
-      counttext += " 🔒(";
-      if (locked.double_ascended > 1) {
-        counttext += `${locked.double_ascended}`;
-      }
-      if (locked.double_ascended > 0) {
-        counttext += "🌟";
-        locked.count -= locked.double_ascended;
-        if (locked.count > 0) {
-          counttext += "+";
-        }
-      }
-      if (locked.ascended > 1) {
-        counttext += `${locked.ascended}`;
-      }
-      if (locked.ascended > 0) {
-        counttext += "⭐";
-        locked.count -= locked.ascended;
-        if (locked.count > 0) {
-          counttext += "+";
-        }
-      }
-      if (locked.count > 0) {
-        counttext += `${locked.count}`;
-      }
-      counttext += ")";
-    }
+    counttext += formatOwners(locked, "🔒");
 
     const unlocked = entry.unlocked;
-    if (
-      unlocked.count === 1 &&
-      unlocked.ascended === 0 &&
-      unlocked.double_ascended === 0
-    ) {
-      counttext += " 🔓";
-    } else if (unlocked.count > 0) {
-      counttext += " 🔓(";
-      if (unlocked.double_ascended > 1) {
-        counttext += `${unlocked.double_ascended}`;
-      }
-      if (unlocked.double_ascended > 0) {
-        counttext += "🌟";
-        unlocked.count -= unlocked.double_ascended;
-        if (unlocked.count > 0) {
-          counttext += "+";
-        }
-      }
-      if (unlocked.ascended > 1) {
-        counttext += `${unlocked.ascended}`;
-      }
-      if (unlocked.ascended > 0) {
-        counttext += "⭐";
-        unlocked.count -= unlocked.ascended;
-        if (unlocked.count > 0) {
-          counttext += "+";
-        }
-      }
-      if (unlocked.count > 0) {
-        counttext += `${unlocked.count}`;
-      }
-      counttext += ")";
-    }
+    counttext += formatOwners(unlocked, "🔓");
+
+    const in_trade = entry.in_trade;
+    counttext += formatOwners(in_trade, "🔀");
 
     subtext += counttext;
     if (subtext) {
