@@ -13,7 +13,7 @@ const { data, pending } = useLazyFetch("/api/waifus", {
 
 const sortedPlayers = computed(
   () =>
-    data.value?.players.sort((a, b) =>
+    data.value?.players.toSorted((a, b) =>
       a.discord_username.localeCompare(b.discord_username)
     ) ?? []
 );
@@ -91,7 +91,13 @@ const selected = ref<Waifu>();
         </div>
       </template>
       <template #side>
-        <Infos v-if="selected" :waifu="selected" />
+        <Infos
+          v-if="selected"
+          :waifus="data?.waifus"
+          :players="data?.players"
+          :pending="pending"
+          :waifu="selected"
+        />
       </template>
     </NuxtLayout>
   </div>

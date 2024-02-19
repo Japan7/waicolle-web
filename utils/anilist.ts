@@ -116,7 +116,7 @@ function compareEdges(a: MediaEdge, b: MediaEdge) {
 }
 
 export function getCharaMedias(chara: CharaData) {
-  const edges = (chara.media?.edges.slice() ?? []).sort(compareEdges);
+  const edges = (chara.media?.edges ?? []).toSorted(compareEdges);
   const animes: BaseMediaData[] = [];
   const mangas: BaseMediaData[] = [];
   let seiyuu: string | null = null;

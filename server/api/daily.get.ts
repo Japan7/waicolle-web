@@ -1,6 +1,4 @@
-const handler = defineEventHandler(async (event) => {
+export default defineEventHandler(async (event) => {
   const { data } = await getDailyExport({});
   return data;
 });
-
-export default memoizeHandler(handler);

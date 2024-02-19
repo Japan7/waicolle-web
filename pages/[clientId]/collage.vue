@@ -52,6 +52,8 @@ const selected = ref<Waifu>();
       </template>
       <template #menu>
         <FiltersMenu
+          :players="data?.players"
+          :pending="pending"
           :filters="filters"
           :media-charas="mediaCharas"
           @filters-update="(newFilters) => (filters = newFilters)"
@@ -63,6 +65,9 @@ const selected = ref<Waifu>();
       <template #side>
         <Infos
           v-if="selected"
+          :waifus="data?.waifus"
+          :players="data?.players"
+          :pending="pending"
           :waifu="selected"
           :media-cursor-pointer="true"
           @media-id-select="(id) => (filters = { ...filters, mediaId: id })"

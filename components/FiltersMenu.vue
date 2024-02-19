@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import type { WaifusData } from "~/utils/nanapi";
 import type { CollageFilters } from "~/utils/waicolle";
 
 const props = defineProps<{
+  players?: WaifusData["players"];
+  pending: boolean;
   filters: CollageFilters;
   mediaCharas?: number[];
 }>();
@@ -17,10 +20,16 @@ const emit = defineEmits<{
       :filters="filters"
       @filters-update="(f) => emit('filtersUpdate', f)"
     />
+
     <FiltersPlayersSelect
+      v-if="players !== undefined"
+      :players="players"
       :filters="filters"
       @filters-update="(f) => emit('filtersUpdate', f)"
     />
+    <p v-else-if="pending">Loading players...</p>
+    <p v-else>Error loading players.</p>
+
     <FiltersMediaSelect
       :filters="filters"
       :media-charas="mediaCharas"
@@ -28,6 +37,7 @@ const emit = defineEmits<{
       @filters-update="(f) => emit('filtersUpdate', f)"
       @media-charas-update="(mc) => emit('mediaCharasUpdate', mc)"
     />
+
     <div ref="infosDiv" class="text-center"></div>
   </div>
 </template>

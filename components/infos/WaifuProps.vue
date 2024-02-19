@@ -1,24 +1,13 @@
 <script setup lang="ts">
 import type { Player, Waifu } from "~/server/utils/nanapi-client";
 import type { CharaData } from "~/utils/anilist";
+import type { WaifusData } from "~/utils/nanapi";
 
 const props = defineProps<{
+  players?: WaifusData["players"];
   chara: CharaData;
   waifu?: Waifu;
 }>();
-
-let players = ref<Player[]>();
-watchEffect(() => {
-  if (props.waifu) {
-    const route = useRoute();
-    const { data, pending } = useLazyFetch("/api/waifus", {
-      params: { clientId: route.params.clientId },
-    });
-    watchEffect(() => {
-      players.value = data.value?.players;
-    });
-  }
-});
 </script>
 
 <template>
@@ -32,7 +21,7 @@ watchEffect(() => {
     </p>
 
     <template v-if="waifu">
-      <template v-if="players">
+      <template v-if="players !== undefined">
         <h2>Owner</h2>
         <p>
           {{

@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import type { Waifu } from "~/server/utils/nanapi-client";
 import type { CharaData } from "~/utils/anilist";
+import type { WaifusData } from "~/utils/nanapi";
 
 const props = defineProps<{
+  waifus?: WaifusData["waifus"];
+  players?: WaifusData["players"];
+  pending: boolean;
   waifu?: Waifu;
   charaId?: number;
   mediaCursorPointer?: boolean;
@@ -26,9 +30,26 @@ const chara = computed<CharaData | undefined>(() => result.value?.Character);
   <div v-else-if="chara" class="flex flex-col">
     <InfosCharaNames :chara="chara" />
     <InfosCharaImage :chara="chara" />
-    <InfosWaifuProps :chara="chara" :waifu="waifu" />
-    <InfosWaifuOwners :chara="chara" />
-    <InfosWaifuTracklisters :chara="chara" />
+
+    <InfosWaifuProps :players="players" :chara="chara" :waifu="waifu" />
+
+    <InfosWaifuOwners
+      v-if="players !== undefined && waifus !== undefined"
+      :players="players"
+      :waifus="waifus"
+      :chara="chara"
+    />
+    <p v-else-if="pending">Loading owners...</p>
+    <p v-else>Error loading owners.</p>
+
+    <InfosWaifuTracklisters
+      v-if="players !== undefined"
+      :players="players"
+      :chara="chara"
+    />
+    <p v-else-if="pending">Loading tracklisters...</p>
+    <p v-else>Error loading tracklisters.</p>
+
     <InfosCharaMedias
       :chara="chara"
       :cursor-pointer="mediaCursorPointer"

@@ -55,7 +55,7 @@ function isIncluded(waifu: Waifu) {
 }
 
 const filtered = computed(() => {
-  const sorted = props.waifus.sort(
+  const sorted = props.waifus.toSorted(
     props.filters.lasts
       ? compareTimestamp
       : (a, b) =>

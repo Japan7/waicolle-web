@@ -10,7 +10,9 @@ const emit = defineEmits<{
   select: [id: number];
 }>();
 
-const sortedCharas = computed(() => props.charas.sort(compareCharaFavourites));
+const sortedCharas = computed(() =>
+  props.charas.toSorted(compareCharaFavourites)
+);
 const limit = useCollageInfiniteScroll(sortedCharas, toRef(props, "scrollDiv"));
 useCollageHotkeys(
   computed(() => sortedCharas.value.map((c) => c.id_al)),

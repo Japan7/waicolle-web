@@ -3,7 +3,11 @@ useHead({
   titleTemplate: "Daily | %s",
 });
 
-const { data, pending } = useLazyFetch("/api/daily");
+const route = useRoute();
+const { data: wData, pending: wPending } = useLazyFetch("/api/waifus", {
+  params: { clientId: route.params.clientId },
+});
+const { data: dData, pending: dPending } = useLazyFetch("/api/daily");
 
 const selected = ref<number>();
 </script>
@@ -13,8 +17,8 @@ const selected = ref<number>();
     <NuxtLayout>
       <template v-slot="slotProps">
         <CollageCharas
-          v-if="data"
-          :charas="data"
+          v-if="dData"
+          :charas="dData"
           :selected="selected"
           :scroll-div="slotProps.contentDiv"
           @select="
@@ -26,11 +30,17 @@ const selected = ref<number>();
             }
           "
         />
-        <p v-else-if="pending">Loading daily...</p>
+        <p v-else-if="dPending">Loading daily...</p>
         <p v-else>Error loading daily.</p>
       </template>
       <template #side>
-        <Infos v-if="selected" :chara-id="selected" />
+        <Infos
+          v-if="selected"
+          :waifus="wData?.waifus"
+          :players="wData?.players"
+          :pending="wPending"
+          :chara-id="selected"
+        />
       </template>
     </NuxtLayout>
   </div>
