@@ -45,173 +45,141 @@ export function compareTimestamp(a: Waifu, b: Waifu) {
   return 0;
 }
 
+class WaifuOwnershipTypes {
+  contextChar: string;
+  simple: number = 0;
+  ascended: number = 0;
+  doubleAscended: number = 0;
+
+  constructor(context_char: string) {
+    this.contextChar = context_char;
+  }
+
+  get count(): number {
+    return this.simple + this.ascended + this.doubleAscended;
+  }
+
+  get hasOwnership(): boolean {
+    return this.count > 0;
+  }
+
+  toString(): string {
+    let out = this.contextChar;
+    if (this.count === 1 && this.simple === 1) {
+      return out;
+    }
+
+    out += "(";
+
+    if (this.doubleAscended > 1) {
+      out += `${this.doubleAscended}`;
+    }
+    if (this.doubleAscended > 0) {
+      out += "🌟";
+
+      if (this.ascended || this.simple) {
+        out += "+";
+      }
+    }
+
+    if (this.ascended > 1) {
+      out += `${this.ascended}`;
+    }
+    if (this.ascended > 0) {
+      out += "⭐";
+
+      if (this.simple) {
+        out += "+";
+      }
+    }
+
+    if (this.simple && this.count > 1) {
+      out += `${this.simple}`;
+    }
+
+    out += ")";
+    return out;
+  }
+}
+
+class WaifuOwnership {
+  unlocked: WaifuOwnershipTypes = new WaifuOwnershipTypes("🔓");
+  locked: WaifuOwnershipTypes = new WaifuOwnershipTypes("🔒");
+  in_trade: WaifuOwnershipTypes = new WaifuOwnershipTypes("🔀");
+}
+
 export function getOwners(charaId: number, players: Player[], waifus: Waifu[]) {
   const playerMap = new Map<string, Player>();
   players.forEach((p) => playerMap.set(p.discord_id, p));
 
   const filtered = waifus.filter((waifu) => waifu.character_id === charaId);
-  const alive = filtered.filter((waifu) => !waifu.blooded);
 
-  const owners = new Map<string, any>();
-  alive.forEach((waifu) => {
-    const owner_dict = owners.get(waifu.owner_discord_id) ?? {
-      unlocked: {
-        count: 0,
-        ascended: 0,
-        double_ascended: 0,
-      },
-      locked: {
-        count: 0,
-        ascended: 0,
-        double_ascended: 0,
-      },
-    };
-    const locked_str = waifu.locked ? "locked" : "unlocked";
-    owner_dict[locked_str].count++;
-    if (waifu.level === 1) {
-      owner_dict[locked_str].ascended++;
-    } else if (waifu.level > 1) {
-      owner_dict[locked_str].double_ascended++;
+  const notBlooded = filtered.filter((waifu) => !waifu.blooded);
+
+  const owners = new Map<string, WaifuOwnership>();
+
+  for (const waifu of notBlooded) {
+    const owner = owners.get(waifu.owner_discord_id) || new WaifuOwnership();
+
+    let ownership: WaifuOwnershipTypes;
+    if (waifu.trade_locked) {
+      ownership = owner.in_trade;
+    } else if (waifu.locked) {
+      ownership = owner.locked;
+    } else {
+      ownership = owner.unlocked;
     }
-    owners.set(waifu.owner_discord_id, owner_dict);
-  });
+
+    if (waifu.level === 0) {
+      ownership.simple += 1;
+    }
+    if (waifu.level === 1) {
+      ownership.ascended += 1;
+    }
+    if (waifu.level > 1) {
+      ownership.doubleAscended += 1;
+    }
+
+    owners.set(waifu.owner_discord_id, owner);
+  }
 
   const text: string[] = [];
-  owners.forEach((entry, owner) => {
-    let subtext = playerMap.get(owner)!.discord_username;
-    let counttext = "";
-    const locked = entry.locked;
-    if (
-      locked.count === 1 &&
-      locked.ascended === 0 &&
-      locked.double_ascended === 0
-    ) {
-      counttext += " 🔒";
-    } else if (locked.count > 0) {
-      counttext += " 🔒(";
-      if (locked.double_ascended > 1) {
-        counttext += `${locked.double_ascended}`;
-      }
-      if (locked.double_ascended > 0) {
-        counttext += "🌟";
-        locked.count -= locked.double_ascended;
-        if (locked.count > 0) {
-          counttext += "+";
-        }
-      }
-      if (locked.ascended > 1) {
-        counttext += `${locked.ascended}`;
-      }
-      if (locked.ascended > 0) {
-        counttext += "⭐";
-        locked.count -= locked.ascended;
-        if (locked.count > 0) {
-          counttext += "+";
-        }
-      }
-      if (locked.count > 0) {
-        counttext += `${locked.count}`;
-      }
-      counttext += ")";
+  for (const [id, entry] of owners.entries()) {
+    let subtext = playerMap.get(id)?.discord_username ?? "";
+    if (entry.locked.hasOwnership) {
+      subtext += ` ${entry.locked}`;
+    }
+    if (entry.unlocked.hasOwnership) {
+      subtext += ` ${entry.unlocked}`;
+    }
+    if (entry.in_trade.hasOwnership) {
+      subtext += ` ${entry.in_trade}`;
     }
 
-    const unlocked = entry.unlocked;
-    if (
-      unlocked.count === 1 &&
-      unlocked.ascended === 0 &&
-      unlocked.double_ascended === 0
-    ) {
-      counttext += " 🔓";
-    } else if (unlocked.count > 0) {
-      counttext += " 🔓(";
-      if (unlocked.double_ascended > 1) {
-        counttext += `${unlocked.double_ascended}`;
-      }
-      if (unlocked.double_ascended > 0) {
-        counttext += "🌟";
-        unlocked.count -= unlocked.double_ascended;
-        if (unlocked.count > 0) {
-          counttext += "+";
-        }
-      }
-      if (unlocked.ascended > 1) {
-        counttext += `${unlocked.ascended}`;
-      }
-      if (unlocked.ascended > 0) {
-        counttext += "⭐";
-        unlocked.count -= unlocked.ascended;
-        if (unlocked.count > 0) {
-          counttext += "+";
-        }
-      }
-      if (unlocked.count > 0) {
-        counttext += `${unlocked.count}`;
-      }
-      counttext += ")";
-    }
-
-    subtext += counttext;
     if (subtext) {
       text.push(subtext);
     }
-  });
+  }
 
   text.sort((a, b) => a.localeCompare(b, "fr", { ignorePunctuation: true }));
 
-  const blooded = filtered.filter((waifu) => waifu.blooded);
-  const blooded_dict = {
-    count: 0,
-    ascended: 0,
-    double_ascended: 0,
-  };
+  const bloodedWaifus = filtered.filter((waifu) => waifu.blooded);
 
-  blooded.forEach((waifu) => {
-    blooded_dict.count++;
-    if (waifu.level === 1) {
-      blooded_dict.ascended++;
+  const blooded = new WaifuOwnershipTypes("🩸");
+  for (const bloodedWaifu of bloodedWaifus) {
+    if (bloodedWaifu.level === 0) {
+      blooded.simple += 1;
     }
-    if (waifu.level > 1) {
-      blooded_dict.double_ascended++;
+    if (bloodedWaifu.level === 1) {
+      blooded.ascended += 1;
     }
-  });
-
-  let subtext = "";
-  if (
-    blooded_dict.count === 1 &&
-    blooded_dict.ascended === 0 &&
-    blooded_dict.double_ascended === 0
-  ) {
-    subtext += " 🩸";
-  } else if (blooded_dict.count > 0) {
-    subtext += " 🩸(";
-    if (blooded_dict.double_ascended > 1) {
-      subtext += `${blooded_dict.double_ascended}`;
+    if (bloodedWaifu.level > 1) {
+      blooded.doubleAscended += 1;
     }
-    if (blooded_dict.double_ascended > 0) {
-      subtext += "🌟";
-      blooded_dict.count -= blooded_dict.double_ascended;
-      if (blooded_dict.count > 0) {
-        subtext += "+";
-      }
-    }
-    if (blooded_dict.ascended > 1) {
-      subtext += `${blooded_dict.ascended}`;
-    }
-    if (blooded_dict.ascended > 0) {
-      subtext += "⭐";
-      blooded_dict.count -= blooded_dict.ascended;
-      if (blooded_dict.count > 0) {
-        subtext += "+";
-      }
-    }
-    if (blooded_dict.count > 0) {
-      subtext += `${blooded_dict.count}`;
-    }
-    subtext += ")";
   }
 
-  if (subtext) {
-    text.push(subtext);
+  if (blooded.count) {
+    text.push(blooded.toString());
   }
 
   return text;
