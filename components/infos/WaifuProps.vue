@@ -46,6 +46,7 @@ const props = defineProps<{
   </div>
 
   <div v-if="waifu" class="flex text-3xl my-2">
+    <p v-if="waifu.trade_locked" class="mx-auto">🔀</p>
     <p v-if="waifu.locked" class="mx-auto">🔒</p>
     <p v-if="waifu.level === 1" class="mx-auto">⭐</p>
     <p v-if="waifu.level > 1" class="mx-auto">🌟</p>
