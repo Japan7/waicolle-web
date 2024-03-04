@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { useStorage } from "@vueuse/core";
 import type { Waifu } from "~/server/utils/nanapi-client";
+// TODO: Maybe useStorage?
+import { DEFAULT_TRACKED_ORDERS } from "~/utils/waicolle";
 
 useHead({
   titleTemplate: "Tracked | %s",
@@ -17,6 +19,7 @@ const sortedPlayers = computed(
       a.discord_username.localeCompare(b.discord_username)
     ) ?? []
 );
+
 
 const filters = useStorage(
   "tracked-filters",
@@ -67,16 +70,21 @@ const selected = ref<Waifu>();
             />
             <span>☝️ Hide singles</span>
           </label>
-          <label class="space-x-1">
-            <input
-              type="checkbox"
-              :checked="filters.lasts"
-              @change="() => (filters = { ...filters, lasts: !filters.lasts })"
-            />
-            <span>📆 ↓ Timestamp</span>
-          </label>
+          <div class="flex flex-col items-center">
+            <span> 👥 Group by </span>
+            <select v-if="data" v-model="filters.groupBy" class="select">
+              <option
+                v-for="order in DEFAULT_TRACKED_ORDERS"
+                :key="order.displayName"
+                :value="order"
+              >
+                {{ order.displayName }}
+              </option>
+            </select>
+          </div>
         </div>
         <div class="flex flex-col items-center">
+          <p>Player</p>
           <select v-if="data" v-model="filters.player" class="select">
             <option
               v-for="p in sortedPlayers"

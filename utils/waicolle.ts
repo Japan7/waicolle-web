@@ -1,5 +1,6 @@
 import type { Player, Waifu } from "~/server/utils/nanapi-client";
 import type { CharaData } from "./anilist";
+import type { Chara } from "../server/utils/nanapi-client";
 
 export interface CollageFilters {
   players: string[];
@@ -12,6 +13,55 @@ export interface CollageFilters {
   lasts: boolean;
 }
 
+export interface GroupBy {
+  compare(a: Waifu, b: Waifu): -1 | 0 | 1;
+  displayName: string;
+}
+
+export const TimestampOrder: GroupBy = {
+  compare: (a: Waifu, b: Waifu) => {
+    if (a.timestamp > b.timestamp) {
+      return -1;
+    }
+    if (a.timestamp < b.timestamp) {
+      return 1;
+    }
+    return 0;
+  },
+  displayName: "📆 ↓ Timestamp",
+};
+
+export const OwnerOrder = {
+  compare: (a: Waifu, b: Waifu) => {
+    console.log(OwnerOrder.ownersMap?.size);
+    if (
+      OwnerOrder.ownersMap?.get(a.owner_discord_id)! >
+      OwnerOrder.ownersMap?.get(b.owner_discord_id)!
+    ) {
+      return -1;
+    }
+    if (
+      OwnerOrder.ownersMap?.get(a.owner_discord_id)! <
+      OwnerOrder.ownersMap?.get(b.owner_discord_id)!
+    ) {
+      return 1;
+    }
+    return 0;
+  },
+  displayName: "👑 ↓ Owner Name",
+} as GroupBy & { ownersMap?: Map<string, String> };
+
+export const FavoritesOrder = {
+  compare: (a: Waifu, b: Waifu) => {
+    console.log(FavoritesOrder.charasMap?.size);
+    return compareCharaFavourites(
+      FavoritesOrder.charasMap?.get(a.character_id)!,
+      FavoritesOrder.charasMap?.get(b.character_id)!
+    );
+  },
+  displayName: "❤️ ↓ Favorites",
+} as GroupBy & { charasMap?: Map<number, Chara> };
+
 export const DEFAULT_COLLAGE_FILTERS: CollageFilters = {
   players: [],
   mediaId: undefined,
@@ -23,27 +73,23 @@ export const DEFAULT_COLLAGE_FILTERS: CollageFilters = {
   lasts: false,
 };
 
+export const DEFAULT_TRACKED_ORDERS: GroupBy[] = [
+  FavoritesOrder,
+  TimestampOrder,
+  OwnerOrder,
+];
+
 export interface TrackedFilters {
   player?: string;
-  lasts: boolean;
   hideSingles: boolean;
+  groupBy?: GroupBy;
 }
 
 export const DEFAULT_TRACKED_FILTERS: TrackedFilters = {
   player: undefined,
+  groupBy: DEFAULT_TRACKED_ORDERS[0],
   hideSingles: true,
-  lasts: false,
 };
-
-export function compareTimestamp(a: Waifu, b: Waifu) {
-  if (a.timestamp > b.timestamp) {
-    return -1;
-  }
-  if (a.timestamp < b.timestamp) {
-    return 1;
-  }
-  return 0;
-}
 
 class WaifuOwnershipTypes {
   contextChar: string;
