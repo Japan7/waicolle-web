@@ -85,7 +85,7 @@ function isIncluded(waifu: Waifu) {
 
 const filtered = computed(() => {
   const sorted = unlockedWaifus.value.toSorted(
-    props.filters.groupBy?.compare
+    props.filters.sortOrder?.compare
   );
   return sorted.filter(isIncluded);
 });

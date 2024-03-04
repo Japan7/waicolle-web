@@ -71,8 +71,8 @@ const selected = ref<Waifu>();
             <span>☝️ Hide singles</span>
           </label>
           <div class="flex flex-col items-center">
-            <span> 👥 Group by </span>
-            <select v-if="data" v-model="filters.groupBy" class="select">
+            <span> 📈 Sort by </span>
+            <select v-if="data" v-model="filters.sortOrder" class="select">
               <option
                 v-for="order in DEFAULT_TRACKED_ORDERS"
                 :key="order.displayName"

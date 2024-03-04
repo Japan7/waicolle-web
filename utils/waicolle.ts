@@ -13,12 +13,12 @@ export interface CollageFilters {
   lasts: boolean;
 }
 
-export interface GroupBy {
+export interface SortOrder {
   compare(a: Waifu, b: Waifu): -1 | 0 | 1;
   displayName: string;
 }
 
-export const TimestampOrder: GroupBy = {
+export const TimestampOrder: SortOrder = {
   compare: (a: Waifu, b: Waifu) => {
     if (a.timestamp > b.timestamp) {
       return -1;
@@ -48,7 +48,7 @@ export const OwnerOrder = {
     return 0;
   },
   displayName: "👑 ↓ Owner Name",
-} as GroupBy & { ownersMap?: Map<string, String> };
+} as SortOrder & { ownersMap?: Map<string, String> };
 
 export const FavoritesOrder = {
   compare: (a: Waifu, b: Waifu) => {
@@ -58,7 +58,7 @@ export const FavoritesOrder = {
     );
   },
   displayName: "❤️ ↓ Favorites",
-} as GroupBy & { charasMap?: Map<number, Chara> };
+} as SortOrder & { charasMap?: Map<number, Chara> };
 
 export const DEFAULT_COLLAGE_FILTERS: CollageFilters = {
   players: [],
@@ -71,7 +71,7 @@ export const DEFAULT_COLLAGE_FILTERS: CollageFilters = {
   lasts: false,
 };
 
-export const DEFAULT_TRACKED_ORDERS: GroupBy[] = [
+export const DEFAULT_TRACKED_ORDERS: SortOrder[] = [
   FavoritesOrder,
   TimestampOrder,
   OwnerOrder,
@@ -80,12 +80,12 @@ export const DEFAULT_TRACKED_ORDERS: GroupBy[] = [
 export interface TrackedFilters {
   player?: string;
   hideSingles: boolean;
-  groupBy?: GroupBy;
+  sortOrder?: SortOrder;
 }
 
 export const DEFAULT_TRACKED_FILTERS: TrackedFilters = {
   player: undefined,
-  groupBy: DEFAULT_TRACKED_ORDERS[0],
+  sortOrder: DEFAULT_TRACKED_ORDERS[0],
   hideSingles: true,
 };
 
