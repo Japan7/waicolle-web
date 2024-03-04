@@ -27,8 +27,8 @@ const ownersMap = computed(() => {
 });
 
 // TODO : This is not clean
-(DEFAULT_TRACKED_ORDERS[0] as typeof FavoritesOrder).charasMap = charasMap.value;
-(DEFAULT_TRACKED_ORDERS[2] as typeof OwnerOrder).ownersMap = ownersMap.value;
+FavoritesOrder.charasMap = charasMap.value;
+OwnerOrder.ownersMap = ownersMap.value;
 
 const trackedIds = computed(
   () =>

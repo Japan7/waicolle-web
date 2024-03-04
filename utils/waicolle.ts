@@ -33,7 +33,6 @@ export const TimestampOrder: GroupBy = {
 
 export const OwnerOrder = {
   compare: (a: Waifu, b: Waifu) => {
-    console.log(OwnerOrder.ownersMap?.size);
     if (
       OwnerOrder.ownersMap?.get(a.owner_discord_id)! >
       OwnerOrder.ownersMap?.get(b.owner_discord_id)!
@@ -53,7 +52,6 @@ export const OwnerOrder = {
 
 export const FavoritesOrder = {
   compare: (a: Waifu, b: Waifu) => {
-    console.log(FavoritesOrder.charasMap?.size);
     return compareCharaFavourites(
       FavoritesOrder.charasMap?.get(a.character_id)!,
       FavoritesOrder.charasMap?.get(b.character_id)!
