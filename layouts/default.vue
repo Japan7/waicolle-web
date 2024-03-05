@@ -35,7 +35,7 @@ function linkGetClass(target?: string) {
   if (target) {
     fullTarget += `-${target}`;
   }
-  return route.name === fullTarget ? "active" : "";
+  return route.name === fullTarget ? "active bg-opacity-50" : "";
 }
 
 const drawerState = ref(false);
@@ -54,7 +54,7 @@ const drawerState = ref(false);
       />
 
       <!-- Page content here -->
-      <div ref="contentDiv" class="drawer-content pb-16 flex flex-col">
+      <div ref="contentDiv" class="drawer-content pb-12 flex flex-col">
         <!-- Sticky nav -->
         <nav
           class="navbar sticky top-0 shadow bg-base-100 bg-opacity-75 backdrop-blur"
@@ -112,7 +112,7 @@ const drawerState = ref(false);
           class="drawer-overlay"
         />
         <div
-          class="min-h-full w-80 max-w-[75vw] pb-16 p-4 bg-base-100 border-l border-base-200"
+          class="min-h-full w-80 max-w-[75vw] pb-12 p-4 bg-base-100 border-l border-base-200"
         >
           <slot name="side" />
         </div>
@@ -120,7 +120,7 @@ const drawerState = ref(false);
     </div>
 
     <!-- Bottom nav -->
-    <div class="btm-nav">
+    <div class="btm-nav btm-nav-sm bg-opacity-75 backdrop-blur">
       <NuxtLink :to="linkGetTo()" :class="linkGetClass()">
         <HomeIcon class="w-5 h-5" />
         <span class="btm-nav-label">Home</span>
