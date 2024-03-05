@@ -52,9 +52,12 @@ const selected = ref<Waifu>();
         <p v-else-if="pending">Loading waifus...</p>
         <p v-else>Error loading waifus.</p>
       </template>
+
       <template #menu>
-        <div class="grid grid-cols-2 w-fit">
-          <label class="space-x-1">
+        <div
+          class="grid grid-flow-row auto-rows-max grid-cols-[auto_1fr] gap-x-2 gap-y-1"
+        >
+          <div class="col-span-2 space-x-2 m-auto">
             <input
               type="checkbox"
               :checked="filters.hideSingles"
@@ -62,25 +65,29 @@ const selected = ref<Waifu>();
                 () =>
                   (filters = { ...filters, hideSingles: !filters.hideSingles })
               "
+              id="hide-singles"
             />
-            <span>☝️ Hide singles</span>
-          </label>
-          <div class="flex flex-col items-center">
-            <span> 📈 Sort by </span>
-            <select v-if="data" v-model="filters.sortOrder" class="select">
-              <option
-                v-for="(order, i) in SORT_ORDERS"
-                :key="order.displayName"
-                :value="i"
-              >
-                {{ order.displayName }}
-              </option>
-            </select>
+            <label for="hide-singles">☝️ Hide singles</label>
           </div>
-        </div>
-        <div class="flex flex-col items-center">
-          <p>Player</p>
-          <select v-if="data" v-model="filters.player" class="select">
+
+          <label for="sort-order" class="m-auto">📈 Sort by</label>
+          <select v-model="filters.sortOrder" id="sort-order" class="select">
+            <option
+              v-for="(order, i) in SORT_ORDERS"
+              :key="order.displayName"
+              :value="i"
+            >
+              {{ order.displayName }}
+            </option>
+          </select>
+
+          <label for="player" class="m-auto">Player</label>
+          <select
+            v-if="data"
+            v-model="filters.player"
+            id="player"
+            class="select"
+          >
             <option
               v-for="p in sortedPlayers"
               :key="p.discord_id"
@@ -93,6 +100,7 @@ const selected = ref<Waifu>();
           <p v-else>Error loading players.</p>
         </div>
       </template>
+
       <template #side>
         <Infos
           v-if="selected"
