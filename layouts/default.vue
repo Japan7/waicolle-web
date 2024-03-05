@@ -43,9 +43,9 @@ const drawerState = ref(false);
 
 <template>
   <!-- Full screen height app -->
-  <div class="h-screen pb-16">
+  <div class="h-screen">
     <!-- Drawer -->
-    <div class="h-full drawer drawer-end drawer-mobile">
+    <div class="h-full drawer drawer-end lg:drawer-open overflow-y-auto">
       <input
         v-model="drawerState"
         id="app-drawer"
@@ -54,7 +54,7 @@ const drawerState = ref(false);
       />
 
       <!-- Page content here -->
-      <div ref="contentDiv" class="drawer-content flex flex-col">
+      <div ref="contentDiv" class="drawer-content pb-16 flex flex-col">
         <!-- Sticky nav -->
         <nav
           class="navbar sticky top-0 shadow bg-base-100 bg-opacity-75 backdrop-blur"
@@ -106,8 +106,14 @@ const drawerState = ref(false);
 
       <!-- Sidebar content here -->
       <div v-if="$slots.side" class="drawer-side">
-        <label for="app-drawer" class="drawer-overlay" />
-        <div class="w-80 p-4 bg-base-100 border-l border-base-200 max-w-[75vw]">
+        <label
+          for="app-drawer"
+          aria-label="close sidebar"
+          class="drawer-overlay"
+        />
+        <div
+          class="min-h-full w-80 max-w-[75vw] pb-16 p-4 bg-base-100 border-l border-base-200"
+        >
           <slot name="side" />
         </div>
       </div>
