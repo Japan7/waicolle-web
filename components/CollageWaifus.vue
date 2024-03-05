@@ -57,7 +57,7 @@ function isIncluded(waifu: Waifu) {
 const filtered = computed(() => {
   const sorted = props.waifus.toSorted(
     props.filters.lasts
-      ? compareTimestamp
+      ? TimestampOrder.compare
       : (a, b) =>
           compareCharaFavourites(
             charasMap.value.get(a.character_id)!,

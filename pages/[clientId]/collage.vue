@@ -15,9 +15,7 @@ const filters = useStorage(
   "collage-filters",
   DEFAULT_COLLAGE_FILTERS,
   localStorage,
-  {
-    mergeDefaults: true,
-  }
+  { mergeDefaults: true }
 );
 const mediaCharas = ref<number[]>();
 const selected = ref<Waifu>();

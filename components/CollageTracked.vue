@@ -14,9 +14,15 @@ const emit = defineEmits<{
   select: [waifu: Waifu];
 }>();
 
+// TODO: Maybe just a regular map?
 const charasMap = computed(() => {
   const map = new Map<number, Chara>();
   props.charas.forEach((c) => map.set(c.id_al, c));
+  return map;
+});
+const ownersMap = computed(() => {
+  const map = new Map<string, string>();
+  props.players.forEach((p) => map.set(p.discord_id, p.discord_username));
   return map;
 });
 
@@ -75,13 +81,10 @@ function isIncluded(waifu: Waifu) {
 
 const filtered = computed(() => {
   const sorted = unlockedWaifus.value.toSorted(
-    props.filters.lasts
-      ? compareTimestamp
-      : (a, b) =>
-          compareCharaFavourites(
-            charasMap.value.get(a.character_id)!,
-            charasMap.value.get(b.character_id)!
-          )
+    SORT_ORDERS[props.filters.sortOrder].compare.bind(undefined, {
+      charasMap: charasMap.value,
+      ownersMap: ownersMap.value,
+    })
   );
   return sorted.filter(isIncluded);
 });

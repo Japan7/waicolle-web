@@ -90,19 +90,7 @@ export function getRank(chara: CharaData) {
 }
 
 export function compareCharaFavourites(a: Chara, b: Chara) {
-  if (a.favourites > b.favourites) {
-    return -1;
-  }
-  if (a.favourites < b.favourites) {
-    return 1;
-  }
-  if (a.id_al > b.id_al) {
-    return -1;
-  }
-  if (a.id_al < b.id_al) {
-    return 1;
-  }
-  return 0;
+  return b.favourites - a.favourites || b.id_al - a.id_al;
 }
 
 function compareEdges(a: MediaEdge, b: MediaEdge) {

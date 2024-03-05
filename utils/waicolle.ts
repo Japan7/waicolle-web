@@ -1,4 +1,5 @@
 import type { Player, Waifu } from "~/server/utils/nanapi-client";
+import type { Chara } from "../server/utils/nanapi-client";
 import type { CharaData } from "./anilist";
 
 export interface CollageFilters {
@@ -11,6 +12,50 @@ export interface CollageFilters {
   blooded: boolean;
   lasts: boolean;
 }
+
+export interface SortOrder {
+  compare: (
+    ctx: {
+      ownersMap: Map<string, string>;
+      charasMap: Map<number, Chara>;
+    },
+    a: Waifu,
+    b: Waifu
+  ) => number;
+  displayName: string;
+}
+
+export const FavoritesOrder: SortOrder = {
+  compare: ({ charasMap }, a: Waifu, b: Waifu) =>
+    compareCharaFavourites(
+      charasMap.get(a.character_id)!,
+      charasMap.get(b.character_id)!
+    ),
+  displayName: "❤️ ↓ Favorites",
+};
+
+export const TimestampOrder: SortOrder = {
+  compare: (ctx, a, b) =>
+    Date.parse(b.timestamp) - Date.parse(a.timestamp) ||
+    FavoritesOrder.compare(ctx, a, b),
+  displayName: "📆 ↓ Timestamp",
+};
+
+export const OwnerOrder: SortOrder = {
+  compare: (ctx, a, b) => {
+    const { ownersMap } = ctx;
+    const ownerA = ownersMap.get(b.owner_discord_id)!;
+    const ownerB = ownersMap.get(a.owner_discord_id)!;
+    return ownerB.localeCompare(ownerA) || FavoritesOrder.compare(ctx, a, b);
+  },
+  displayName: "👑 ↓ Owner Name",
+};
+
+export const SORT_ORDERS: SortOrder[] = [
+  FavoritesOrder,
+  TimestampOrder,
+  OwnerOrder,
+];
 
 export const DEFAULT_COLLAGE_FILTERS: CollageFilters = {
   players: [],
@@ -25,25 +70,15 @@ export const DEFAULT_COLLAGE_FILTERS: CollageFilters = {
 
 export interface TrackedFilters {
   player?: string;
-  lasts: boolean;
   hideSingles: boolean;
+  sortOrder: number;
 }
 
 export const DEFAULT_TRACKED_FILTERS: TrackedFilters = {
   player: undefined,
   hideSingles: true,
-  lasts: false,
+  sortOrder: 0,
 };
-
-export function compareTimestamp(a: Waifu, b: Waifu) {
-  if (a.timestamp > b.timestamp) {
-    return -1;
-  }
-  if (a.timestamp < b.timestamp) {
-    return 1;
-  }
-  return 0;
-}
 
 class WaifuOwnershipTypes {
   contextChar: string;
