@@ -1,6 +1,6 @@
 import type { Player, Waifu } from "~/server/utils/nanapi-client";
-import type { CharaData } from "./anilist";
 import type { Chara } from "../server/utils/nanapi-client";
+import type { CharaData } from "./anilist";
 
 export interface CollageFilters {
   players: string[];
@@ -14,51 +14,48 @@ export interface CollageFilters {
 }
 
 export interface SortOrder {
-  compare(a: Waifu, b: Waifu): -1 | 0 | 1;
+  compare: (
+    ctx: {
+      ownersMap: Map<string, string>;
+      charasMap: Map<number, Chara>;
+    },
+    a: Waifu,
+    b: Waifu
+  ) => number;
   displayName: string;
 }
 
+export const FavoritesOrder: SortOrder = {
+  compare: ({ charasMap }, a: Waifu, b: Waifu) =>
+    compareCharaFavourites(
+      charasMap.get(a.character_id)!,
+      charasMap.get(b.character_id)!
+    ),
+  displayName: "❤️ ↓ Favorites",
+};
+
 export const TimestampOrder: SortOrder = {
-  compare: (a: Waifu, b: Waifu) => {
-    if (a.timestamp > b.timestamp) {
-      return -1;
-    }
-    if (a.timestamp < b.timestamp) {
-      return 1;
-    }
-    return 0;
-  },
+  compare: (ctx, a, b) =>
+    Date.parse(b.timestamp) - Date.parse(a.timestamp) ||
+    FavoritesOrder.compare(ctx, a, b),
   displayName: "📆 ↓ Timestamp",
 };
 
-export const OwnerOrder = {
-  compare: (a: Waifu, b: Waifu) => {
-    if (
-      OwnerOrder.ownersMap?.get(a.owner_discord_id)! >
-      OwnerOrder.ownersMap?.get(b.owner_discord_id)!
-    ) {
-      return -1;
-    }
-    if (
-      OwnerOrder.ownersMap?.get(a.owner_discord_id)! <
-      OwnerOrder.ownersMap?.get(b.owner_discord_id)!
-    ) {
-      return 1;
-    }
-    return 0;
+export const OwnerOrder: SortOrder = {
+  compare: (ctx, a, b) => {
+    const { ownersMap } = ctx;
+    const ownerA = ownersMap.get(b.owner_discord_id)!;
+    const ownerB = ownersMap.get(a.owner_discord_id)!;
+    return ownerB.localeCompare(ownerA) || FavoritesOrder.compare(ctx, a, b);
   },
   displayName: "👑 ↓ Owner Name",
-} as SortOrder & { ownersMap?: Map<string, String> };
+};
 
-export const FavoritesOrder = {
-  compare: (a: Waifu, b: Waifu) => {
-    return compareCharaFavourites(
-      FavoritesOrder.charasMap?.get(a.character_id)!,
-      FavoritesOrder.charasMap?.get(b.character_id)!
-    );
-  },
-  displayName: "❤️ ↓ Favorites",
-} as SortOrder & { charasMap?: Map<number, Chara> };
+export const SORT_ORDERS: SortOrder[] = [
+  FavoritesOrder,
+  TimestampOrder,
+  OwnerOrder,
+];
 
 export const DEFAULT_COLLAGE_FILTERS: CollageFilters = {
   players: [],
@@ -71,22 +68,16 @@ export const DEFAULT_COLLAGE_FILTERS: CollageFilters = {
   lasts: false,
 };
 
-export const DEFAULT_TRACKED_ORDERS: SortOrder[] = [
-  FavoritesOrder,
-  TimestampOrder,
-  OwnerOrder,
-];
-
 export interface TrackedFilters {
   player?: string;
   hideSingles: boolean;
-  sortOrder?: SortOrder;
+  sortOrder: number;
 }
 
 export const DEFAULT_TRACKED_FILTERS: TrackedFilters = {
   player: undefined,
-  sortOrder: DEFAULT_TRACKED_ORDERS[0],
   hideSingles: true,
+  sortOrder: 0,
 };
 
 class WaifuOwnershipTypes {

@@ -23,12 +23,8 @@ const charasMap = computed(() => {
 const ownersMap = computed(() => {
   const map = new Map<string, string>();
   props.players.forEach((p) => map.set(p.discord_id, p.discord_username));
-  return map
+  return map;
 });
-
-// TODO : This is not clean
-FavoritesOrder.charasMap = charasMap.value;
-OwnerOrder.ownersMap = ownersMap.value;
 
 const trackedIds = computed(
   () =>
@@ -85,7 +81,10 @@ function isIncluded(waifu: Waifu) {
 
 const filtered = computed(() => {
   const sorted = unlockedWaifus.value.toSorted(
-    props.filters.sortOrder?.compare
+    SORT_ORDERS[props.filters.sortOrder].compare.bind(undefined, {
+      charasMap: charasMap.value,
+      ownersMap: ownersMap.value,
+    })
   );
   return sorted.filter(isIncluded);
 });

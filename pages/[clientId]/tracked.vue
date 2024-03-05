@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import { useStorage } from "@vueuse/core";
 import type { Waifu } from "~/server/utils/nanapi-client";
-// TODO: Maybe useStorage?
-import { DEFAULT_TRACKED_ORDERS } from "~/utils/waicolle";
 
 useHead({
   titleTemplate: "Tracked | %s",
@@ -20,14 +18,11 @@ const sortedPlayers = computed(
     ) ?? []
 );
 
-
 const filters = useStorage(
   "tracked-filters",
   DEFAULT_TRACKED_FILTERS,
   localStorage,
-  {
-    mergeDefaults: true,
-  }
+  { mergeDefaults: true }
 );
 const selected = ref<Waifu>();
 </script>
@@ -74,9 +69,9 @@ const selected = ref<Waifu>();
             <span> 📈 Sort by </span>
             <select v-if="data" v-model="filters.sortOrder" class="select">
               <option
-                v-for="order in DEFAULT_TRACKED_ORDERS"
+                v-for="(order, i) in SORT_ORDERS"
                 :key="order.displayName"
-                :value="order"
+                :value="i"
               >
                 {{ order.displayName }}
               </option>
