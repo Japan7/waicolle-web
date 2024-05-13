@@ -40,12 +40,8 @@ const oAuth2Middleware: Middleware = (url, init, next) => {
   return new Promise<ApiResponse>(async (resolve, reject) => {
     const authRetry = createAuthRetry(reject);
     await authRetry.execute(async () => {
-      const resp = await next(url, {
-        headers: new Headers({
-          ...init.headers,
-          Authorization: `Bearer ${token}`,
-        }),
-      });
+      init.headers.set("Authorization", `Bearer ${token}`);
+      const resp = await next(url, { headers: init.headers });
       resolve(resp);
     });
   });
