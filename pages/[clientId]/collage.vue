@@ -29,6 +29,7 @@ const selected = ref<Waifu>();
           v-if="data && filters.players.length > 0"
           :waifus="data.waifus"
           :charas="data.charas"
+          :players="data.players"
           :filters="filters"
           :media-charas="mediaCharas"
           :selected="selected"
