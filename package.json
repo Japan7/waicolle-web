@@ -16,7 +16,7 @@
     "typecheck": "nuxt typecheck"
   },
   "devDependencies": {
-    "@heroicons/vue": "2.1.4",
+    "@heroicons/vue": "2.1.5",
     "@nuxt/devtools": "latest",
     "@nuxtjs/apollo": "5.0.0-alpha.14",
     "@nuxtjs/tailwindcss": "6.12.0",
