@@ -20,7 +20,7 @@
     "@nuxt/devtools": "latest",
     "@nuxtjs/apollo": "5.0.0-alpha.14",
     "@nuxtjs/tailwindcss": "6.12.1",
-    "@tailwindcss/typography": "0.5.13",
+    "@tailwindcss/typography": "0.5.14",
     "@types/node": "20.14.14",
     "@vue/apollo-composable": "4.0.2",
     "@vueuse/core": "10.11.0",
