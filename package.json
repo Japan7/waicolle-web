@@ -23,7 +23,7 @@
     "@tailwindcss/typography": "0.5.14",
     "@types/node": "20.14.14",
     "@vue/apollo-composable": "4.0.2",
-    "@vueuse/core": "10.11.0",
+    "@vueuse/core": "10.11.1",
     "@vueuse/nuxt": "10.11.0",
     "cockatiel": "3.2.1",
     "daisyui": "4.12.10",
