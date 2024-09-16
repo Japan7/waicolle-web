@@ -24,7 +24,7 @@
     "@types/node": "20.16.5",
     "@vue/apollo-composable": "4.2.1",
     "@vueuse/core": "11.1.0",
-    "@vueuse/nuxt": "11.0.3",
+    "@vueuse/nuxt": "11.1.0",
     "cockatiel": "3.2.1",
     "daisyui": "4.12.10",
     "nuxt": "3.13.2",
