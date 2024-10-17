@@ -19,7 +19,7 @@
     "@heroicons/vue": "2.1.5",
     "@nuxt/devtools": "latest",
     "@nuxtjs/apollo": "5.0.0-alpha.14",
-    "@nuxtjs/tailwindcss": "6.12.1",
+    "@nuxtjs/tailwindcss": "6.12.2",
     "@tailwindcss/typography": "0.5.15",
     "@types/node": "20.16.12",
     "@vue/apollo-composable": "4.2.1",
