@@ -27,7 +27,7 @@
     "@vueuse/nuxt": "11.2.0",
     "cockatiel": "3.2.1",
     "daisyui": "4.12.14",
-    "nuxt": "3.14.159",
+    "nuxt": "3.14.1592",
     "openapi-typescript-fetch": "2.0.0"
   },
   "overrides": {
