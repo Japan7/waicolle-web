@@ -12,8 +12,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "typecheck": "nuxt typecheck"
+    "postinstall": "nuxt prepare"
   },
   "devDependencies": {
     "@heroicons/vue": "2.2.0",
@@ -28,7 +27,9 @@
     "cockatiel": "3.2.1",
     "daisyui": "4.12.14",
     "nuxt": "3.14.1592",
-    "openapi-typescript-fetch": "2.0.0"
+    "openapi-typescript-fetch": "2.0.0",
+    "typescript": "5.6.2",
+    "vue-tsc": "2.1.10"
   },
   "overrides": {
     "@vue/apollo-composable": {

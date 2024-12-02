@@ -3,6 +3,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
   modules: ["@nuxtjs/tailwindcss", "@nuxtjs/apollo", "@vueuse/nuxt"],
+  typescript: {
+    typeCheck: true,
+  },
   runtimeConfig: {
     nanapiUrl: "",
     nanapiClientUsername: "",
