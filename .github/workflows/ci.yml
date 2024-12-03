@@ -19,7 +19,7 @@ jobs:
           node-version-file: .nvmrc
       - run: |
           wget $NANAPI_OPENAPI
-          npx openapi-typescript openapi.json -o server/utils/nanapi.d.ts
+          npm run codegen -- openapi.json
         env:
           NANAPI_OPENAPI: ${{ secrets.NANAPI_OPENAPI }}
       - run: npm ci
