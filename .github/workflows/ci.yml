@@ -17,10 +17,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
+      - run: npm ci
       - run: |
           wget $NANAPI_OPENAPI
           npm run codegen -- openapi.json
         env:
           NANAPI_OPENAPI: ${{ secrets.NANAPI_OPENAPI }}
-      - run: npm ci
       - run: npm run typecheck
