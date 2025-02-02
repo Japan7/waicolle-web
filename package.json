@@ -29,7 +29,7 @@
     "daisyui": "4.12.23",
     "nuxt": "3.15.4",
     "openapi-fetch": "0.13.4",
-    "openapi-typescript": "7.6.0",
+    "openapi-typescript": "7.6.1",
     "typescript": "5.7.3",
     "vue-tsc": "2.2.0"
   },
