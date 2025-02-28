@@ -22,7 +22,7 @@
     "@nuxtjs/apollo": "5.0.0-alpha.14",
     "@nuxtjs/tailwindcss": "6.13.1",
     "@tailwindcss/typography": "0.5.16",
-    "@types/node": "22.13.5",
+    "@types/node": "22.13.7",
     "@vue/apollo-composable": "4.2.1",
     "@vueuse/core": "12.7.0",
     "@vueuse/nuxt": "12.7.0",
