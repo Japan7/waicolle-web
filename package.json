@@ -30,7 +30,7 @@
     "nuxt": "3.16.2",
     "openapi-fetch": "0.13.5",
     "openapi-typescript": "7.6.1",
-    "typescript": "5.8.2",
+    "typescript": "5.8.3",
     "vue-tsc": "2.2.8"
   },
   "overrides": {
