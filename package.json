@@ -26,7 +26,7 @@
     "@vue/apollo-composable": "4.2.2",
     "@vueuse/core": "13.2.0",
     "@vueuse/nuxt": "13.2.0",
-    "daisyui": "4.12.24",
+    "daisyui": "5.0.35",
     "nuxt": "3.17.3",
     "openapi-fetch": "0.14.0",
     "openapi-typescript": "7.8.0",
