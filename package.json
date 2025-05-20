@@ -27,7 +27,7 @@
     "@vueuse/core": "13.2.0",
     "@vueuse/nuxt": "13.2.0",
     "daisyui": "4.12.24",
-    "nuxt": "3.17.3",
+    "nuxt": "3.17.4",
     "openapi-fetch": "0.14.0",
     "openapi-typescript": "7.8.0",
     "typescript": "5.8.3",
