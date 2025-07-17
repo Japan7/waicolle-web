@@ -31,7 +31,7 @@
     "openapi-fetch": "0.14.0",
     "openapi-typescript": "7.8.0",
     "typescript": "5.8.3",
-    "vue-tsc": "3.0.1"
+    "vue-tsc": "3.0.2"
   },
   "overrides": {
     "@vue/apollo-composable": {
