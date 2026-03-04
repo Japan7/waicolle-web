@@ -38,10 +38,8 @@ jobs:
       - run: npm ci
 
       - run: |
-          wget $NANAPI_OPENAPI
+          wget ${{ vars.NANAPI_OPENAPI }}
           npm run codegen -- openapi.json
-        env:
-          NANAPI_OPENAPI: ${{ secrets.NANAPI_OPENAPI }}
 
       - name: Prepare
         run: |
