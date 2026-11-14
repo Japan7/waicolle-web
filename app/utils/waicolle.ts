@@ -1,5 +1,4 @@
-import type { Player, Waifu } from "~/server/utils/nanapi-client";
-import type { Chara } from "../server/utils/nanapi-client";
+import type { Chara, Player, Waifu } from "~~/server/utils/nanapi-client";
 import type { CharaData } from "./anilist";
 
 export interface CollageFilters {
