@@ -14,7 +14,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "typecheck": "nuxt typecheck",
-    "codegen": "openapi-typescript -o server/utils/nanapi.d.ts"
+    "codegen": "npx openapi-typescript@7.13.0 -o server/utils/nanapi.d.ts"
   },
   "devDependencies": {
     "@heroicons/vue": "2.2.0",
@@ -29,7 +29,6 @@
     "daisyui": "4.12.24",
     "nuxt": "3.21.8",
     "openapi-fetch": "0.17.0",
-    "openapi-typescript": "7.13.0",
     "typescript": "5.9.3",
     "vue-tsc": "3.3.14"
   },
