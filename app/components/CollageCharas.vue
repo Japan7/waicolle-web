@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Chara } from "~/server/utils/nanapi-client";
+import type { Chara } from "~~/server/utils/nanapi-client";
 
 const props = defineProps<{
   charas: Chara[];
@@ -25,11 +25,11 @@ useCollageHotkeys(
 <template>
   <div class="flex flex-wrap justify-center">
     <CollageImage
-      v-for="i in Math.min(limit, sortedCharas.length)"
-      :key="sortedCharas[i - 1].id_al"
-      :chara="sortedCharas[i - 1]"
-      :selected="sortedCharas[i - 1].id_al === selected"
-      @click="emit('select', sortedCharas[i - 1].id_al)"
+      v-for="chara in sortedCharas.slice(0, limit)"
+      :key="chara.id_al"
+      :chara="chara"
+      :selected="chara.id_al === selected"
+      @click="emit('select', chara.id_al)"
     />
   </div>
 </template>

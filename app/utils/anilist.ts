@@ -1,4 +1,4 @@
-import type { Chara } from "~/server/utils/nanapi-client";
+import type { Chara } from "~~/server/utils/nanapi-client";
 
 export interface MediaData extends BaseMediaData {
   siteUrl: string;
@@ -113,7 +113,7 @@ export function getCharaMedias(chara: CharaData) {
     const node = e.node;
     if (node.type === "ANIME") {
       animes.push(node);
-      if (!seiyuu && e.voiceActors.length > 0) {
+      if (!seiyuu && e.voiceActors[0]) {
         const name = e.voiceActors[0].name;
         seiyuu = `${name.userPreferred} (${name.native})`;
       }

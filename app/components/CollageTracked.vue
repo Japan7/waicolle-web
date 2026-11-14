@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Chara, Player, Waifu } from "~/server/utils/nanapi-client";
+import type { Chara, Player, Waifu } from "~~/server/utils/nanapi-client";
 import type { TrackedFilters } from "~/utils/waicolle";
 
 const props = defineProps<{
@@ -81,7 +81,7 @@ function isIncluded(waifu: Waifu) {
 
 const filtered = computed(() => {
   const sorted = unlockedWaifus.value.toSorted(
-    SORT_ORDERS[props.filters.sortOrder].compare.bind(undefined, {
+    (SORT_ORDERS[props.filters.sortOrder] ?? FavoritesOrder).compare.bind(undefined, {
       charasMap: charasMap.value,
       ownersMap: ownersMap.value,
     })
@@ -94,18 +94,19 @@ useCollageHotkeys(
   filtered,
   toRef(props, "selected"),
   (w) => emit("select", w),
-  toRef(props, "scrollDiv")
+  toRef(props, "scrollDiv"),
+  (w) => w.id
 );
 </script>
 
 <template>
   <div class="flex flex-wrap justify-center">
     <CollageImage
-      v-for="i in Math.min(limit, filtered.length)"
-      :key="filtered[i - 1].id"
-      :chara="charasMap.get(filtered[i - 1].character_id)!"
-      :selected="filtered[i - 1].id === selected?.id"
-      @click="emit('select', filtered[i - 1])"
+      v-for="waifu in filtered.slice(0, limit)"
+      :key="waifu.id"
+      :chara="charasMap.get(waifu.character_id)!"
+      :selected="waifu.id === selected?.id"
+      @click="emit('select', waifu)"
     />
   </div>
 </template>

@@ -4,6 +4,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
   modules: ["@nuxtjs/tailwindcss", "@nuxtjs/apollo", "@vueuse/nuxt"],
+  postcss: {
+    plugins: { "tailwindcss/nesting": false },
+  },
   runtimeConfig: {
     nanapiUrl: "",
     nanapiClientUsername: "",
