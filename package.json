@@ -7,6 +7,7 @@
     "NextFire <git@yuru.moe>",
     "Aymane Kssim <aymane.kssim@gmail.com>"
   ],
+  "type": "module",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -20,15 +21,16 @@
     "@heroicons/vue": "2.2.0",
     "@nuxt/devtools": "latest",
     "@nuxtjs/apollo": "5.0.0-alpha.16",
-    "@nuxtjs/tailwindcss": "6.14.0",
     "@tailwindcss/typography": "0.5.20",
+    "@tailwindcss/vite": "4.3.5",
     "@types/node": "26.6.6",
     "@vue/apollo-composable": "4.2.2",
     "@vueuse/core": "15.0.0",
     "@vueuse/nuxt": "15.0.0",
-    "daisyui": "4.12.24",
+    "daisyui": "5.8.1",
     "nuxt": "4.6.4",
     "openapi-fetch": "0.17.0",
+    "tailwindcss": "4.3.5",
     "typescript": "6.0.3",
     "vue": "3.5.45",
     "vue-tsc": "3.3.14"

@@ -35,7 +35,7 @@ function linkGetClass(target?: string) {
   if (target) {
     fullTarget += `-${target}`;
   }
-  return route.name === fullTarget ? "active bg-opacity-50" : "";
+  return route.name === fullTarget ? "dock-active" : "";
 }
 
 const drawerState = ref(false);
@@ -56,9 +56,7 @@ const drawerState = ref(false);
       <!-- Page content here -->
       <div ref="contentDiv" class="drawer-content pb-12 flex flex-col">
         <!-- Sticky nav -->
-        <nav
-          class="navbar sticky top-0 shadow bg-base-100 bg-opacity-75 backdrop-blur"
-        >
+        <nav class="navbar sticky top-0 shadow bg-base-100/75 backdrop-blur">
           <!-- Menu -->
           <div class="navbar-start">
             <div
@@ -70,7 +68,7 @@ const drawerState = ref(false);
               </label>
               <div
                 tabindex="0"
-                class="dropdown-content w-80 p-2 rounded-box shadow bg-base-100 bg-opacity-75"
+                class="dropdown-content w-80 p-2 rounded-box shadow bg-base-100/75"
               >
                 <slot name="menu" />
               </div>
@@ -120,22 +118,22 @@ const drawerState = ref(false);
     </div>
 
     <!-- Bottom nav -->
-    <div class="btm-nav btm-nav-sm bg-opacity-75 backdrop-blur">
+    <div class="dock dock-sm bg-base-100/75 backdrop-blur">
       <NuxtLink :to="linkGetTo()" :class="linkGetClass()">
         <HomeIcon class="w-5 h-5" />
-        <span class="btm-nav-label">Home</span>
+        <span class="dock-label">Home</span>
       </NuxtLink>
       <NuxtLink :to="linkGetTo('collage')" :class="linkGetClass('collage')">
         <Squares2X2Icon class="w-5 h-5" />
-        <span class="btm-nav-label">Collage</span>
+        <span class="dock-label">Collage</span>
       </NuxtLink>
       <NuxtLink :to="linkGetTo('tracked')" :class="linkGetClass('tracked')">
         <HeartIcon class="w-5 h-5" />
-        <span class="btm-nav-label">Tracked</span>
+        <span class="dock-label">Tracked</span>
       </NuxtLink>
       <NuxtLink :to="linkGetTo('daily')" :class="linkGetClass('daily')">
         <CalendarDaysIcon class="w-5 h-5" />
-        <span class="btm-nav-label">Daily</span>
+        <span class="dock-label">Daily</span>
       </NuxtLink>
     </div>
   </div>

@@ -13,8 +13,8 @@ const emit = defineEmits<{
 const sortedPlayers = computed(
   () =>
     props.players.toSorted((a, b) =>
-      a.discord_username.localeCompare(b.discord_username)
-    ) ?? []
+      a.discord_username.localeCompare(b.discord_username),
+    ) ?? [],
 );
 
 const selected = computed({
@@ -32,7 +32,7 @@ const selected = computed({
 
 <template>
   <div class="flex flex-col items-center">
-    <select multiple v-model="selected" class="select">
+    <select multiple v-model="selected" class="select appearance-none">
       <option
         v-for="p in sortedPlayers"
         :key="p.discord_id"

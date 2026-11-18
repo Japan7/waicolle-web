@@ -1,12 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import tailwindcss from "@tailwindcss/vite";
+
 export default defineNuxtConfig({
   compatibilityDate: "2025-03-08",
   devtools: { enabled: true },
   ssr: false,
-  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/apollo", "@vueuse/nuxt"],
-  postcss: {
-    plugins: { "tailwindcss/nesting": false },
+  modules: ["@nuxtjs/apollo", "@vueuse/nuxt"],
+  vite: {
+    plugins: [tailwindcss()],
   },
+  css: ["~/assets/css/main.css"],
   runtimeConfig: {
     nanapiUrl: "",
     nanapiClientUsername: "",
